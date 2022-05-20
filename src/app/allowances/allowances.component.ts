@@ -20,7 +20,10 @@ export class AllowancesComponent implements OnInit {
 
   constructor(public serve:DatabaseService,public navparams: ActivatedRoute,public dialog:DialogComponent,public location: Location,public session: sessionStorage) 
   { 
-    this.get_designation();
+    setTimeout(() => {
+      this.get_designation();
+
+    }, 3000);
   }
 
   ngOnInit() 
@@ -42,12 +45,12 @@ export class AllowancesComponent implements OnInit {
 
   get_allowance()
   {
-    // this.loader=1;
+    this.loader=1;
 
       this.serve.fetchData({},"Allowance/getAllowanceData").subscribe((response=>
       {
         console.log(response);
-
+        
         this.allowanceData = response['allowance'];
         console.log(this.allowanceData);
 
@@ -75,7 +78,7 @@ export class AllowancesComponent implements OnInit {
               this.userRoleData[i]['nonacbus_outstation'] = this.allowanceData[j]['nonacbus_outstation'];
               this.userRoleData[i]['acbus_outstation'] = this.allowanceData[j]['acbus_outstation'];
               this.userRoleData[i]['ta'] = this.allowanceData[j]['ta'];
-
+              
 
             }
           }
@@ -85,26 +88,34 @@ export class AllowancesComponent implements OnInit {
         setTimeout (() => {
           this.loader='';
           
-        }, 1000);
+        }, 5000);
         
       }));
   }
-
+    refresh(){
+      this.get_designation();
+      // this.get_allowance();
+    }
   updateAllowance()
   {
     console.log(this.userRoleData); 
+    this.dialog.confirm("Update Allowance !").then((result)=>{
+      if(result){
+        this.serve.fetchData({'data':this.userRoleData},"Allowance/update_allowance").subscribe((response=>
+          {
+            console.log(response); 
+            if(response)
+            {
+                this.dialog.success("Allowances","Updated");
+                // this.rout.navigate(['/product-list']);
+            } 
+            this.get_allowance();
+      
+          })); 
+      }
+    })
 
-    this.serve.fetchData({'data':this.userRoleData},"Allowance/update_allowance").subscribe((response=>
-    {
-      console.log(response); 
-      if(response)
-      {
-          this.dialog.success("Allowances","Updated");
-          // this.rout.navigate(['/product-list']);
-      } 
-      this.get_allowance();
-
-    })); 
+   
   }
 
 

@@ -157,20 +157,25 @@ this.serve.count_list();
     console.log(index);
 
     console.log(this.userlist[index].active);
-    if (this.userlist[index].active == "1") {
-      this.userlist[index].active = "0";
-      console.log(this.userlist[index].active);
-    }
-    else {
-      this.userlist[index].active = "1";
-      console.log(this.userlist[index].active);
-    }
-    let value = { "active": this.userlist[index].active }
-    this.serve.fetchData({ 'user_id': id, 'data': value ,'uid':this.userId,'uname':this.userName}, "User/update_user")
-      .subscribe(resp => {
-        console.log(resp);
-        this.getUserList(0, 10,2);
-      })
+    this.alert.confirm("You Want To Change Status !").then((result)=>{
+      if(result){
+        if (this.userlist[index].active == "1") {
+          this.userlist[index].active = "0";
+          console.log(this.userlist[index].active);
+        }
+        else {
+          this.userlist[index].active = "1";
+          console.log(this.userlist[index].active);
+        }
+        let value = { "active": this.userlist[index].active }
+        this.serve.fetchData({ 'user_id': id, 'data': value ,'uid':this.userId,'uname':this.userName}, "User/update_user")
+          .subscribe(resp => {
+            console.log(resp);
+            this.getUserList(0, 10,2);
+          })
+      }
+    })
+   
   }
   xLXSArray: any = []
   exceldata() {

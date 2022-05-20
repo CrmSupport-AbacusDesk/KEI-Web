@@ -175,7 +175,12 @@ attendence_type : any ='Present';
 
   }
   sales:any=[];
+    refresh(func_name, type){
+    this.data = '';
+    this.attendance_list(func_name, type);
+    }
   attendance_list(func_name, type) {
+    
     this.loader = 1;
     if (Object.getOwnPropertyNames(this.data).length != 0) {
       // this.pagelimit = 0;
