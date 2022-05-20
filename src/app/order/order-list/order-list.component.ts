@@ -147,10 +147,10 @@ export class OrderListComponent implements OnInit {
         this.loader='';
 
       }, 700);
-      if(this.orderlist.length ==0){
-        this.data_not_found=true;
-      }else{
+      if(this.orderlist.length >0){
         this.data_not_found=false;
+      }else{
+        this.data_not_found=true;
 
       }
 
@@ -209,6 +209,11 @@ export class OrderListComponent implements OnInit {
         console.log(this.orderlist);
       }else if(status=='all'){
         this.orderlist=this.tmp_orderlist;
+      }
+      if(this.orderlist.length > 0 ){
+        this.data_not_found = false;
+      }else{
+        this.data_not_found = true;
       }
     }
 

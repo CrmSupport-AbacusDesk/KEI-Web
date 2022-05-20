@@ -363,21 +363,27 @@ export class LeadListComponent implements OnInit {
       console.log(index);
 
       console.log(this.lead_List[index].checkin_active);
-      if (this.lead_List[index].checkin_active == "1") {
-        this.lead_List[index].checkin_active = "0";
-        console.log(this.lead_List[index].checkin_active);
-      }
-      else {
-        this.lead_List[index].checkin_active = "1";
-        console.log(this.lead_List[index].checkin_active);
-      }
-      let value = { "checkin_active": this.lead_List[index].checkin_active }
-      this.serve.fetchData({ 'dr_id': id, 'data': value ,'uid':this.login_data5.id,'uname':name}, "Lead/checkin_active")
-        .subscribe(resp => {
-          console.log(resp);
-          this.leadList()
-
-        })
+      this.dialog.confirm('You Want To Change Status').then((result)=>{
+        if(result){
+          if (this.lead_List[index].checkin_active == "1") {
+            this.lead_List[index].checkin_active = "0";
+            console.log(this.lead_List[index].checkin_active);
+          }
+          else {
+            this.lead_List[index].checkin_active = "1";
+            console.log(this.lead_List[index].checkin_active);
+          }
+          let value = { "checkin_active": this.lead_List[index].checkin_active }
+          this.serve.fetchData({ 'dr_id': id, 'data': value ,'uid':this.login_data5.id,'uname':name}, "Lead/checkin_active")
+            .subscribe(resp => {
+              console.log(resp);
+              this.leadList()
+    
+            })
+        }
+       
+      })
+   
     }
 
   }

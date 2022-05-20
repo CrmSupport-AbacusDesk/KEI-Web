@@ -351,20 +351,25 @@ export class DistributionListComponent implements OnInit {
       console.log(index);
 
       console.log(this.distributor_list[index].checkin_active);
-      if (this.distributor_list[index].checkin_active == "1") {
-        this.distributor_list[index].checkin_active = "0";
-        console.log(this.distributor_list[index].checkin_active);
-      }
-      else {
-        this.distributor_list[index].checkin_active = "1";
-        console.log(this.distributor_list[index].checkin_active);
-      }
-      let value = { "checkin_active": this.distributor_list[index].checkin_active }
-      this.serve.fetchData({ 'dr_id': id, 'data': value ,'uid':this.assign_login_data2.id,'uname':name}, "Lead/checkin_active")
-        .subscribe(resp => {
-          console.log(resp);
-          this.distributorList();
-        })
+      this.dialog.confirm("You Want To Change Status!").then((res)=>{
+        if(res){
+          if (this.distributor_list[index].checkin_active == "1") {
+            this.distributor_list[index].checkin_active = "0";
+            console.log(this.distributor_list[index].checkin_active);
+          }
+          else {
+            this.distributor_list[index].checkin_active = "1";
+            console.log(this.distributor_list[index].checkin_active);
+          }
+          let value = { "checkin_active": this.distributor_list[index].checkin_active }
+          this.serve.fetchData({ 'dr_id': id, 'data': value ,'uid':this.assign_login_data2.id,'uname':name}, "Lead/checkin_active")
+            .subscribe(resp => {
+              console.log(resp);
+              this.distributorList();
+            })
+        }
+      })
+     
     }
 
 
