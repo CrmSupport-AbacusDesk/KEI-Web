@@ -28,6 +28,12 @@ export class LeavesComponent implements OnInit {
   view_edit : boolean = true;
   view_add : boolean = true;
   view_delete : boolean = true;
+  start:any=0;
+
+  total_page:any;
+  pagenumber:any;
+  page_limit:any=50;
+  count:any=[];
 
 
   constructor(public serve:DatabaseService,public dialog:DialogComponent,public navparams: ActivatedRoute, public dialogs: MatDialog,public session: sessionStorage)
@@ -106,14 +112,19 @@ export class LeavesComponent implements OnInit {
 
     this.loader=true;
     this.serve.fetchData({
-      'user_id': this.assign_login_data2.id, filter: this.search,'user_type': this.assign_login_data2.type
+      'user_id': this.assign_login_data2.id,'start': this.start,'pagelimit': this.page_limit, filter: this.search,'user_type': this.assign_login_data2.type
 },"Leaves/leave_list").subscribe((result=>
     {
       this.loader=false;
       console.log(result);
-      this.leave_list = result;
+      this.leave_list = result['data'];
+      this.count=result['count']
+      console.log(this.count);
+
 
       console.log(this.leave_list.length);
+      this.total_page = Math.ceil(this.count/this.page_limit);
+      this.pagenumber = Math.ceil(this.start/this.page_limit)+1;
 
 
       if(this.leave_list.length == 0)

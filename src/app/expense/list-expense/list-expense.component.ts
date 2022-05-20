@@ -40,7 +40,6 @@ hotel:any=0
 total:any
 count_list:any=[]
   expense_list:any=[];
-  pagelimit:any=0;
   search:any={};
   active_tab = 'Pending';
   loader:any;
@@ -49,7 +48,12 @@ count_list:any=[]
   searchData: any;
   search_val: any = {}
   backButton: boolean = false;
-list1:any=[]
+ list1:any=[]
+ start:any=0;
+
+ total_page:any;
+ pagenumber:any;
+ page_limit:any=50;
 
 
 
@@ -131,11 +135,15 @@ list1:any=[]
     }
 
     this.serve.fetchData({
-      'user_id': this.assign_login_data2.id, 'start': this.expense_list.length, 'pagelimit': this.pagelimit, 'search': this.search, 'expenseStatus': this.active_tab, 'user_type': this.assign_login_data2.type},"Expense/expense_list").subscribe((result=>
+      'user_id': this.assign_login_data2.id, 'start':this.start, 'pagelimit': this.page_limit, 'search': this.search, 'expenseStatus': this.active_tab, 'user_type': this.assign_login_data2.type},"Expense/expense_list").subscribe((result=>
     {
       console.log(result);
       this.count_list=result;
       this.expense_list=result['result'];
+      console.log(this.count_list);
+
+      this.total_page = Math.ceil(this.count_list.count/this.page_limit);
+      this.pagenumber = Math.ceil(this.start/this.page_limit)+1;
 
 
       if(this.expense_list.length ==0)

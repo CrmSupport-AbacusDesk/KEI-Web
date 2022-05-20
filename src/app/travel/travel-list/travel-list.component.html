@@ -6,10 +6,37 @@
         <p>{{travel_list.length}}</p>
       </div>
       <div class="top-pagination">
-    
-        <button *ngIf="view_add" mat-raised-button color="accent"  (click)="upload_excel()"><i class="material-icons">backup</i> Upload File</button>
 
-      </div>
+        <ul>
+              <li class="refresh-area mr0 after-none">
+
+                 <a class="refresh-btn" mat-raised-button (click)="refresh()" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+            </li>
+            <li>
+                <p>Pages {{pagenumber}} Of {{total_page}}</p>
+            </li>
+            <li>
+                <button mat-button class="left-btn" (click)="start=start-page_limit; getTravelList()" [disabled]="pagenumber == 1">
+        <i class="material-icons">keyboard_arrow_left</i></button>
+            </li>
+            <li>
+                <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getTravelList()" [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+            </li>
+
+            <li>
+                <button mat-button class="right-btn" (click)="start=start+page_limit; getTravelList()" [disabled]="pagenumber == total_page">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </button>
+            </li>
+
+        </ul>
+
+
+    </div>
+
+        <button *ngIf="view_add" mat-raised-button color="accent" style="right: -575px;" (click)="upload_excel()"><i class="material-icons">backup</i> Upload File</button>
+
+
       <!-- <div class=" ml15 tabs"  *ngIf="search.travel_date!='' || search.sales_user!=''">
         <ul>
           <li><a class="" [ngClass]="active_tab == 'Pending' ? 'active' : ''" (click)="active_tab = 'Pending';getTravelList();">Pending</a></li>
@@ -21,7 +48,7 @@
         </ul>
       </div> -->
     </div>
-    
+
     <div class="uppr-one m-right-data">
       <!-- <ul *ngIf="search.travel_date!='' || search.sales_user!=''">
         <li class="refresh-area pr5 mr15">

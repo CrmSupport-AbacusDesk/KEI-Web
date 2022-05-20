@@ -17,7 +17,6 @@ import { UploadFileModalComponent } from 'src/app/upload-file-modal/upload-file-
 export class TravelListComponent implements OnInit {
   travel_list: any = [];
   loader: any = false;
-  page_limit: any = 50
   search: any = {};
   skelton: any;
   data_not_found = false;
@@ -35,6 +34,11 @@ export class TravelListComponent implements OnInit {
   view_edit: boolean = true;
   view_add: boolean = true;
   view_delete: boolean = true;
+  start:any=0;
+
+  total_page:any;
+  pagenumber:any;
+  page_limit:any=50
 
 
   constructor(public alert: DialogComponent, public serve: DatabaseService, public alrt: MatDialog, public dialog: MatDialog, public session: sessionStorage) {
@@ -97,15 +101,20 @@ export class TravelListComponent implements OnInit {
 
 
     this.serve.fetchData({
-      'user_id': this.assign_login_data2.id, 'start': this.travel_list.length, 'pagelimit': this.page_limit, 'search': this.search, 'active_tab': this.active_tab, 'user_type': this.assign_login_data2.type
+      'user_id': this.assign_login_data2.id, 'start': this.start, 'pagelimit': this.page_limit, 'search': this.search, 'active_tab': this.active_tab, 'user_type': this.assign_login_data2.type
     }, "Travel/travel_list").subscribe((result => {
       console.log(result);
       this.loader = false;
       this.count_list = result;
+           console.log(this.count_list);
+           console.log(this.count_list.count);
+
 
       this.travel_list = result['data'];
       this.travel_list2 = result['data']['travel_plan'];
       console.log(this.travel_list2);
+      this.total_page = Math.ceil(this.count_list.count/this.page_limit);
+      this.pagenumber = Math.ceil(this.start/this.page_limit)+1;
 
       if (this.travel_list.length == 0) {
         this.data_not_found = true;
@@ -137,6 +146,7 @@ export class TravelListComponent implements OnInit {
   }
 
   statusModal(id) {
+
 
     const dialogRef = this.dialog.open(TravelStatusModalComponent, {
       width: '400px',
@@ -196,7 +206,7 @@ export class TravelListComponent implements OnInit {
 
 
       if (this.travel_list[i].travel_type != "Distributor Visit") {
-        
+
         console.log("in if");
 
         for (let j = 0; j < this.travel_list[i].travel_plan.length; j++) {
@@ -221,7 +231,7 @@ export class TravelListComponent implements OnInit {
         }
         console.log(this.company_name);
         this.travel_list[i].travel_type = 'Party Visit';
-        
+
 
         this.excel_data.push({ 'Date from': this.travel_list[i].date_from, 'Date to': this.travel_list[i].date_to, 'TravelType': this.travel_list[i].travel_type,'ERPCode':this.travel_list[i].executive_erp_id, 'Executive name': this.travel_list[i].name, 'Status': this.travel_list[i].status, 'Company Name': this.company_name });
 
