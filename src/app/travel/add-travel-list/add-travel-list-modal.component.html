@@ -1,0 +1,277 @@
+<div class="edit-modal">
+  <form #add_travel="ngForm" name="add_travel"
+  >
+
+  <div mat-dialog-content>
+     <div >
+    <p class="heading">Add Travel Plan</p>
+  </div>
+
+    <div class="cs-form">
+      <div class="row">
+        <div class="col s3">
+          <mat-form-field class="cs-input" appearance="outline">
+            <mat-label>Date From</mat-label>
+            <input matInput [matDatepicker]="select_from_picker" [min]="today_date" name="date_from" #date_from="ngModel"
+            [(ngModel)]="data1.date_from" disabled required>
+            <mat-datepicker-toggle matSuffix [for]="select_from_picker"></mat-datepicker-toggle>
+            <mat-datepicker #select_from_picker disabled="false"></mat-datepicker>
+
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="!(data1.date_from) && add_travel.submitted">
+            Date From is required...
+          </div>
+        </div>
+        <div class="col s3" *ngIf="data1.date_from">
+          <mat-form-field class="cs-input" appearance="outline">
+            <mat-label>Date To</mat-label>
+            <input matInput [matDatepicker]="select_to_picker" [min]="data1.date_from" name="date_to" #date_to="ngModel"
+            [(ngModel)]="data1.date_to" disabled required>
+            <mat-datepicker-toggle matSuffix [for]="select_to_picker"></mat-datepicker-toggle>
+            <mat-datepicker #select_to_picker disabled="false"></mat-datepicker>
+
+          </mat-form-field>
+          <div class="alert alert-danger" *ngIf="!(data1.date_to) && add_travel.submitted">
+            Date to is required...
+          </div>
+        </div>
+        <div class="" [ngClass]="data1.date_from ? 'col s6':'col s9'">
+          <mat-form-field class="cs-input" appearance="outline">
+            <mat-label>Select Sales User</mat-label>
+            <mat-select name="sales_user_id" placeholder="salesUser" #sales_user_id="ngModel"
+            (click)="get_sales_user_list()" [(ngModel)]="data1.sales_user_id"
+            [ngClass]="{'has-error' : !(sales_user_id.invalid) } " required>
+            <mat-option disabled="">Select Sales User</mat-option>
+            <div class="drop-down-search">
+              <input type="text" placeholder="search..." name="sales_user" class="fix-search" (input)="get_sales_user_List(search.sales_user)" #sales_user="ngModel" [(ngModel)]="search.sales_user">
+            </div>
+            <mat-option *ngFor="let list of salesUserList" value="{{list.id}}">{{list.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="" [ngClass]="data1.travel_type ?'col s6':'col s12'">
+        <mat-form-field class="cs-input" appearance="outline">
+          <mat-label>Select Type</mat-label>
+          <mat-select name="travel_type" #travel_type="ngModel" [(ngModel)]="data1.travel_type">
+            <mat-option value="Area Visit" (click)="getStateList()">Area Visit</mat-option>
+            <mat-option value="Distributor Visit" (click)="distributorList()">Party Visit</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+     
+    <div class="col s6" *ngIf="data1.travel_type == 'Area Visit'">
+      <mat-form-field class="cs-input" appearance="outline">
+        <mat-label>Select State</mat-label>
+        <mat-select name="state" placeholder="state" #state="ngModel" [(ngModel)]="data1.state"
+        [ngClass]="{'has-error' : state.invalid } "  multiple required>
+        <mat-option disabled="">Select State</mat-option>
+        <div class="drop-down-search">
+          <input type="text" placeholder="search..." name="state_search" class="fix-search" (input)="searchStateList(search.state_search)" #state_search="ngModel" [(ngModel)]="search.state_search">
+        </div>
+        <mat-option *ngFor="let state of state_list" (click)="getDistrict()"
+        value="{{state}}">{{state}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="row" *ngIf="data1.travel_type == 'Area Visit'">
+  <div class="col s6">
+    <mat-form-field class="cs-input" appearance="outline">
+      <mat-label>Select District</mat-label>
+      <mat-select name="district" placeholder="District" #district="ngModel" [(ngModel)]="data1.district"
+      [ngClass]="{'has-error' : district.invalid } " multiple required>
+      <!-- <mat-option disabled="">Select District</mat-option> -->
+      <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="district_search" class="fix-search" (input)="searchDistrict(search.district_search)" #district_search="ngModel" [(ngModel)]="search.district_search">
+      </div>
+      <mat-option *ngFor="let district of district_list2" (click)="getCityList()"
+      value="{{district}}">{{district}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="col s6" *ngIf="data1.district!= ''">
+
+
+  <!-- --------------------- -->
+
+  <mat-form-field class="cs-input" appearance="outline">
+    <mat-label>Select City</mat-label>
+    <mat-select name="city" placeholder="city"  #city="ngModel"  [(ngModel)]="data1.city" multiple required>
+      <!-- <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="city" class="fix-search"  #city="ngModel" [(ngModel)]="search.city">
+      </div> -->
+      <mat-option *ngFor="let list of city_list " placeholder="city"  value="{{list.city}}" (click)="getAreaList()">{{list.city}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+<div class="row" *ngIf="data1.travel_type == 'Area Visit'">
+  <div class="col s6" >
+
+  <mat-form-field class="cs-input" appearance="outline">
+    <mat-label>Select Area</mat-label>
+    <mat-select name="area" placeholder="area"  #area="ngModel"  [(ngModel)]="data1.area" multiple required>
+      <!-- <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="city" class="fix-search"  #city="ngModel" [(ngModel)]="search.city">
+      </div> -->
+      <mat-option *ngFor="let list of area_list " placeholder="area"  value="{{list.area}}" >{{list.area}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+
+
+
+
+
+  <!-- --------------------- -->
+
+  <!-- <mat-form-field class="cs-input" appearance="outline">
+    <mat-label>Select Area</mat-label>
+    <mat-select name="area" placeholder="Area" required>
+      <div class="item-input">
+        <input type="text" placeholder="search..." name="city_area" class="fix-search" (input)="getItemsList(search.city_area)" #city_area="ngModel" [(ngModel)]="search.city_area">
+      </div>
+      <mat-option *ngFor="let list of city_list ;let index=index ">
+        <mat-checkbox class="check-list" [checked]="list.check" (change)="area_assign_check(list,index,$event)" value="{{list}}">{{list}}</mat-checkbox>
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+  <!-- --------------------- -->
+
+
+</div>
+</div>
+<div class="sprate-box cs-form"*ngIf="data1.travel_type == 'Distributor Visit'">
+
+<mat-divider  *ngIf="data1.travel_type == 'Distributor Visit'" class="left-right-15  mb10 "></mat-divider>
+<div   *ngIf="data1.travel_type == 'Distributor Visit'" class="cs-heading">
+  <h2>Filter Your Data</h2>
+ 
+</div>
+<mat-divider class="left-right-15 mt10"></mat-divider>
+<div class="row mt10" *ngIf="data1.travel_type == 'Distributor Visit'">
+  <div class="col s6" >
+    <mat-form-field class="cs-input" appearance="outline">
+      <mat-label>Select State</mat-label>
+      <mat-select name="state" placeholder="state" #state="ngModel" [(ngModel)]="data1.state"
+      [ngClass]="{'has-error' : state.invalid } "  multiple required>
+      <mat-option disabled="">Select State</mat-option>
+      <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="state_search" class="fix-search" (input)="searchStateList(search.state_search)" #state_search="ngModel" [(ngModel)]="search.state_search">
+      </div>
+      <mat-option *ngFor="let state of state_list" (click)="getDistrict()"
+      value="{{state}}">{{state}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+  <div class="col s6">
+    <mat-form-field class="cs-input" appearance="outline">
+      <mat-label>Select District</mat-label>
+      <mat-select name="district" placeholder="District" #district="ngModel" [(ngModel)]="data1.district"
+      [ngClass]="{'has-error' : district.invalid } " multiple required>
+      <!-- <mat-option disabled="">Select District</mat-option> -->
+      <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="district_search" class="fix-search" (input)="searchDistrict(search.district_search)" #district_search="ngModel" [(ngModel)]="search.district_search">
+      </div>
+      <mat-option *ngFor="let district of district_list2" (click)="getCityList()"
+      value="{{district}}">{{district}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+  
+</div>
+<div class="row" *ngIf="data1.travel_type == 'Distributor Visit'">
+ 
+<div class="col s6" *ngIf="data1.district!= ''">
+
+
+  <!-- --------------------- -->
+
+  <mat-form-field class="cs-input" appearance="outline">
+    <mat-label>Select City</mat-label>
+    <mat-select name="city" placeholder="city"  #city="ngModel"  [(ngModel)]="data1.city" multiple required>
+      <!-- <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="city" class="fix-search"  #city="ngModel" [(ngModel)]="search.city">
+      </div> -->
+      <mat-option *ngFor="let list of city_list " placeholder="city"  value="{{list.city}}" (click)="getAreaList()">{{list.city}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+  <div class="row">
+    <div class="col s8 empty"> </div>
+    <div class="col s4">
+      <div class="cs-btn fixedd mt16 text-right">
+        <div class="in-btn">
+          <button mat-raised-button color="accent" (click)="distributorList()">GO</button>
+        </div>
+      </div>
+      <!-- <div class="alert alert-danger"
+        *ngIf="!company_name.valid || !dr_type.valid || !district.valid || !state.valid || !city.valid || !pinCode .valid && f.submitted">
+        Form Incomplete...
+      </div> -->
+    </div>
+  </div>
+
+ 
+</div>
+
+</div>
+<div class="row mt10" *ngIf="data1.travel_type == 'Distributor Visit'">
+ 
+ 
+  <div class="col s12" *ngIf="data1.travel_type == 'Distributor Visit'">
+    <mat-form-field class="cs-input" appearance="outline">
+      <mat-label>Select Party</mat-label>
+      <mat-select name="distributor" placeholder="Distributor" #distributor="ngModel"
+      [(ngModel)]="data1.distributor" [ngClass]="{'has-error' : !(distributor.invalid) } " multiple required>
+      <!-- <mat-option *ngFor="let dist of drlist2" [value]="dist.id">{{dist.company_name}}</mat-option> -->
+      <div class="drop-down-search">
+        <input type="text" placeholder="search..." name="distributor_search" class="fix-search" (input)="searchDistributor(search.distributor_search)" #distributor_search="ngModel" [(ngModel)]="search.distributor_search">
+      </div>
+      <mat-option *ngFor="let list of drlist" value="{{list.id}}">{{list.company_name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+</div>
+<div class="row" *ngIf="(data1.travel_type == 'Area Visit') && (selectedArea.length>0)">
+  <div class="col s12">
+    <div class="details-info">
+      <div class="basic-details">
+        <div class="cs-heading">
+          <h2>Selected Area</h2>
+        </div>
+
+        <div class="cs-chips" style="display: table-cell;">
+          <span *ngFor="let list of selectedArea">{{list}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col s12">
+    <mat-form-field class="cs-input" appearance="outline">
+      <textarea class="h60" matInput name="status_remark" #status_remark="ngModel" [(ngModel)]="data1.status_remark" placeholder="Status Remark" value="{{data1.status_remark}}"></textarea>
+    </mat-form-field>
+  </div>
+</div>
+<div mat-dialog-actions *ngIf="!assign">
+  <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button type="submit"(click)="add_travel_plan()" mat-button color="accent">Save</button>
+</div>
+<div mat-dialog-actions *ngIf="assign">
+  <button mat-button color="warn" [mat-dialog-close]="false">Cancel</button>
+  <button type="submit" (click)="update_travel_plan()"mat-button color="accent">Update</button>
+</div>
+
+</div>
+</div>
+</form>
+</div>
