@@ -61,7 +61,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-     
+
     <div class="col s6" *ngIf="data1.travel_type == 'Area Visit'">
       <mat-form-field class="cs-input" appearance="outline">
         <mat-label>Select State</mat-label>
@@ -93,20 +93,18 @@
   </mat-form-field>
 </div>
 <div class="col s6" *ngIf="data1.district!= ''">
-
-
-  <!-- --------------------- -->
-
   <mat-form-field class="cs-input" appearance="outline">
     <mat-label>Select City</mat-label>
     <mat-select name="city" placeholder="city"  #city="ngModel"  [(ngModel)]="data1.city" multiple required>
-      <!-- <div class="drop-down-search">
+       <!-- <div class="drop-down-search">
         <input type="text" placeholder="search..." name="city" class="fix-search"  #city="ngModel" [(ngModel)]="search.city">
-      </div> -->
+      </div>  -->
       <mat-option *ngFor="let list of city_list " placeholder="city"  value="{{list.city}}" (click)="getAreaList()">{{list.city}}</mat-option>
     </mat-select>
   </mat-form-field>
   </div>
+
+</div>
 <div class="row" *ngIf="data1.travel_type == 'Area Visit'">
   <div class="col s6" >
 
@@ -143,13 +141,12 @@
 
 
 </div>
-</div>
 <div class="sprate-box cs-form"*ngIf="data1.travel_type == 'Distributor Visit'">
 
 <mat-divider  *ngIf="data1.travel_type == 'Distributor Visit'" class="left-right-15  mb10 "></mat-divider>
 <div   *ngIf="data1.travel_type == 'Distributor Visit'" class="cs-heading">
   <h2>Filter Your Data</h2>
- 
+
 </div>
 <mat-divider class="left-right-15 mt10"></mat-divider>
 <div class="row mt10" *ngIf="data1.travel_type == 'Distributor Visit'">
@@ -182,10 +179,10 @@
   </mat-form-field>
 </div>
 
-  
+
 </div>
 <div class="row" *ngIf="data1.travel_type == 'Distributor Visit'">
- 
+
 <div class="col s6" *ngIf="data1.district!= ''">
 
 
@@ -216,13 +213,13 @@
     </div>
   </div>
 
- 
+
 </div>
 
 </div>
 <div class="row mt10" *ngIf="data1.travel_type == 'Distributor Visit'">
- 
- 
+
+
   <div class="col s12" *ngIf="data1.travel_type == 'Distributor Visit'">
     <mat-form-field class="cs-input" appearance="outline">
       <mat-label>Select Party</mat-label>

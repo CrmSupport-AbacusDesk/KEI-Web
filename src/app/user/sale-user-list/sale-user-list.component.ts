@@ -42,18 +42,18 @@ export class SaleUserListComponent implements OnInit {
   view_delete : boolean = true;
 
   constructor(public alert: DialogComponent, public serve: DatabaseService, public rout: Router, public dialog2: MatDialog,public session: sessionStorage) {
-    
+
     this.assign_login_data = this.session.getSession();
     this.assign_login_data = this.assign_login_data.value;
     this.assign_login_data = this.assign_login_data.assignModule;
     console.log(this.assign_login_data);
     const index = this.assign_login_data.findIndex(row => row.module_name == 'User Master');
     console.log(index);
-    
+
     this.assign_login_data[index].add == 'true' ? this.view_add = true : this.view_add = false;
     this.assign_login_data[index].edit == 'true' ? this.view_edit = true : this.view_edit = false;
     this.assign_login_data[index].delete == 'true' ? this.view_delete = true : this.view_delete = false;
-    
+
     console.log(this.view_add);
     console.log(this.view_edit);
     console.log(this.view_delete);
@@ -105,8 +105,15 @@ export class SaleUserListComponent implements OnInit {
       if (result) {
         let value = { "id": id ,"uid":this.userId,"uname":this.userName}
         this.serve.fetchData(value, "User/delete_user").subscribe((result) => {
-          if (result) {
-            this.getUserList(0, 10,2);
+          if (result['msg'] == 'Deleted Successfully') {
+            console.log('in success function');
+            this.alert.success("User","Delete Successfully");
+            this.getUserList(0, 10,2)
+
+          }
+          else {
+            console.log('in failed function');
+            this.alert.error("Something Went Wrong Please Try Again !");
           }
         })
       }

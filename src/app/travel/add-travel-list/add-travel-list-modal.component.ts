@@ -246,6 +246,18 @@ id:any
 
         this.dialog.closeAll();
       }
+      if(result['msg']=="success"){
+
+        this.dialog1.success("Travel Plan", "Added");
+        this.loader = false;
+      }
+      else{
+
+        this.dialog1.error("Something Went Wrong Please try again !");
+        this.loader = false;
+        this.dialog.closeAll();
+
+      }
       setTimeout(() => {
         this.loader = '';
       }, 100);

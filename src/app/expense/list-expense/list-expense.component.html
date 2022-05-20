@@ -15,6 +15,31 @@
 
 
     <div class="uppr-one m-right-data">
+      <div class="top-pagination">
+
+        <ul>
+
+            <li>
+                <p>Pages {{pagenumber}} Of {{total_page}}</p>
+            </li>
+            <li>
+                <button mat-button class="left-btn" (click)="start=start-page_limit; expenseList()" [disabled]="pagenumber == 1">
+        <i class="material-icons">keyboard_arrow_left</i></button>
+            </li>
+            <li>
+                <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; expenseList()" [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+            </li>
+
+            <li>
+                <button mat-button class="right-btn" (click)="start=start+page_limit; expenseList()" [disabled]="pagenumber == total_page">
+          <i class="material-icons">keyboard_arrow_right</i>
+        </button>
+            </li>
+
+        </ul>
+
+
+    </div>
       <!-- <div class="cs-btn">
         <div class="in-btn">
             <button *ngIf="view_edit" mat-raised-button color="accent" (click)="exporttestAsXLSX()">Download excel</button>
