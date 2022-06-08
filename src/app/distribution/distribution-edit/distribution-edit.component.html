@@ -95,7 +95,7 @@
                   </mat-form-field>
                 </div>
 
-                  <div class="" *ngIf="data.country == 'INDIA'  || data.country == 'India'">
+                  <div class="" *ngIf="(data.country == 'INDIA'  || data.country == 'India')&&data.dr_type != '3'">
                   <mat-form-field class="cs-input" appearance="outline">
                     <mat-label>Area</mat-label>
                     <mat-select name="area" placeholder="area" #area="ngModel" [(ngModel)]="data.area"
@@ -108,7 +108,17 @@
                     </div>
                   </mat-form-field>
                 </div>
-
+                <div class="" *ngIf="(data.country == 'INDIA'  || data.country == 'India')&&data.dr_type == '3'">
+                  <mat-form-field class="cs-input" appearance="outline">
+                    <mat-label>Beat Code</mat-label>
+                    <mat-select name="area" placeholder="beat_code" #beat_code="ngModel" [(ngModel)]="data.beat_code"
+                      >
+                      <mat-option disabled="">Select Beat Code</mat-option>
+                      <mat-option *ngFor="let cityArea of beat_list"  (click)="getarea1(cityArea.area)" value="{{cityArea.beat_code}}">{{cityArea.beat_code}}-{{cityArea.area}}</mat-option>
+                    </mat-select>
+                    
+                  </mat-form-field>
+                </div>
 
 
                 <!-- <div class=""  *ngIf="data.country == 'INDIA'">

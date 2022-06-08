@@ -475,7 +475,7 @@ export class UploadFileModalComponent implements OnInit {
     console.log(this.file);
     this.dialogRef.disableClose = true;
     // this.file.push(this.userId)
-    this.formData.append('category', this.file,this.file.name);
+    this.formData.append('file', this.file,this.file.name);
     this.formData.append('id',this.userId);
     // this.formData.append('type',this.type);
 
@@ -486,6 +486,44 @@ export class UploadFileModalComponent implements OnInit {
 
     this.loader=1;
     this.serve.FileData(this.formData, 'Travel/import_travel_excel')
+    .subscribe(d => {
+
+      this.dialogRef.disableClose = false;
+      this.formData = new FormData();
+      if(d['msg'] == 'Data Imported successfully'){
+        this.dialog.success("Excel Uploaded", " Successfully");
+        this.dialogRef.close();
+        setTimeout (() => {
+          this.loader='';
+        }, 700);
+        return;
+      }
+      else{
+        setTimeout (() => {
+          this.loader='';
+        }, 700);
+        this.dialog.error(d['msg']);
+        return;
+      }
+
+    },err => {console.log(err);  this.formData = new FormData(); });
+  }
+  upload_beat_excel()
+  {
+    console.log(this.file);
+    this.dialogRef.disableClose = true;
+    // this.file.push(this.userId)
+    this.formData.append('file', this.file,this.file.name);
+    this.formData.append('id',this.userId);
+    // this.formData.append('type',this.type);
+
+
+    console.log(this.formData);
+    console.log(this.file);
+    console.log(this.file.name);
+
+    this.loader=1;
+    this.serve.FileData(this.formData, 'User/importBeatCode_excel')
     .subscribe(d => {
 
       this.dialogRef.disableClose = false;
@@ -695,7 +733,21 @@ export class UploadFileModalComponent implements OnInit {
     {
       this.excel_loader = true;
 
-        this.excel_data.push({'Executive ERP Code':'','Travel type':'','Date From':'','Date To':'','Remarks':'','State':'','District':'','City':'','Area':'','Distributor ERP Code':''});
+        this.excel_data.push({'Executive ERP Code':'','Date':'','City':'','Travel type':'','Beat Code':'','Remarks':''});
+
+
+      console.log(this.excel_data);
+      this.serve.exportAsExcelFile(this.excel_data, 'SAMPLE '+type+' EXCEL');
+
+      setTimeout (() => {
+        this.excel_loader = false;
+      }, 700);
+    }
+    else if(type == 'Beat')
+    {
+      this.excel_loader = true;
+
+        this.excel_data.push({'State':'','District':'','Area/RouteName':'','Beat Code':''});
 
 
       console.log(this.excel_data);

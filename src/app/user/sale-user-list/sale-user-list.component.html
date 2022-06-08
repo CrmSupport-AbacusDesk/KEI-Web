@@ -33,7 +33,7 @@
                         <table>
                             <tr>
                                 <th class="w30 text-center"></th>
-                                <th class="w140">Name</th>
+                                <th class="w240">Name</th>
                                 <th class="w100">Employee Code</th>
                                 <th class="w80">Designation</th>
                                 <!-- <th class="w180">Designation</th> -->
@@ -42,8 +42,10 @@
                                 <!-- <th *ngIf='userType==1'class="w250">Working State</th> -->
 
                                 <th *ngIf='userType==2' class="w200">Reporting Manager</th>
-                                <th *ngIf='userType==2' class="w100">Primary Sale</th>
-                                <th *ngIf='userType==2' class="w100">Secondary Sale</th>
+                                <th *ngIf='userType==2' class="w100">Distance Office to Home (IN KM)</th>
+
+                                <!-- <th *ngIf='userType==2' class="w100">Primary Sale</th>
+                                <th *ngIf='userType==2' class="w100">Secondary Sale</th> -->
                                 <!-- <th *ngIf='userType==2' class="w50 text-center">Target</th> -->
                                 <!-- <th>Address</th> -->
                                 <th class="w50 text-center" >Status</th>
@@ -56,7 +58,7 @@
                             
                             <tr>
                                 <th class="w30 text-center"></th>
-                                <th class="w140">
+                                <th class="w240">
                                     <div class="th-search-acmt">
                                         <mat-form-field class="example-full-width cs-input select-input">
                                             <input matInput placeholder="Name. . ." (keyup)="getItemsList('name',value.search)" #search="ngModel" [(ngModel)]="value.search">
@@ -108,8 +110,10 @@
                                         </mat-form-field>
                                     </div>
                                 </th> 
-                                <th *ngIf="userType==2" class="w100"></th>               
-                                <th *ngIf="userType==2" class="w100"></th> 
+                                 <th *ngIf="userType==2" class="w100"></th>               
+
+                                <!-- <th *ngIf="userType==2" class="w100"></th>               
+                                <th *ngIf="userType==2" class="w100"></th>  -->
                                 <!-- <th *ngIf="userType==2" class="w50"></th>               -->
                                 <th class="w50"></th>               
                                 <th class="w50"></th>               
@@ -124,7 +128,7 @@
                         <table>
                             <tr *ngFor="let u of userlist;let i=index ">
                                 <td class="w30 text-center">{{i+1}}</td>
-                                <td class="w140"><a *ngIf="view_edit" class="link-btn" routerLink="/sale-user-detail/{{u.id}}" routerLinkActive="active" mat-button>{{u.name}}</a></td>
+                                <td class="w240"><a *ngIf="view_edit" class="link-btn" routerLink="/sale-user-detail/{{u.id}}" routerLinkActive="active" mat-button>{{u.name}}</a></td>
                                 <td class="w100">{{u.employee_id}}</td>
                                 <td class="w80">
                                    <span>{{u.role_name}}</span>
@@ -134,16 +138,18 @@
                                 <!-- <td class="w250" *ngIf='userType==1'>{{u.state_name}}</td>    -->
 
                                 <td *ngIf="userType==2" class="w200">{{u.assign_user}}</td>   
-                                <td *ngIf="userType==2" class="w100">
+                                <td *ngIf="userType==2" class="w100">{{u.distance}}</td>   
+
+                                <!-- <td *ngIf="userType==2" class="w100">
                                     <div class="one-line">
-                                        {{u.primary_sale.count}} | &#8377; {{u.primary_sale.sum}}
+                                        {{u.primary_sale.count}} 
                                     </div>  
                                 </td>
                                 <td *ngIf="userType==2" class="w100">
                                     <div class="one-line">
-                                        {{u.secondary_sale.count}} | &#8377; {{u.secondary_sale.sum}}
+                                        {{u.secondary_sale.count}}
                                     </div>  
-                                </td>
+                                </td> -->
                                 <!-- <td *ngIf="userType==2" class="w50 text-center" >
                                     <a *ngIf="view_edit"  (click)="targetModal(u.id)" class="link-btn" mat-button>View</a>
                                 </td> -->
@@ -158,14 +164,14 @@
                             <ng-container *ngFor="let lead of skelton">
                                 <tr class="sk-loading"  *ngIf="loader">
                                   <td class="w30"><div>&nbsp;</div></td>
-                                  <td class="w140"><div>&nbsp;</div></td>
+                                  <td class="w240"><div>&nbsp;</div></td>
                                   <td class="w100"><div>&nbsp;</div></td>
                                   <td class="w80"><div>&nbsp;</div></td>
                                   <td class="w90"><div>&nbsp;</div></td>
                                   <!-- <td class="w100"><div>&nbsp;</div></td> -->
                                   <td *ngIf="userType==2" class="w200"><div>&nbsp;</div></td>
-                                  <td *ngIf="userType==2"  class="w100"><div>&nbsp;</div></td>
-                                  <td *ngIf="userType==2" class="w100"><div>&nbsp;</div></td>
+                                  <!-- <td *ngIf="userType==2"  class="w100"><div>&nbsp;</div></td>
+                                  <td *ngIf="userType==2" class="w100"><div>&nbsp;</div></td> -->
                                   <!-- <td *ngIf="userType==2" class="w50"><div>&nbsp;</div></td> -->
                                   <td class="w50"><div>&nbsp;</div></td>
                                   <td class="w50"><div>&nbsp;</div></td>

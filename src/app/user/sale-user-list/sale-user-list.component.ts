@@ -105,16 +105,16 @@ export class SaleUserListComponent implements OnInit {
       if (result) {
         let value = { "id": id ,"uid":this.userId,"uname":this.userName}
         this.serve.fetchData(value, "User/delete_user").subscribe((result) => {
-          if (result['msg'] == 'Deleted Successfully') {
+          // if (result['msg'] == 'Deleted Successfully') {
             console.log('in success function');
             this.alert.success("User","Delete Successfully");
             this.getUserList(0, 10,2)
 
-          }
-          else {
-            console.log('in failed function');
-            this.alert.error("Something Went Wrong Please Try Again !");
-          }
+          // }
+          // else {
+          //   console.log('in failed function');
+          //   this.alert.error("Something Went Wrong Please Try Again !");
+          // }
         })
       }
     });
@@ -200,7 +200,7 @@ this.serve.count_list();
 
   exportAsXLSX(): void {
     for (let i = 0; i < this.userlist.length; i++) {
-      this.excel_data.push({ 'Employee Code': this.userlist[i].employee_id, 'Name': this.userlist[i].name, Mobile: this.userlist[i].contact_01, Designation: this.userlist[i].role_name, ReportingManager: this.userlist[i].assign_user, 'Address ': this.userlist[i].street, 'State ': this.userlist[i].state_name, 'District ': this.userlist[i].district_name, 'City ': this.userlist[i].city, 'Pincode ': this.userlist[i].pincode, });
+      this.excel_data.push({ 'Employee Code': this.userlist[i].employee_id, 'Name': this.userlist[i].name, Mobile: this.userlist[i].contact_01, Designation: this.userlist[i].role_name, ReportingManager: this.userlist[i].assign_user, 'Address ': this.userlist[i].street, 'State ': this.userlist[i].state_name, 'District ': this.userlist[i].district_name, 'City ': this.userlist[i].city, 'Pincode ': this.userlist[i].pincode,'Distance from ofc to home': this.userlist[i].name });
     }
     this.serve.exportAsExcelFile(this.excel_data, 'USER SHEET');
   }

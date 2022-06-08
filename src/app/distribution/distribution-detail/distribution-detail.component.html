@@ -189,7 +189,7 @@
                                                     <div class="cs-heading">
                                                         <h2>Address</h2>
                                                         <button class="edit-item" mat-raised-button color="accent"
-                                                        (click)="editAddress(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.area,dr_detail.address,'address')"><i
+                                                        (click)="editAddress(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.area,dr_detail.address,dr_detail.type,'address')"><i
                                                         class="material-icons">create</i></button>
                                                     </div>
                                                     <div class="cs-figure">
@@ -229,11 +229,19 @@
 
                                                         </ul>
                                                         <ul class="minus-top">
-                                                             <li>
+                                                             <li *ngIf="dr_detail.type!='3'">
                                                                 <div class="outer">
                                                                     <div class="inner">
                                                                         <span>Area</span>
                                                                         <p>{{dr_detail.area && dr_detail.area != null  ? dr_detail.area : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li *ngIf="dr_detail.type=='3'">
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>Beat Code</span>
+                                                                        <p>{{dr_detail.beat_code && dr_detail.beat_code != null  ? dr_detail.beat_code : '--'}}-{{dr_detail.area && dr_detail.area != null  ? dr_detail.area : '--'}}</p>
                                                                     </div>
                                                                 </div>
                                                             </li>

@@ -306,7 +306,7 @@ export class DistributionListComponent implements OnInit {
         console.log(this.exp_data);
         for(let i=0;i<this.exp_data.length;i++)
         {
-          this.excel_data.push({'ID':this.exp_data[i].id,'Date Created':this.exp_data[i].date_created,'Company Name':this.exp_data[i].company_name,'GST':this.exp_data[i].gst,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'Customer Code':this.exp_data[i].dr_code,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,'State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Assigned Sales User ':this.exp_data[i].assign_user,'Last Checkin':this.exp_data[i].last_checkin,' Total Primary Sale':this.exp_data[i].primary_sale.count,'Primary sale amount':this.exp_data[i].primary_sale.sum,' Total Secondary Sale':this.exp_data[i].secondary_sale.count,'Secondary sale amount':this.exp_data[i].secondary_sale.sum});
+          this.excel_data.push({'ID':this.exp_data[i].id,'Date Created':this.exp_data[i].date_created,'Company Name':this.exp_data[i].company_name,'GST':this.exp_data[i].gst,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'Customer Code':this.exp_data[i].dr_code,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,'State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Assigned Sales User ':this.exp_data[i].assign_user,'Last Checkin':this.exp_data[i].last_checkin,'Beat Code':this.exp_data[i].beat_code});
         }
         this.exp_loader = false;
 

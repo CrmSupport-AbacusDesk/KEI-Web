@@ -46,7 +46,7 @@ export class TravelStatusModalComponent implements OnInit {
   update_status()
   {
     console.log(this.data);
-    this.serve.fetchData(this.data,"Travel/update_status").subscribe((result)=>{
+    this.serve.fetchData(this.data,"Travel/update_status_new").subscribe((result)=>{
       console.log(result);
       if(result)
       {

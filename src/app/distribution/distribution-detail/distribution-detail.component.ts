@@ -575,7 +575,7 @@ export class DistributionDetailComponent implements OnInit {
             }
         }
 
-        editAddress(country, state, district, city, pincode,area, address, type) {
+        editAddress(country, state, district, city, pincode,area, address,dr_type, type) {
             const dialogRef = this.dialog.open(DistributionEditComponent, {
                 width: '768px',
                 data: {
@@ -586,6 +586,7 @@ export class DistributionDetailComponent implements OnInit {
                     pincode,
                     area,
                     address,
+                    dr_type,
                     type,
                     id: this.dr_id
                 }

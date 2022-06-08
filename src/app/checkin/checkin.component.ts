@@ -11,6 +11,7 @@ import { Location } from '@angular/common';
 
 import { sessionStorage } from '../localstorage.service';
 import { JointmodalComponent } from '../jointmodal/jointmodal.component';
+import { CheckindocumentComponent } from '../checkindocument/checkindocument.component';
 
 
 @Component({
@@ -187,7 +188,19 @@ if(this.checkins[i].order_grand_total== "NaN"){
     }))
   }
 
+  opendoc(list)
+  {
 
+    const dialogRef = this.dialog2.open(CheckindocumentComponent, {
+      width: '768px',
+      data:{
+        list
+      }});
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+
+    }
 
 
   change_tab(fn_name, type) {

@@ -85,22 +85,24 @@
                 <th class="w20">S.no.</th>
 
                 <th class="w90">Date Created</th>
-                <th class="w80">Created By</th>
+                <th class="w80">Created By</th>         
                 <th class="w80">ERP Code</th>
+                <th *ngIf="type_id=='3'"class="w80" >Beat Code</th>
+
                 <th class="w170">Company Name</th>
                 <th class="w150">Contact Person</th>
-                <th class="w100">Contact Number</th>
+                <th class="w80">Contact Number</th>
                 <th class="w100">State Name</th>
                 <!-- <th class="w130">Password</th> -->
-                <th *ngIf="type_id!='3'&&type_id!='4'"class="w80" >Primary Sale</th>
-                <th class="w80">Secondary Sale</th>
-                <th class="w100">Last Checkin</th>
+                <!-- <th class="w80">Secondary Sale</th> -->
+                <th class="w80">Last Checkin</th>
 
-                <th class="w50">Status</th>
 
 
                 <!-- <th class="w100">Credit Limit</th> -->
                 <th class="w150">Assigned To</th>
+                <th class="w50">Status</th>
+
               </tr>
             </table>
           </div>
@@ -126,10 +128,20 @@
                     </mat-form-field>
                   </div>
                 </th>
+              
+
                 <th class="w80">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <input matInput placeholder="ERP Code. . ." type="text" name="customer_code" [(ngModel)]="search_val.customer_code" (keyup)="distributorList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w80"*ngIf="type_id=='3'">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <!-- getItemsList('created_by',value.search) -->
+                      <input matInput placeholder="Beat code. . ." type="text" name="beat_code" [(ngModel)]="search_val.beat_code" (keyup)="distributorList()">
                     </mat-form-field>
                   </div>
                 </th>
@@ -147,7 +159,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w100">
+                <th class="w80">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <input matInput placeholder="Contact Number." onkeypress="return event.charCode >= 48 && event.charCode <= 57"  maxlength="10" name="contact_number"  (keyup)="distributorList()" [(ngModel)]="search_val.contact_number" >
@@ -164,9 +176,8 @@
                 </th>
                 <!-- <th class="w100"></th>-->
                 <!-- <th class="w150"></th> -->
-                <th class="w80"*ngIf="type_id!='3'&&type_id!='4'"></th>
-                <th class="w80"></th>
-                 <th class="w100">
+                <!-- <th class="w80"*ngIf="type_id!='3'&&type_id!='4'"></th> -->
+                 <th class="w80">
                  <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker1" placeholder="Date" name="last_checkin" [(ngModel)]="search_val.last_checkin" [max]="today_date" (dateChange)="onfilter($event)" disabled>
@@ -175,7 +186,6 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w50"></th>
                 <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
@@ -183,6 +193,8 @@
                     </mat-form-field>
                   </div>
                 </th>
+                <th class="w50"></th>
+
               </tr>
             </table>
           </div>
@@ -198,28 +210,27 @@
                 <td *ngIf="!list.created_name" class="w80">Admin</td>
                 <td *ngIf="list.created_name" class="w80">{{list.created_name}}</td>
                 <td  class="w80">{{list.dr_code?list.dr_code:'N/A'}}</td>
+                <td class="w80"*ngIf="type_id=='3'" >
+                    {{list.beat_code}} 
+                </td>
                 <td class="w170"><a  class="link-btn" mat-button (click)="tothepage(list.id,list.state,list.type)">{{list.company_name}}</a></td>
                 <td class="w150">{{list.contactperson}}</td>
-                <td class="w100">{{list.mobile}}</td>
+                <td class="w80">{{list.mobile}}</td>
                 <td class="w100">{{list.state ? list.state : '--'}}</td>
-                <td class="w80"*ngIf="type_id!='3'&&type_id!='4'" >
+             
+                <!-- <td class="w80">
                   <div class="one-line">
-                    {{list.primary_sale.count}} | &#8377; {{list.primary_sale.sum}}
+                    {{list.secondary_sale.count}}
                   </div>
-                </td>
+                </td> -->
                 <td class="w80">
-                  <div class="one-line">
-                    {{list.secondary_sale.count}} | &#8377; {{list.secondary_sale.sum}}
-                  </div>
-                </td>
-                <td class="w100">
                  {{list.last_checkin | date : 'd MMM y'}}
                 </td>
+                <td class="w150">{{list.assign_user}}</td>
                 <td class="w50 text-center">
                   <mat-slide-toggle  [checked]="list.checkin_active == '0'"  (click)="userStatus(i,list.id,list.created_name)"></mat-slide-toggle>
-              </td>
                 <!-- <td class="w100">{{list.credit_limit?list.credit_limit:'--'}}</td> -->
-                <td class="w150">{{list.assign_user}}
+               
                   <div class="action-btns">
                     <a *ngIf="edit=='true'" mat-button class="view" (click)="userDetail(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
                     <button *ngIf="delete=='true'" mat-button class="delete" (click)="deleteUser(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>

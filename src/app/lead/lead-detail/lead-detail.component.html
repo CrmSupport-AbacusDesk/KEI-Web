@@ -156,6 +156,7 @@
                               <p *ngIf="lead_detail.type == '6'">Constructor</p>
                               <p *ngIf="lead_detail.type == '7'">Contractor</p>
                               <p *ngIf="lead_detail.type == '8'">Interior Designer</p>
+                              <p *ngIf="lead_detail.type == '9'">Online</p>
 
                               <!-- <p *ngIf="lead_detail.type == '9'">Project</p>
                               <p *ngIf="lead_detail.type == '5'">End User</p>
@@ -176,6 +177,24 @@
                                 </div>
                               </li> -->
 
+                            </ul>
+                            <ul *ngIf="lead_detail.type == '9'" >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span>Product Name</span>
+                                  <p>{{lead_detail.product_name?lead_detail.product_name:'--'}}</p>
+                                </div>
+                              </li>
+                            </ul>
+                            <ul *ngIf="lead_detail.type == '9'">
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Enquiry Description</span>
+                                  <p>{{lead_detail.enquiry_desc?lead_detail.enquiry_desc:'--'}}</p>
+                                </div>
+                              </li>
                             </ul>
                             <ul >
                               <li>

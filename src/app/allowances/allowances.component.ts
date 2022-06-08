@@ -73,6 +73,8 @@ export class AllowancesComponent implements OnInit {
               this.userRoleData[i]['car'] = this.allowanceData[j]['car'];
               this.userRoleData[i]['bike'] = this.allowanceData[j]['bike'];
               this.userRoleData[i]['hotel'] = this.allowanceData[j]['hotel'];
+              this.userRoleData[i]['metro'] = this.allowanceData[j]['metro'];
+
               this.userRoleData[i]['food'] = this.allowanceData[j]['food'];
               this.userRoleData[i]['car_outstation'] = this.allowanceData[j]['car_outstation'];
               this.userRoleData[i]['nonacbus_outstation'] = this.allowanceData[j]['nonacbus_outstation'];

@@ -117,7 +117,7 @@
                             <tr>
                                 <th class="w90 text-center" *ngIf="!show_today">Date</th>
                                 <th class="w150 text-center">User </th>
-                                <th class="w100 text-center">Work Type</th>
+                                <!-- <th class="w100 text-center">Work Type</th> -->
                                 <!-- <th class="w90 text-center">Mode</th> -->
 
                                 <th class="w90 text-center">Start Time</th>
@@ -163,7 +163,7 @@
                                         </mat-form-field>
                                     </div>
                                 </th>
-                                <th class="w100">&nbsp;</th>
+                                <!-- <th class="w100">&nbsp;</th> -->
                                 <th class="w90">&nbsp;</th>
                                 <!-- <th class="w90">&nbsp;</th> -->
 
@@ -192,13 +192,13 @@
 
                                 <td class="w150 text-center" [ngClass]="p.attend_date ? 'light-green' : ( (p.weekly_off && p.weekly_off == p.date_created_day) ? 'yellow-bgclr' : 'red-bgclr') ">{{p.name}}</td>
 
-                                <td *ngIf="!p.work_type" class="w100 text-center">--</td>
+                                <!-- <td *ngIf="!p.work_type" class="w100 text-center">--</td>
 
                                 <td *ngIf="p.work_type=='Working'" class="w100 text-center">{{p.work_type ? p.work_type : '--'}}</td>
 
                                 <td *ngIf="p.work_type=='Travel'" class="w100 text-center"
                                 matTooltip="{{p.travel_place ? p.travel_place : '--'}}" matTooltipPosition="above">{{p.work_type ?
-                                    p.work_type : '--'}}</td>
+                                    p.work_type : '--'}}</td> -->
                                 <!-- <td class="w90 text-center">{{p.vehicle}}</td> -->
 
                                 <td class="w90 text-center">{{p.start_time?p.start_time:'--'}}</td>
@@ -228,13 +228,13 @@
                                     </td>
                                     <td class="w90 text-center">
                                         <span style="cursor: pointer;color:blue" (click)="p.today_primary_sales && p.today_primary_sales_count ? goTo(p.name,p.date_created,'primary_sale'):''">
-                                            {{p.today_primary_sales_count?p.today_primary_sales_count:'0'}} | &#8377; {{p.today_primary_sales=='NaN'?'0':p.today_primary_sales}}
+                                            {{p.today_primary_sales_count?p.today_primary_sales_count:'0'}}
                                         </span>
                                     </td>
 
                                     <td class="w90 text-center">
                                         <span style="cursor: pointer;color:blue" (click)="p.today_secondary_sales && p.today_secondary_sales_count ? goTo(p.name,p.date_created,'secondary_sale'):'--'">
-                                            {{p.today_secondary_sales_count?p.today_secondary_sales_count:'0'}} | &#8377;{{p.today_secondary_sales? conInt(p.today_secondary_sales):'0'}}
+                                            {{p.today_secondary_sales_count?p.today_secondary_sales_count:'0'}} 
                                         </span>
                                     </td>
                                     <td class="w90 text-center">

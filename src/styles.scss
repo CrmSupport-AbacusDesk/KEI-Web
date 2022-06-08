@@ -9840,7 +9840,24 @@ ul.flex-input
     }
     
 }
+.search-block{
+  padding: 10px;
+  background: #f9f9f9;
 
+  input{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px;
+      font-size: 12px;
+      border-radius: 30px;
+      border: 1px solid #6e6e6e;
+
+      &:focus{
+          outline: none;
+      }
+
+  }
+}
 
 .heading-bg
 {

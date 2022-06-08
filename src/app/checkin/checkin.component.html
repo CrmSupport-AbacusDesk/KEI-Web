@@ -89,7 +89,7 @@
                 <th class="w180">Remark</th>
                 <th class="w80">Document</th>
                 <th class="w60">Order</th>
-                <th class="w100">Order Amount</th>
+                <!-- <th class="w100">Order Amount</th> -->
                 <!-- <th class="w100">Checkin Activity</th> -->
 
               </tr>
@@ -131,7 +131,7 @@
                 <th class="w180"></th>
                 <th class="w80"></th>
                 <th class="w60"></th>
-                <th class="w100"></th>
+                <!-- <th class="w100"></th> -->
                 <!-- <th class="w100"></th> -->
               </tr>
             </table>
@@ -153,13 +153,13 @@
                 <td class="w120">
                   <span style="font-weight: 500;" *ngIf="list.type == '1'">Distributor</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '3'">Retailer</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '2'">Direct Dealer</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '2'">Dealer</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '4'">Project</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '5'">End User</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '6'">Others</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '5'"> Architect</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '6'">Constructor</span>
 
-                  <span style="font-weight: 500;" *ngIf="list.type == '11'">Electrician</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '12'">Sub-dealer</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '7'">Contractor</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '8'">Interior Designer</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '13'">Private Contractor</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '14'">Government Contractor</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '15'">Builder</span>
@@ -184,12 +184,13 @@
                       </div>
                     </td>
                     <td class="w80 text-center">
-                      <div class="dflex1" *ngIf="list.Doc">
-                        <a class="img-avtar relative">
-                          <img  *ngIf="list.Doc!=null &&list.Doc!=''" src="{{list.Doc}}"    (click)="imageModel(list.Doc)" >
-                        </a>
+                    				
+				
+                      <div class="dflex1"*ngIf="list.documents.length>0">
+                        <a download="checkinDoc.png"  class="link-btn" (click)="opendoc(list.documents)">View</a>
+
                       </div>
-                      <div class="one-line" *ngIf="!list.Doc">
+                      <div class="one-line" *ngIf="list.documents.length==0">
                         --
                       </div>
                     </td>
@@ -201,8 +202,8 @@
                         <span class="material-icons red-clr">close</span>
                       </div>
                     </td>
-                    <td class="w100">
-                      <div class="one-line" style="cursor: pointer;color:blue" (click)="goTo(list.exec_name,list.company_name,list.activity_date,list.type == '3'?'secondary_sale':'primary_sale') ">&#8377;{{list.order_grand_total}}</div>
+                    <!-- <td class="w100">
+                      <div class="one-line" style="cursor: pointer;color:blue" (click)="goTo(list.exec_name,list.company_name,list.activity_date,list.type == '3'?'secondary_sale':'primary_sale') ">&#8377;{{list.order_grand_total}}</div> -->
                       <!-- <div class="one-line" *ngIf="list.order_grand_total=='null'">--</div>
                     </td> -->
                     <!-- <td class="w100">
