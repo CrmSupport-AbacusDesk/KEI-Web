@@ -26,7 +26,7 @@
     </div>
 </div>
  
-<div class="edit-modal" *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type'  && data.type!='access_level' && data.type!='department' && data.type!='team_name' && data.type!='username' && data.type!='password' && data.type!='working_state' && data.type!='weekly_off'">
+<div class="edit-modal" *ngIf="data.category=='user' && data.type!='email' && data.type!='contact_01' && data.type!='manager' && data.type!='name' && data.type!='user_type'  && data.type!='access_level' && data.type!='department' && data.type!='team_name' && data.type!='username' && data.type!='password' && data.type!='working_state' && data.type!='weekly_off'&& data.type!='distance'">
     <div mat-dialog-content>
         <p class="heading">Update User detail</p>
         <div class="cs-form">
@@ -287,7 +287,26 @@
         </div>
     </form>
 </div>
- 
+<div class="edit-modal" *ngIf="data.type=='distance'">
+    <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_user()">
+        <div mat-dialog-content>
+            <p class="heading">Update Distance</p>
+            <div class="cs-form">
+                <mat-form-field class="cs-input" appearance="outline">
+                    <mat-label>Distance</mat-label>
+                    <input matInput type="tel"  name="distance" #distance="ngModel" [(ngModel)]="data.value"  >
+                </mat-form-field >
+              
+            </div>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button  color="warn" [mat-dialog-close]="false">Cancel</button>
+            <div >
+                <button type="submit" mat-button color="accent" [disabled]="exist" >Save</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="edit-modal" *ngIf="data.type=='working_state'">
     <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="(state_name.valid && update_basic.submitted)?update_user():''">
         <div mat-dialog-content>
@@ -369,6 +388,7 @@
         </div>
     </form>
 </div>
+
 <div class="edit-modal" *ngIf="data.type=='password'">
     <form validate #update_basic="ngForm" name="update_basic" (ngSubmit)="update_user()">
         <div mat-dialog-content>

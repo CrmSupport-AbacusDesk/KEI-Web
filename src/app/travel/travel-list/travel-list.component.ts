@@ -7,6 +7,7 @@ import { TravelStatusModalComponent } from '../travel-status-modal/travel-status
 import { addTravelListModal } from '../add-travel-list/add-travel-list-modal.component';
 import { sessionStorage } from 'src/app/localstorage.service';
 import { UploadFileModalComponent } from 'src/app/upload-file-modal/upload-file-modal.component';
+import { ToastrManager } from 'ng6-toastr-notifications';
 
 
 
@@ -35,13 +36,14 @@ export class TravelListComponent implements OnInit {
   view_add: boolean = true;
   view_delete: boolean = true;
   start:any=0;
-
+data:any={}
   total_page:any;
   pagenumber:any;
   page_limit:any=50
-
-
-  constructor(public alert: DialogComponent, public serve: DatabaseService, public alrt: MatDialog, public dialog: MatDialog, public session: sessionStorage) {
+tmpsearch:string
+  asmList:any=[]
+  secondary_lead_list:any=[]
+  constructor(public alert: DialogComponent, public serve: DatabaseService, public dialog1:DialogComponent,public alrt: MatDialog, public dialog: MatDialog, public session: sessionStorage, public toast: ToastrManager,) {
     this.skelton = new Array(10);
 
     this.assign_login_data = this.session.getSession();
@@ -71,9 +73,24 @@ export class TravelListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTravelList();
-
+    // this.getTravelList();
+this.salesUserLIst()
     this.travel_list2;
+  }
+  salesUserLIst() {
+
+   
+    
+    this.serve.fetchData({}, "User/sales_user_list_for_activity").subscribe((result => {
+      console.log(result);
+      this.asmList = result['sales_user_list_for_activity'];
+      this.secondary_lead_list= result['sales_user_list_for_activity'];
+
+    
+
+
+     
+    }))
   }
   upload_excel() {
     const dialogRef = this.alrt.open(UploadFileModalComponent, {
@@ -83,15 +100,33 @@ export class TravelListComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.getTravelList();
+      // this.getTravelList();
 
     });
+  }
+  filter_dr(dr_name){
+    console.log("filter_dr method calls");
+    console.log(dr_name);
+    this.tmpsearch='';
+    this.asmList = [];
+    for (var i = 0; i < this.secondary_lead_list.length; i++) {
+      dr_name = dr_name.toLowerCase();
+      this.tmpsearch = this.secondary_lead_list[i]['name'].toLowerCase();
+      if (this.tmpsearch.includes(dr_name)) {
+        this.asmList.push(this.secondary_lead_list[i]);
+      }
+    }
+  }
+  refresh(){
+    this.search={}
+    this.data={}
+this.travel_list=[]
   }
   getTravelList(action: any = '') {
     if (action == "refresh") {
       this.search = {};
     }
-
+this.travel_list=[]
     this.loader = true;
     if (this.search.date_to)
       this.search.date_to = moment(this.search.date_to).format('YYYY-MM-DD');
@@ -101,7 +136,7 @@ export class TravelListComponent implements OnInit {
 
 
     this.serve.fetchData({
-      'user_id': this.assign_login_data2.id, 'start': this.start, 'pagelimit': this.page_limit, 'search': this.search, 'active_tab': this.active_tab, 'user_type': this.assign_login_data2.type
+      'user_id': this.assign_login_data2.id, 'start': this.start, 'pagelimit': this.page_limit, 'data':this.data,'search': this.search, 'user_type': this.assign_login_data2.type
     }, "Travel/travel_list").subscribe((result => {
       console.log(result);
       this.loader = false;
@@ -145,13 +180,13 @@ export class TravelListComponent implements OnInit {
 
   }
 
-  statusModal(id) {
+  statusModal(id,month,year) {
 
 
     const dialogRef = this.dialog.open(TravelStatusModalComponent, {
       width: '400px',
       data: {
-        id
+        id,month,year
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -197,46 +232,19 @@ export class TravelListComponent implements OnInit {
   company_name: String;
   exportAsXLSX(): void {
     for (let i = 0; i < this.travel_list.length; i++) {
-      this.districtAppend = '';
-      this.areaexcel = ""
-      this.cityexcel = ""
-      this.state4xl = ""
-      this.company_name = ""
+    
 
 
 
-      if (this.travel_list[i].travel_type != "Distributor Visit") {
+      // if (this.travel_list[i].travel_type != "Distributor Visit") {
 
         console.log("in if");
 
-        for (let j = 0; j < this.travel_list[i].travel_plan.length; j++) {
+  
+        this.excel_data.push({ 'Date': this.travel_list[i].date_from,   'ERPCode':this.travel_list[i].executive_erp_id, 'Executive name': this.travel_list[i].name, 'Area\Route Name': this.travel_list[i].city,'Beat Code': this.travel_list[i].beat_code, 'TravelType': this.travel_list[i].travel_type,'Remarks':this.travel_list[i].status_remark,'Status': this.travel_list[i].status,});
 
-          this.districtAppend = this.travel_list[i].travel_plan[j]['district'] + ',' + this.districtAppend;
-          this.state4xl = this.travel_list[i].travel_plan[j]['state'] + ',' + this.state4xl
-          this.areaexcel = this.travel_list[i].travel_plan[j]['area'] + ',' + this.areaexcel
-          this.cityexcel = this.travel_list[i].travel_plan[j]['city'] + ',' + this.cityexcel
-
-        }
-        this.excel_data.push({ 'Date from': this.travel_list[i].date_from, 'Date to': this.travel_list[i].date_to, 'TravelType': this.travel_list[i].travel_type, 'ERPCode':this.travel_list[i].executive_erp_id, 'Executive name': this.travel_list[i].name, 'Status': this.travel_list[i].status, 'State': this.state4xl, 'District': this.districtAppend, 'City': this.cityexcel, 'Area': this.areaexcel });
-
-      }
-      else {
-        console.log("in else ");
-
-
-        for (let j = 0; j < this.travel_list[i].travel_plan.length; j++) {
-          this.company_name = this.travel_list[i].travel_plan[j]['company_name'] + ',' + this.company_name
-
-
-        }
-        console.log(this.company_name);
-        this.travel_list[i].travel_type = 'Party Visit';
-
-
-        this.excel_data.push({ 'Date from': this.travel_list[i].date_from, 'Date to': this.travel_list[i].date_to, 'TravelType': this.travel_list[i].travel_type,'ERPCode':this.travel_list[i].executive_erp_id, 'Executive name': this.travel_list[i].name, 'Status': this.travel_list[i].status, 'Company Name': this.company_name });
-
-      }
-      console.log(this.districtAppend);
+      // }
+     
 
       // this.excel_data.push({ 'Date from': this.travel_list[i].date_from, 'Date to': this.travel_list[i].date_to, 'TravelType': this.travel_list[i].travel_type, 'Executive name': this.travel_list[i].name, 'Status': this.travel_list[i].status, 'State': this.state4xl, 'District': this.districtAppend });
 
@@ -249,6 +257,49 @@ export class TravelListComponent implements OnInit {
     this.excel_data = [];
 
   }
+  travel_plan_update(id,month,year){
+    this.dialog1.delete('Travel Information!').then((result) => {
+      if(result){
+        this.serve.fetchData({"user_id":id,'month':month,'year':year},"travel/delete_travel_plan").subscribe((result=>{
+          console.log(result);
+          this.refresh();
+          this.getTravelList('refresh');
+
+        }))
+      }})
+  }
+  openEditDialog2(row): void {  
+    const dialogRef = this.dialog.open(addTravelListModal,{
+        width: '720px', data:{
+           row,
+           
+        }
+        
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        // this.orderDetail();
+        this.getTravelList()
+
+    });
+  }
+  deletetravel(id)
+  {
+    this.dialog1.delete('Travel Information!').then((result) => {
+      if(result){
+        this.serve.fetchData({"travel_id":id},"travel/delete_travel_plan").subscribe((result=>{
+          console.log(result);
+          this.refresh();
+          this.getTravelList('refresh');
+
+        }))
+      }})
+
+
+
+
+    }
   addTravelPlan() {
     const dialogRef = this.dialog.open(addTravelListModal, {
       width: '720px',

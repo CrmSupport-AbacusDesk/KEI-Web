@@ -137,7 +137,14 @@
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.weekly_off,'weekly_off')"><i class="material-icons">create</i></a>
                         </div>
                       </li>
-
+                      <li  class="col s4"   *ngIf="detail.user_type == 'Sales User' || detail.user_type == 'Sales User'">
+                        <div class="cs-box">
+                          <img src="../kei/assets/img/distance.svg" class="fix-img">
+                          <span>Distance Office to Home(IN KM)</span>
+                          <p>{{detail.distance?detail.distance:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.distance,'distance')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
                     </ul>
 
                 

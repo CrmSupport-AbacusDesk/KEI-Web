@@ -11,6 +11,7 @@ import * as XLSX from 'xlsx';
 import { ExportexcelService } from 'src/app/service/exportexcel.service';
 import { sessionStorage } from '../localstorage.service';
 import { TravelStatusModalComponent } from '../travel/travel-status-modal/travel-status-modal.component'
+import { UploadFileModalComponent } from '../upload-file-modal/upload-file-modal.component';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class LocationMasterComponent implements OnInit {
 
 
 
-  constructor(public alert: DialogComponent, public serve: DatabaseService, public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
+  constructor(public alert: DialogComponent, public serve: DatabaseService, 
+    public editdialog: DialogService, public dialog: MatDialog, public route: ActivatedRoute, public rout: Router, public toast: ToastrManager, public session: sessionStorage) {
    
    
     this.assign_login_data = this.session.getSession();
@@ -157,7 +159,7 @@ export class LocationMasterComponent implements OnInit {
   {
 
     console.log(this.search);
-    
+    this.arealist=[]
     this.serve.fetchData({'search':this.search}, "User/area_list").subscribe((response => {
       console.log(response);
       this.arealist = response['area_list'];
@@ -223,12 +225,39 @@ export class LocationMasterComponent implements OnInit {
 
   }
 
+  upload_excel() {
+    const dialogRef = this.dialog.open(UploadFileModalComponent, {
+      width: '500px',
+      data: {
+        'from': 'beat',
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      // this.getTravelList();
 
+    });
+  }
+  deletetbeat(id)
+  {
+    this.alert.delete('Beat Code!').then((result) => {
+      if(result){
+        this.serve.fetchData({"travel_id":id},"travel/delete_travel_plan").subscribe((result=>{
+          console.log(result);
+          // this.refresh();
+          this.area_list();
+
+        }))
+      }})
+
+
+
+
+    }
   updateData(location_maste_id,area,description){
     console.log(area);
     console.log(description);
     console.log(location_maste_id);
-    this.serve.fetchData({'area' : area,'description' : description,'id' : location_maste_id}, "User/update_area").subscribe((response => {
+    this.serve.fetchData({'beat_code' : area,'description' : description,'id' : location_maste_id}, "User/update_area").subscribe((response => {
       console.log(response);
       if(response['msg'] == 'already exist'){
         this.alert.error( "Area with this name already exist");
@@ -242,7 +271,7 @@ export class LocationMasterComponent implements OnInit {
         this.alert.error( "Something Went Wrong" );
       }
       else{
-        this.toast.successToastr("Location Master Updated");
+        this.toast.successToastr("Beat Code Updated");
       }
 
     }))

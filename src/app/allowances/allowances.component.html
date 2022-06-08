@@ -79,10 +79,12 @@
 										<th class="w400 text-center no-padding">
 											<table>
 												<tr>
-													<th class="w70 text-center padding-tb0">AC Bus</th>
-													<th class="w70 text-center padding-tb0 padding-tb0">Non AC Bus</th>
-													<th class="w70 text-center">Taxi</th>
-													<th class="w60 text-center">Auto</th>
+													<th class="w80 text-center padding-tb0">AC Bus</th>
+													<th class="w80 text-center padding-tb0 padding-tb0">Non AC Bus</th>
+													<th class="w80 text-center">Taxi</th>
+													<th class="w80 text-center">Auto</th>
+													<th class="w80 text-center">Metro Train</th>
+
 													
 												</tr>
 											</table>
@@ -159,27 +161,31 @@
 										<td class="w400 text-center no-padding">
 											<table class="in-table">
 												<tr>
-													<td class="w70 text-center">
+													<td class="w80 text-center">
 														<div class="input-check">
 															<mat-checkbox name="busAC{{i}}" [(ngModel)]="data.busAC" [checked]="data.busAC == '1' ? true : ''">&nbsp;</mat-checkbox>
 														</div>
 													</td>
-													<td class="w70 text-center">
+													<td class="w80 text-center">
 														<div class="input-check">
 															<mat-checkbox name="busNonAC{{i}}" [(ngModel)]="data.busNonAC" [checked]="data.busNonAC == '1' ? true : ''">&nbsp;</mat-checkbox>
 														</div>
 													</td>
-													<td class="w70 text-center">
+													<td class="w80 text-center">
 														<div class="input-check">
 															<mat-checkbox name="taxi{{i}}" [(ngModel)]="data.taxi" [checked]="data.taxi == '1' ? true : ''">&nbsp;</mat-checkbox>
 														</div>
 													</td>
-													<td class="w60 text-center">
+													<td class="w80 text-center">
 														<div class="input-check">
 															<mat-checkbox name="auto{{i}}" [(ngModel)]="data.auto" [checked]="data.auto == '1' ? true : ''">&nbsp;</mat-checkbox>
 														</div>
 													</td>
-													
+													<td class="w80 text-center">
+														<div class="input-check">
+															<mat-checkbox name="metro{{i}}" [(ngModel)]="data.metro" [checked]="data.metro == '1' ? true : ''">&nbsp;</mat-checkbox>
+														</div>
+													</td>
 												</tr>
 											</table>
 										</td>

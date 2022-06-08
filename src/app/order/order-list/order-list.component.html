@@ -6,11 +6,11 @@
             <a mat-button ><i class="material-icons">west</i></a>
         </div>
         <h2>Primary Order</h2>
-        <p>{{count.count}} | &#8377; {{count.sum}}</p>
+        <p>{{count.count}} </p>
     </div>
       <div  *ngIf="!backButton" class="heading-text">
         <h2>Primary Order</h2>
-        <p>{{count.count}} | &#8377; {{count.sum}}</p>
+        <p>{{count.count}}</p>
 
         <!-- <p>Total Primary Order - {{count}}</p> -->
       </div>
@@ -23,49 +23,37 @@
     </div>
     </div>
 
-    <div class="uppr-one m-right-data">
-      <div>
-        <div class="cs-form date-filter">
-          <mat-form-field appearance="outline" class="cs-input w150" >
-            <mat-label>Date From</mat-label>
-            <input matInput [matDatepicker]="date_from" [max]="today_date" placeholder="From Date"[(ngModel)]="search_val.date_from"  (ngModelChange)="change_date_filter('date_from')"  readonly >
-            <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
-            <mat-datepicker #date_from></mat-datepicker>
-          </mat-form-field>
-
-          <div class="df">
-            <mat-form-field appearance="outline" class="cs-input w150">
-              <mat-label>Date To</mat-label>
-              <input matInput [matDatepicker]="date_to" [max]="today_date" placeholder="To Date" [(ngModel)]="search_val.date_to" (ngModelChange)="change_date_filter('date_to')"  readonly >
-              <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
-              <mat-datepicker #date_to></mat-datepicker>
-            </mat-form-field>
-            <!-- <a class="add-item ml10" mat-raised-button (click)="(data.date_from || data.date_to)?distributorList('get_all_checkin_new','2'):''" [disabled]="!data.date_from || !data.date_to">Go</a> -->
-          </div>
-        </div>
-      </div>
-
-    </div>
+   
 
 
     <div class="left-auto">
 
 
       <a mat-raised-button color="primary" class="delete-action mr30" *ngIf="allCount" (click)="deletecheckavailable()">Delete <span class="count"> {{ allCount }}</span></a>
-
-      <div class="tabs">
-        <ul>
-          <li><a [ngClass]="{'active': view_tab=='all'}" (click)="filter_order_data('all')">All</a></li>
-          <li><a [ngClass]="{'active': view_tab=='Pending'}" (click)="filter_order_data('Pending')">Pending</a></li>
-          <li><a [ngClass]="{'active': view_tab=='Approved'}" (click)="filter_order_data('Approved')">Approved</a></li>
-          <li><a [ngClass]="{'active': view_tab=='Partial Dispatch'}" (click)="filter_order_data('Partial Dispatch')"> Partially Dispatched</a></li>
-          <li><a [ngClass]="{'active': view_tab=='Dispatch'}" (click)="filter_order_data('Dispatch')">Dispatched</a></li>
-          <li><a [ngClass]="{'active': view_tab=='Reject'}" (click)="filter_order_data('Reject')">Reject</a></li>
-
-          <!-- <li><a [ngClass]="{'active': view_tab=='Dispatch'}" (click)="filter_order_data('Dispatch')">Dispatched</a></li> -->
-          <!-- <li><a [ngClass]="{'active': view_tab=='Pre Close'}" (click)="filter_order_data('Pre Close')">Pre Closed</a></li> -->
-        </ul>
+      <div class="uppr-one m-right-data">
+        <div>
+          <div class="cs-form date-filter">
+            <mat-form-field appearance="outline" class="cs-input w150" >
+              <mat-label>Date From</mat-label>
+              <input matInput [matDatepicker]="date_from" [max]="today_date" placeholder="From Date"[(ngModel)]="search_val.date_from"  (ngModelChange)="change_date_filter('date_from')"  readonly >
+              <mat-datepicker-toggle matSuffix [for]="date_from"></mat-datepicker-toggle>
+              <mat-datepicker #date_from></mat-datepicker>
+            </mat-form-field>
+  
+            <div class="df">
+              <mat-form-field appearance="outline" class="cs-input w150">
+                <mat-label>Date To</mat-label>
+                <input matInput [matDatepicker]="date_to" [max]="today_date" placeholder="To Date" [(ngModel)]="search_val.date_to" (ngModelChange)="change_date_filter('date_to')"  readonly >
+                <mat-datepicker-toggle matSuffix [for]="date_to"></mat-datepicker-toggle>
+                <mat-datepicker #date_to></mat-datepicker>
+              </mat-form-field>
+              <!-- <a class="add-item ml10" mat-raised-button (click)="(data.date_from || data.date_to)?distributorList('get_all_checkin_new','2'):''" [disabled]="!data.date_from || !data.date_to">Go</a> -->
+            </div>
+          </div>
+        </div>
+  
       </div>
+  
     </div>
   </div>
 
@@ -77,17 +65,21 @@
             <table class="sno-border">
               <tr>
                 <!-- <th class="w30"><mat-checkbox color="accent" [(ngModel)]="search_val.allStates" (change)="allOrderdata()"  name="allStates"  value="true"></mat-checkbox></th> -->
-                <th class="w120">Date</th>
-                <th class="w160">Created By</th>
-                <th class="w120">Order ID</th>
-                <th class="w130">Type</th>
-                <th>Company Name</th>
-                <th class="w90 text-center">Total Item</th>
+                <th class="w100">Date</th>
+                <th class="w100">Created By</th>
+                <th class="w100">Order ID</th>
+                <th class="w100">Type</th>
+                <th class="w250">Company Name</th>
+                <th class="w150 text-right">Contact Person</th>
+
+                 <th class="">Order Details</th>
+
+                <!-- <th class="w90 text-center">Total Item</th>
                 <th class="w120 text-right">Order Value</th>
                 <th *ngIf="view_tab=='all'" class="w130">Status</th>
                 <th *ngIf="view_tab=='Approved'" class="w130">Approved By</th>
                 <th *ngIf="view_tab=='Reject'" class="w130">Reject By</th>
-                <th *ngIf="view_tab=='Reject'||view_tab=='Pending'" class="w130">Reason</th>
+                <th *ngIf="view_tab=='Reject'||view_tab=='Pending'" class="w130">Reason</th> -->
               </tr>
             </table>
           </div>
@@ -95,7 +87,7 @@
             <table class="sno-border">
               <tr>
                 <!-- <th class="w30"></th> -->
-                <th class="w120">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
                       <input matInput [matDatepicker]="picker" placeholder="Date" name="date_created" #date_created="ngModel"  [(ngModel)]="search_val.date_created" (ngModelChange)="change_date_filter('date_created')" [max]="today_date" readonly>
@@ -104,23 +96,23 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w160">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <input matInput placeholder="Created By. . ." name="created_by" #created_by="ngModel" [(ngModel)]="search_val.created_by" (keyup)="orderList()">
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w120">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <input matInput placeholder="Order Id. . ." (keyup)="orderList()" #order_id="ngModel" [(ngModel)]="search_val.order_id" >
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w130">
+                <th class="w100">
                 </th>
-                <th>
+                <th class="w250">
                   <div class="th-search-acmt">
                     <mat-form-field>
                       <input type="text"  matInput placeholder="Company Name. . ." (keyup)="orderList()" #company_name="ngModel" [(ngModel)]="search_val.company_name">
@@ -128,13 +120,23 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w90">
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field>
+                      <input type="text"  matInput placeholder="Contact Person. . ." (keyup)="orderList()" #contact_person="ngModel" [(ngModel)]="search_val.contact_person">
+
+                    </mat-form-field>
+                  </div>
+</th>
+                 <th class="">
+
+                <!-- <th class="w90">
                 </th>
                 <th class="w120" ></th>
                 <th  *ngIf="view_tab=='all'" class="w130"></th>
                 <th  *ngIf="view_tab=='Approved'" class="w130"></th>
                 <th  *ngIf="view_tab=='Reject'" class="w130"></th>
-                <th  *ngIf="view_tab=='Reject'||view_tab=='Pending'" class="w130"></th>
+                <th  *ngIf="view_tab=='Reject'||view_tab=='Pending'" class="w130"></th> -->
               </tr>
             </table>
           </div>
@@ -145,35 +147,17 @@
             <table class="sno-border">
               <tr *ngFor="let list of orderlist;let i=index">
                 <!-- <td class="w30"><mat-checkbox color="accent" [(ngModel)]="list.selected_order" (change)="countSelected()"  [name]="'id'+i" value="true"></mat-checkbox></td> -->
-                <td class="w120">{{list.date_created | date : 'd MMM y'}}</td>
-                <td class="w160">{{list.created_by_name ? list.created_by_name : list.ord_created_by}}</td>
-                <td class="w120"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/order-detail/{{list.id}}" routerLinkActive="active">{{list.order_no}}</a></td>
-                <td class="w130" *ngIf="list.type==2">Direct Dealer</td>
-                <td class="w130" *ngIf="list.type==1">Distributor</td>
-                <td class="">{{list.company_name}}</td>
-                <td class="w90 text-center">{{list.order_item}}</td>
-                <td class="w120 text-right">&#8377; {{list.order_grand_total}}</td>
-                <td class="w130" *ngIf="view_tab=='Reject'">{{list.approved_by}}</td>
-                <td class="w130" *ngIf="view_tab=='Reject'||view_tab=='Pending'">{{list.reason_reject}}
-                  <div *ngIf="view_tab!='all' && view_tab!='Approved'" class="action-btns">
-                    <a *ngIf="view_edit" mat-button class="view" (click)="detailOrder(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
-                    <button *ngIf="view_delete" mat-button class="delete" (click)="deleteOrder(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
-                  </div>
+                <td class="w100">{{list.date_created | date : 'd MMM y'}}</td>
+                <td class="w100">{{list.created_by_name ? list.created_by_name : list.ord_created_by}}</td>
+                <td class="w100"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/order-detail/{{list.id}}" routerLinkActive="active">{{list.order_no}}</a></td>
+                <td class="w100" *ngIf="list.type==2"> Dealer</td>
+                <td class="w100" *ngIf="list.type==1">Distributor</td>
+                <td class="w250">{{list.company_name}}</td>
+                <td class="w150">{{list.name}}-{{list.mobile}}
 
+                
                 </td>
-                <td *ngIf="view_tab=='all'" class="w130" [ngClass]="{'yellow-clr':list.order_status=='Pending','blue-clr':list.order_status=='Dispatch','green-clr':list.order_status=='Approved','red-clr':list.order_status=='Reject'}">
-                  <strong> {{list.order_status | uppercase}}</strong>
-                  <div class="action-btns">
-                    <a *ngIf="view_edit" mat-button class="view" (click)="detailOrder(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
-                    <button *ngIf="view_delete" mat-button class="delete" (click)="deleteOrder(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
-                  </div>
-                </td>
-                <td *ngIf="view_tab=='Approved'" class="w130 green-clr">{{list.approved_by_name}}
-                  <div class="action-btns">
-                    <a *ngIf="view_edit" mat-button class="view" (click)="detailOrder(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
-                    <button *ngIf="view_delete" mat-button class="delete" (click)="deleteOrder(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
-                  </div>
-                </td>
+               
               </tr>
 
               <ng-container *ngFor="let lead of skelton">

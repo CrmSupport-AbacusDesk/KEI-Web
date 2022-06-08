@@ -5,6 +5,8 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { sessionStorage } from 'src/app/localstorage.service';
 import * as moment from 'moment';
 import { Location } from '@angular/common'
+import { MatDialog } from '@angular/material';
+import { OrderdetailsComponent } from 'src/app/orderdetails/orderdetails.component';
 
 
 @Component({
@@ -46,7 +48,7 @@ export class SecondaryOrderListComponent implements OnInit {
 
 
 
-  constructor(public serve: DatabaseService, public location: Location,public navparams: ActivatedRoute, public route: Router, public dialog: DialogComponent, public session: sessionStorage) {
+  constructor(public serve: DatabaseService,public dialog1: MatDialog, public location: Location,public navparams: ActivatedRoute, public route: Router, public dialog: DialogComponent, public session: sessionStorage) {
 
     this.assign_login_data = this.session.getSession();
     this.assign_login_data = this.assign_login_data.value;
@@ -149,7 +151,19 @@ export class SecondaryOrderListComponent implements OnInit {
       }))
     this.serve.count_list();
   }
+  opendoc(c)
+  {
 
+    const dialogRef = this.dialog1.open(OrderdetailsComponent, {
+      width: '500px',
+      data:{
+        c
+      }});
+      dialogRef.afterClosed().subscribe(result => {
+
+      });
+
+  }
 
   filter_order_data(status) {
 
@@ -332,7 +346,7 @@ export class SecondaryOrderListComponent implements OnInit {
         this.exp_data = resp['order_list'].result;
 
         for (let i = 0; i < this.exp_data.length; i++) {
-          this.excel_data.push({ 'Date': this.exp_data[i].date_created, 'Created By': this.exp_data[i].created_by_name, 'Order Id': this.exp_data[i].id, 'Company Name': this.exp_data[i].company_name, 'Company Id': this.exp_data[i].dr_id, 'Total Item': this.exp_data[i].order_item, 'Dealer Order Value': this.exp_data[i].order_total, 'Company Order Value': this.exp_data[i].sec_ord_background_amt, 'Channel Partner': this.exp_data[i].distributor_name, 'Status': this.exp_data[i].order_status });
+          this.excel_data.push({ 'Date': this.exp_data[i].date_created, 'Created By': this.exp_data[i].created_by_name, 'Order Id': this.exp_data[i].id, 'Company Name': this.exp_data[i].company_name, 'Company Id': this.exp_data[i].dr_id,'Distributor': this.exp_data[i].distributor_name });
         }
         this.exp_loader = false;
 

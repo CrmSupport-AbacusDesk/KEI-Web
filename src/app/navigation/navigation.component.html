@@ -113,13 +113,13 @@
         <li class="dropdown" *ngIf="login_data.masters=='1' ">
             <a  mat-button (click)=toggleDropdown(3) [ngClass]="{'active':masteractive}"><i class="material-icons nav-icon">star_rate</i>Masters </a>
             <ul>
-                <li *ngIf="login_data.view_products=='1'">
+                <!-- <li *ngIf="login_data.view_products=='1'">
                     <a mat-button routerLink="/product-list" routerLinkActive="active">
                         Products
                         <i class="material-icons">chevron_right </i>
                         <span class="nav-counter orange-count">{{serve.counterArray.product}}</span>
                     </a>
-                </li>
+                </li> -->
                 <li *ngIf="login_data.view_users=='1'">
                     <a mat-button routerLink="/sale-user-list" routerLinkActive="active">
                         Users
@@ -133,7 +133,13 @@
                         <i class="material-icons">chevron_right </i>
                     </a>
                 </li>
-               
+                <li *ngIf="login_data.view_category_master=='1'">
+                    <a routerLink="/location-Master" routerLinkActive="active">
+                        Beat Code Master
+                        <i class="material-icons">chevron_right </i>
+
+                    </a>
+                </li>
             </ul>
         </li>
       
