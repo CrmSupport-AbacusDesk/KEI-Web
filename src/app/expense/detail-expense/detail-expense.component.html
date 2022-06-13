@@ -368,9 +368,13 @@
                         <div class="table-head border-bottom">
                           <table>
                             <tr>
-                              <th class="w150">Date</th>
+                              <th class="w120">Date From</th>
+                              <th class="w120">Date To</th>
+
                               <th class="w100">Type</th>
                               <th class="w100">Mode Of Travel</th>
+                              <th class="w100">Google Km</th>
+
                               <th class="w100 text-right">Distance</th>
                               <th class="w100 text-right">Amount</th>
                               <th>Remark</th>
@@ -382,7 +386,10 @@
                           <div class="table-content">
                             <table>
                               <tr *ngFor="let row1 of expenseDetail.localConv">
-                                <td class="w150">
+                                <td class="w120">
+                                  {{row1.date_from | date:'d MMM y'}}
+                                </td>
+                                <td class="w120">
                                   {{row1.date | date:'d MMM y'}}
                                 </td>
                                 <td class="w100">
@@ -390,6 +397,9 @@
                                 </td>
                                 <td class="w100">
                                   {{row1.travelClass}}
+                                </td>
+                                <td class="w100">
+                                  {{row1.google_distance+ 'Km'}}
                                 </td>
                                 <td class="w100">
                                   {{row1.distance + 'Km'}}

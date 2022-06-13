@@ -113,6 +113,8 @@ export class LeadListComponent implements OnInit {
       console.log(params);
       this.type_id = params.id;
       this.type = params.type;
+      console.log(this.type);
+      
       console.log(this.type_id);
       this.search_val.date_created='';
       this.search_val.created_by='';
