@@ -3,6 +3,8 @@ import { slideToTop } from '../../router-animation/router-animation.component';
 import { DatabaseService } from 'src/_services/DatabaseService'
 import { Router } from '@angular/router';
 import { DialogComponent } from 'src/app/dialog.component';
+// import { sessionStorage } from '../localstorage.service';
+import { sessionStorage } from 'src/app/localstorage.service';
 
 @Component({
   selector: 'app-add-annoucement',
@@ -28,9 +30,15 @@ export class AddAnnoucementComponent implements OnInit {
   userId:any;
   userName:any;
 search:any={}
+assign_login_data: any = [];
+assign_login_data2: any = [];
 
-  constructor(public serve:DatabaseService,public rout:Router,public dialog:DialogComponent)
+  constructor(public serve:DatabaseService,public rout:Router,public session: sessionStorage,public dialog:DialogComponent)
   {
+    this.assign_login_data = this.session.getSession();
+    this.assign_login_data = this.assign_login_data.value;
+    this.assign_login_data2 = this.assign_login_data.data;
+    console.log(this.assign_login_data);
     this.getStateList();
     this.getUserDrList();
     this.announcementData.dealers = [];
@@ -74,7 +82,7 @@ search:any={}
         }
       getUserDrList()
       {
-        this.serve.fetchData({'state':this.announcementData.state,'district':this.announcementData.district,'city':this.announcementData.city,'search':this.announcementData.search},"Announcement/user_dr_list").subscribe((response=>
+        this.serve.fetchData({'state':this.announcementData.state,'district':this.announcementData.district,'city':this.announcementData.city,'search':this.announcementData.search,'user_id': this.assign_login_data2.id, 'user_type': this.assign_login_data2.type},"Announcement/user_dr_list").subscribe((response=>
           {
             console.log(response);
             this.distributorList = response['distributor_list'];

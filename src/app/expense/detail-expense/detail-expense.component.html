@@ -12,26 +12,7 @@
     </div>
     
     
-    <div class="left-auto">
-      <div class="cs-btn">
-        <div class="in-btn">
-          <button mat-raised-button color="accent" (click)="goTo()">View Allowance</button>
-        </div>
-      </div>
-      <div class="action-menu">
-        
-        <!-- <button mat-raised-button color="primary" class="ml10" (click)="print1()" >
-          Print
-        </button>
-         -->
-        
-        
-        
-        
-        
-      </div>
-    </div>
-    
+   
     
     
   </div>
@@ -355,8 +336,8 @@
                 </mat-expansion-panel>
                 <!-- Food mat-expansion--->
                 
-                <!-- Local Conveyance mat-expansion--->
-                <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle *ngIf="expenseDetail.localConveyanceAmt > 0">
+                <!-- out-Local Conveyance mat-expansion--->
+                <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle *ngIf="expenseDetail.localConveyanceAmt > 0&&expenseDetail.expenseType!= 'Local Conveyance'">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       local conveyance
@@ -434,8 +415,101 @@
                     </div>
                   </div>
                 </mat-expansion-panel>
-                <!-- Local Conveyance mat-expansion--->
+                <!-- out-Local Conveyance mat-expansion--->
+                                <!-- Local Conveyance mat-expansion--->
+                                <!-- <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle >
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      ocal conveyance
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header> -->
+                                  <div class="collapse-body pt0"*ngIf="expenseDetail.localConveyanceAmt > 0&&expenseDetail.expenseType== 'Local Conveyance'">
+                                    <div class="cs-form">
+                                      <div class="cs-table left-right-10">
+                                        <div class="table-head border-bottom">
+                                          <table>
+                                            <tr>
+                                              <th class="w120">Date From</th>
+                                              <th class="w120">Date To</th>
+                                              <th class="w100">Total Working Days</th>
                 
+                                              <th class="w100">Total GPS Kms</th>
+                                              <th class="w100">Home To Office Distance</th>
+                                              <th class="w100 text-right">Distance Travel</th>
+                                              <th class="w100">Mode Of Travel</th>
+
+                                              <!-- <th class="w100">Mode Of Travel</th> -->
+                
+                                              <!-- <th class="w100 text-right">Amount</th> -->
+                                              <th>Remark</th>
+                                            </tr>
+                                          </table>
+                                        </div>
+                                        
+                                        <div class="table-container">
+                                          <div class="table-content">
+                                            <table>
+                                              <tr *ngFor="let row1 of expenseDetail.localConv">
+                                                <td class="w120">
+                                                  {{expenseDetail.date_from | date:'d MMM y'}}
+                                                </td>
+                                                <td class="w120">
+                                                  {{expenseDetail.date_to | date:'d MMM y'}}
+                                                </td>
+                                                <td class="w100">
+                                                  {{row1.working_days}}
+                                                </td>
+                                                <td class="w100">
+                                                  {{row1.google_distance+ 'Km'}}
+                                                </td>
+                                                <td class="w100" *ngIf="row1.home_distance!=''">
+                                                  {{row1.home_distance}}Km
+                                                </td>
+                                                <td class="w100" *ngIf="row1.home_distance==''">
+                                                  -
+                                                </td>
+                                                <td class="w100">
+                                                  {{row1.distance + 'Km'}}
+                                                </td>
+                                                <td class="w100">
+                                                  {{row1.modeOfTravel}}
+                                                </td>
+                                                <!-- <td class="w100">
+                                                  {{row1.travelClass}}
+                                                </td> -->
+                                                
+                                              
+                                                <!-- <td class="w100 text-right">&#x20B9;{{row1.amount}}
+                                                  
+                                                </td> -->
+                                                <td>{{row1.remark != '' ? row1.remark : '--' }}
+                                                  <!-- <div class="action-btns" *ngIf="expenseDetail.seniorStatus=='Pending'">
+                                                    <a mat-button class="edit" (click)="edit_details('local conveyance')"><i class="material-icons">edit</i> Edit</a>
+                                                  </div> -->
+                                                </td>
+                                              </tr>
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="row">
+                                        <div class="col s12 m4 offset-m8">
+                                          <div class="summary">
+                                            <table>
+                                              <!-- <tr>
+                                                <td>Total</td>
+                                                <td class="text-center"><strong>:</strong></td>
+                                                <td class="text-right">&#x20B9; {{expenseDetail.localConveyanceAmt}} /-</td>
+                                              </tr> -->
+                                            </table>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                <!-- </mat-expansion-panel> -->
+                                <!-- Local Conveyance mat-expansion--->
                 <!-- Misc Expense mat-expansion--->
                 <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle *ngIf="expenseDetail.miscExpenseAmt > 0">
                   <mat-expansion-panel-header>

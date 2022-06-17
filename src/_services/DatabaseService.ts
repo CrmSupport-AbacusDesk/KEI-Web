@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DialogComponent } from 'src/app/dialog.component';
 // import { sessionStorage } from '../localstorage.service';
 
+// import { sessionStorage } from '../localstorage.service';
+
 import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -50,7 +52,7 @@ export class DatabaseService implements OnInit {
 
     counterArray1:any={};
 
-
+st_user:any
     orderFilterPrimary: any = {}
     orderFilterSecondary: any = {}
     dealerListSearch: any = {}
@@ -63,9 +65,11 @@ export class DatabaseService implements OnInit {
     constructor(public http: HttpClient,public location: Location,
         public dialog: DialogComponent,
         private router: Router,
+        // public session: sessionStorage,
         public route: ActivatedRoute,
         ) {
-
+            this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+            console.log(this.st_user);
 
     }
 
@@ -388,6 +392,11 @@ export class DatabaseService implements OnInit {
 
 
     count_list() {
+        console.log(this.login_data.id)
+        console.log(this.login_data.type)
+        console.log(this.st_user);
+       
+
         this.http.post(this.dbUrl +  "Attendance/count_data",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
             if (r) {
                 this.counterArray = r;

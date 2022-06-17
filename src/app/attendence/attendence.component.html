@@ -32,7 +32,18 @@
                     </li>
                 </ul>
             </div>
+            <div class="top-pagination" *ngIf="show_today">
+                <ul>
+                    <li class="refresh-area">
+                        <a class="refresh-btn" mat-raised-button (click)="refresh('getattendance_today',1)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                      </li>
+                   
+                </ul>
+            </div>
             <div *ngIf="!show_today">
+                <!-- <li class="refresh-area">
+                    <a class="refresh-btn" mat-raised-button (click)="refresh('getAttendance',2)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                  </li> -->
                 <div class="cs-form date-filter">
                     <mat-form-field appearance="outline" class="cs-input w150">
                         <mat-label>Date From</mat-label>

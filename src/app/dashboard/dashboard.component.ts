@@ -94,7 +94,7 @@ console.log(this.id);
     // });
 
     // chart.render();
-    this.count_data();
+    // this.count_data();
     this.order_dashboard();
     this.latestOrders();
     this.latestCheckin();

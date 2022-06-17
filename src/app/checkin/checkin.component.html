@@ -82,7 +82,7 @@
                 <th  class="w140" >Sales User</th>
                 <th  class="w180">Company Name</th>
                 <th class="w120">Type</th>
-                <!-- <th class="w120"> Check in Type</th> -->
+                <th class="w120"> Name</th>
 
                 <th class="w180">Check in</th>
                 <th class="w180">Checkout</th>
@@ -124,6 +124,8 @@
                   </div>
                 </th>
                 <th class="w120"></th>
+                <th class="w120"></th>
+
               
 
                 <th class="w180"></th>
@@ -160,14 +162,16 @@
 
                   <span style="font-weight: 500;" *ngIf="list.type == '7'">Contractor</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '8'">Interior Designer</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '10'">Electrician</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '9'">Online</span>
 
-                  <span style="font-weight: 500;" *ngIf="list.type == '13'">Private Contractor</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '14'">Government Contractor</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '15'">Builder</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '16'">Architect</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '' || list.type != '12' && list.type != '15' && list.type != '13' && list.type != '14' && list.type != '9' && list.type != '5' && list.type != '10' && list.type != '11' && list.type != '7' && list.type != '1' && list.type != '3' && list.type != '16'&& list.type != '4'&& list.type != '2'">Other</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '10'">Electrician</span>
+                  <span style="font-weight: 500;" *ngIf="list.dr_type == '11'">Others</span>
+
+
+                 
+                  
                 </td>
+                <td class="w120">{{list.activity_mode }}</td>
              
 
                 <td class="w180" matTooltip="{{list.visit_start != '0000-00-00 00:00:00' ? (list.visit_start | date : 'h:mm a') : 'NA'}}  {{list.start_address}}  " matTooltipPosition="above">

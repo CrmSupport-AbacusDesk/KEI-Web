@@ -10,6 +10,7 @@ import { ImageModuleComponent } from '../image-module/image-module.component';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import { sessionStorage } from '../localstorage.service';
 import { AttendancemodalComponent } from '../attendancemodal/attendancemodal.component';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 // import { log } from 'console';
 
@@ -469,7 +470,7 @@ this.excel_data.push({ 'Date': this.attendancelist1[i].date, 'Employee Code': th
 
     console.log(this.attendancelist);
     console.log('in');
-
+this.excel_data=[]
 
 
   }))
