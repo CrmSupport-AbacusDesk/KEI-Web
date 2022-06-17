@@ -177,6 +177,7 @@ import { JointmodalComponent } from './jointmodal/jointmodal.component';
 import { TargetReportComponent } from './target-report/target-report.component';
 import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
 import { CheckindocumentComponent } from './checkindocument/checkindocument.component';
+import { BnNgIdleService } from 'bn-ng-idle';
 
 
 
@@ -500,6 +501,7 @@ const routes: Routes = [
         AuthComponentGuard,
         sessionStorage,
         DialogComponent,
+        BnNgIdleService,
         ExportexcelService,
         NgxImageCompressService,
     ],

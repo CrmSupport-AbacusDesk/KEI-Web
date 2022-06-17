@@ -33,7 +33,7 @@ export class NavigationComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.count_data();
+    // this.count_data();
     // this.getNetworkType();
     // this.getNetworkType1();
 
@@ -244,13 +244,13 @@ export class NavigationComponent implements OnInit {
       this.renderer.removeClass(document.body, 'active');
     }
   }
-  count_data(){
-    console.log(this.login_data.id);
-    this.serve.fetchData({'user_id':this.login_data.id,'user_type':this.login_data.type},"Attendance/count_data").subscribe((result=>{
-      console.log(result);
-      this.count=result;
-    }))
-  }
+  // count_data(){
+  //   console.log(this.login_data.id);
+  //   this.serve.fetchData({'user_id':this.login_data.id,'user_type':this.login_data.type},"Attendance/count_data").subscribe((result=>{
+  //     console.log(result);
+  //     this.count=result;
+  //   }))
+  // }
 
 
 }

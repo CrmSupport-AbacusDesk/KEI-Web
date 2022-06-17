@@ -6,6 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DialogComponent } from 'src/app/dialog.component';
 // import { sessionStorage } from '../localstorage.service';
 
+// import { sessionStorage } from '../localstorage.service';
+
 import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -19,24 +21,24 @@ export class DatabaseService implements OnInit {
    
 
     //////////////////////////test links
-    // dburl2 = "https://fsa.kei-ind.in/api/"
-    // myimgurl = "https://fsa.kei-ind.in/";
-    // imgurl = "https://fsa.kei-ind.in/api/uploads/";
-    // myimgurl2 = "https://fsa.kei-ind.in/";
-    // dbUrl = "https://fsa.kei-ind.in/api/index.php/";
-    // myurl = 'https://fsa.kei-ind.in/';
-    // myurl2 ='https://fsa.kei-ind.in/api/';
-    // tempUrl = "https://fsa.kei-ind.in/api/index.php/";
+    dburl2 = "https://fsa.kei-ind.in/api/"
+    myimgurl = "https://fsa.kei-ind.in/";
+    imgurl = "https://fsa.kei-ind.in/api/uploads/";
+    myimgurl2 = "https://fsa.kei-ind.in/";
+    dbUrl = "https://fsa.kei-ind.in/api/index.php/";
+    myurl = 'https://fsa.kei-ind.in/';
+    myurl2 ='https://fsa.kei-ind.in/api/';
+    tempUrl = "https://fsa.kei-ind.in/api/index.php/";
 
     
-    dburl2 = "https://apps.abacusdesk.com/kei/api/"
-    myimgurl = "https://apps.abacusdesk.com/kei/";
-    imgurl = "https://apps.abacusdesk.com/kei/api/uploads/";
-    myimgurl2 = "https://apps.abacusdesk.com/kei/";
-    dbUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
-    myurl = 'https://apps.abacusdesk.com/kei/';
-    myurl2 ='https://apps.abacusdesk.com/kei/api/';
-    tempUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
+    // dburl2 = "https://apps.abacusdesk.com/kei/api/"
+    // myimgurl = "https://apps.abacusdesk.com/kei/";
+    // imgurl = "https://apps.abacusdesk.com/kei/api/uploads/";
+    // myimgurl2 = "https://apps.abacusdesk.com/kei/";
+    // dbUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
+    // myurl = 'https://apps.abacusdesk.com/kei/';
+    // myurl2 ='https://apps.abacusdesk.com/kei/api/';
+    // tempUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
     header: any = new HttpHeaders();
     data: any;
     myProduct: any = {};
@@ -50,7 +52,7 @@ export class DatabaseService implements OnInit {
 
     counterArray1:any={};
 
-
+st_user:any
     orderFilterPrimary: any = {}
     orderFilterSecondary: any = {}
     dealerListSearch: any = {}
@@ -63,9 +65,11 @@ export class DatabaseService implements OnInit {
     constructor(public http: HttpClient,public location: Location,
         public dialog: DialogComponent,
         private router: Router,
+        // public session: sessionStorage,
         public route: ActivatedRoute,
         ) {
-
+            this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+            console.log(this.st_user);
 
     }
 
@@ -388,7 +392,12 @@ export class DatabaseService implements OnInit {
 
 
     count_list() {
-        this.http.get(this.dbUrl + "Attendance/count_data").subscribe(r => {
+        console.log(this.login_data.id)
+        console.log(this.login_data.type)
+        console.log(this.st_user);
+       
+
+        this.http.post(this.dbUrl +  "Attendance/count_data",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
             if (r) {
                 this.counterArray = r;
                 console.log("Service File Data : ",this.counterArray);
@@ -400,7 +409,7 @@ export class DatabaseService implements OnInit {
     }
 
     dr_list() {
-        this.http.get(this.dbUrl + "Dashboard/distributionNetworkModule").subscribe(r => {
+        this.http.post(this.dbUrl +"Dashboard/distributionNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
             if (r) {
                 this.drArray = r['modules'];
                 console.log(this.drArray);
@@ -411,7 +420,7 @@ export class DatabaseService implements OnInit {
         });
     }
     lead_list() {
-        this.http.get(this.dbUrl + "Dashboard/leadNetworkModule").subscribe(r => {
+        this.http.post(this.dbUrl + "Dashboard/leadNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
             if (r) {
                 this.leadArray = r['modules'];
                 console.log(this.drArray);

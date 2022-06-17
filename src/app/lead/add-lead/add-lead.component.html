@@ -47,7 +47,7 @@
                   </div>
                 </div>
 
-                <div class="col s4">
+                <div class="col s4" *ngIf="data.dr_type!='10'">
                   <mat-form-field class="cs-input" appearance="outline">
                     <mat-label>Company Name</mat-label>
                     <input matInput placeholder="Type Here .." name="company_name" #company_name="ngModel"

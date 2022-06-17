@@ -87,7 +87,7 @@
                 <th class="w90">Date Created</th>
                 <th class="w80">Created By</th>         
                 <th class="w80">ERP Code</th>
-                <th *ngIf="type_id=='3'"class="w80" >Beat Code</th>
+                <th *ngIf="type_id=='3'"class="w150" >Beat Code</th>
 
                 <th class="w170">Company Name</th>
                 <th class="w150">Contact Person</th>
@@ -137,7 +137,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w80"*ngIf="type_id=='3'">
+                <th class="w150"*ngIf="type_id=='3'">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <!-- getItemsList('created_by',value.search) -->
@@ -145,6 +145,7 @@
                     </mat-form-field>
                   </div>
                 </th>
+               
                 <th class="w170">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
@@ -210,9 +211,10 @@
                 <td *ngIf="!list.created_name" class="w80">Admin</td>
                 <td *ngIf="list.created_name" class="w80">{{list.created_name}}</td>
                 <td  class="w80">{{list.dr_code?list.dr_code:'N/A'}}</td>
-                <td class="w80"*ngIf="type_id=='3'" >
-                    {{list.beat_code}} 
+                <td class="w150"*ngIf="type_id=='3'" >
+                    {{list.beat_code?list.beat_code:'--'}}- {{list.route?list.route:'--'}}
                 </td>
+               
                 <td class="w170"><a  class="link-btn" mat-button (click)="tothepage(list.id,list.state,list.type)">{{list.company_name}}</a></td>
                 <td class="w150">{{list.contactperson}}</td>
                 <td class="w80">{{list.mobile}}</td>
@@ -244,7 +246,7 @@
                   <td class="w90"><div>&nbsp;</div></td>
 
                   <td class="w80"><div>&nbsp;</div></td>
-                  <td class="w80"><div>&nbsp;</div></td>
+                  <td class="w150"><div>&nbsp;</div></td>
                   <td class="w170"><div>&nbsp;</div></td>
                   <td class="w150"><div>&nbsp;</div></td>
                   <td class="w100"><div>&nbsp;</div></td>

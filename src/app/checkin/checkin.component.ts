@@ -142,7 +142,7 @@ export class CheckinComponent implements OnInit {
       console.log(this.data.date_to);
 
     }
-    this.serve.fetchData({'user_id':this.assign_login_data2.id,'start':this.start,'pagelimit':this.pagelimit,'search':this.data},"Distributors/"+func_name)
+    this.serve.fetchData({'user_id':this.assign_login_data2.id,'start':this.start,'pagelimit':this.pagelimit,'search':this.data, 'user_type': this.assign_login_data2.type},"Distributors/"+func_name)
     .subscribe(((result:any)=>{
       console.log(result);
       this.checkins = (result['result']);
@@ -310,66 +310,17 @@ jointname2:any= [];
 
 
 
-              this.excel_data.push({ 'Date': this.checkins[i].activity_date, 'Sales User': this.checkins[i].exec_name, 'Type': this.checkins[i].dr_type , 'Check in Type':this.jointname ==''? this.jointname:this.jointname,'Company Name': this.checkins[i].other_name == '' ? this.checkins[i].company_name : this.checkins[i].other_name, 'Check In': this.checkins[i].visit_start, 'Check Out': this.checkins[i].visit_end, 'Remark': this.checkins[i].description,'Order': this.checkins[i].isOrderExist,'Order Amount': this.checkins[i].order_total });
+              this.excel_data.push({ 'Date': this.checkins[i].activity_date, 'Sales User': this.checkins[i].exec_name, 'Type': this.checkins[i].dr_type , 'Company Name': this.checkins[i].other_name == '' ? this.checkins[i].company_name : this.checkins[i].other_name, 'Check In': this.checkins[i].visit_start, 'Check Out': this.checkins[i].visit_end, 'Remark': this.checkins[i].description, });
 
             }
 
 
-      for(let i = 0; i < this.checkins.length; i++){
-        console.log('okkkkk');
-        if(this.checkins[i].dr_type == '1')
-          {
-            this.checkins[i].dr_type='Distributor'
-         }
-         if(this.checkins[i].dr_type == '6')
-         {
-           this.checkins[i].dr_type='Others'
-           console.log(this.checkins[i].dr_type)
-         }
-         if(this.checkins[i].dr_type == '5')
-         {
-           this.checkins[i].dr_type='End User'
-         }
-         if(this.checkins[i].dr_type == '9')
-         {
-           this.checkins[i].dr_type='Project'
-         }
-         if(this.checkins[i].dr_type == '3')
-         {
-           this.checkins[i].dr_type='Retailer'
-         }
-         if(this.checkins[i].dr_type == '7')
-         {
-           this.checkins[i].dr_type='Direct Dealer'
-         }
-
-        for (let j = 0; j < this.checkins[i].joiner[j]; j++) {
-          console.log('hlooo');
-
-          console.log(this.checkins[i].joiner);
-         this.jointname= (this.checkins[i].joiner[j].name).toString()
-
-
-       this.jointname = this.checkins[i].joiner[j]['name']
-         console.log(this.checkins[i].joiner);
-         console.log(this.jointname);
-         this.jointname2.push(this.jointname);
-         console.log(this.jointname1);
-
-
-        }
-        this.excel_data.push({ 'Date': this.checkins[i].activity_date, 'Sales User': this.checkins[i].exec_name, 'Type': this.checkins[i].dr_type , 'Check in Type':this.jointname2[i] ==''? this.jointname2[i]:this.jointname2[i],'Company Name': this.checkins[i].other_name == '' ? this.checkins[i].company_name : this.checkins[i].other_name, 'Check In': this.checkins[i].visit_start, 'Check Out': this.checkins[i].visit_end, 'Remark': this.checkins[i].description,'Order': this.checkins[i].isOrderExist,'Order Amount': this.checkins[i].order_total });
-
-
-
-
-
-      }
+    
 
 
             console.log(this.excel_data);
             this.serve.exportAsExcelFile(this.excel_data, 'Check IN  Sheet');
-
+this.excel_data=[]
 
 
 
@@ -455,12 +406,12 @@ jointname2:any= [];
 
 
 
-              this.excel_data.push({ 'Date': this.checkins[i].activity_date, 'Sales User': this.checkins[i].exec_name, 'Type': this.checkins[i].dr_type , 'Check in Type':this.jointname1[i], 'Company Name': this.checkins[i].other_name == '' ? this.checkins[i].company_name : this.checkins[i].other_name, 'Check In': this.checkins[i].visit_start, 'Check Out': this.checkins[i].visit_end, 'Remark': this.checkins[i].description,'Order': this.checkins[i].isOrderExist,'Order Amount': this.checkins[i].order_total });
+              this.excel_data.push({ 'Date': this.checkins[i].activity_date, 'Sales User': this.checkins[i].exec_name, 'Type': this.checkins[i].dr_type , 'Company Name': this.checkins[i].other_name == '' ? this.checkins[i].company_name : this.checkins[i].other_name, 'Check In': this.checkins[i].visit_start, 'Check Out': this.checkins[i].visit_end, 'Remark': this.checkins[i].description, });
 
             }
             console.log(this.excel_data);
             this.serve.exportAsExcelFile(this.excel_data, 'Check IN  Sheet');
-
+this.excel_data=[]
 
 
 

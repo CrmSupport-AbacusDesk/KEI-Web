@@ -27,6 +27,7 @@
     "angular-font-awesome": "^3.1.2",
     "angular-mat-datepicker": "0.0.2",
     "angular-ng-autocomplete": "^1.1.14",
+    "bn-ng-idle": "^1.0.1",
     "chart.js": "^2.8.0",
     "chartjs-plugin-datalabels": "^0.6.0",
     "core-js": "^2.6.9",
