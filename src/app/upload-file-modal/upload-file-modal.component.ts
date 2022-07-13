@@ -402,7 +402,7 @@ export class UploadFileModalComponent implements OnInit {
 
     this.loader=1;
 
-    this.serve.FileData(this.formData, 'lead/import_distributor_excel')
+    this.serve.FileData(this.formData, 'user/import_distributor_excel')
     .subscribe(d => {
 
       this.dialogRef.disableClose = false;
@@ -448,6 +448,44 @@ export class UploadFileModalComponent implements OnInit {
 
     this.loader=1;
     this.serve.FileData(this.formData, 'Lead/import_lead_excel')
+    .subscribe(d => {
+
+      this.dialogRef.disableClose = false;
+      this.formData = new FormData();
+      if(d['msg'] == 'Data Imported successfully'){
+        this.dialog.success("Excel Uploaded", " Successfully");
+        this.dialogRef.close();
+        setTimeout (() => {
+          this.loader='';
+        }, 700);
+        return;
+      }
+      else{
+        setTimeout (() => {
+          this.loader='';
+        }, 700);
+        this.dialog.error(d['msg']);
+        return;
+      }
+
+    },err => {console.log(err);  this.formData = new FormData(); });
+  }
+  upload_Users_excel()
+  {
+    console.log(this.file);
+    this.dialogRef.disableClose = true;
+    // this.file.push(this.userId)
+    this.formData.append('file', this.file,this.file.name);
+    // this.formData.append('id',this.userId);
+    // this.formData.append('type',this.type);
+
+
+    console.log("formdata",this.formData);
+    console.log("file",this.file);
+    // console.log(this.file.name);
+
+    this.loader=1;
+    this.serve.FileData(this.formData, 'test/add_user_data')
     .subscribe(d => {
 
       this.dialogRef.disableClose = false;
@@ -705,7 +743,7 @@ export class UploadFileModalComponent implements OnInit {
     {
       this.excel_loader = true;
 
-        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'','Source':'','Description':''});
+        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'','Source':'','Description':'','Alternate Mobile':'','Product Name':'','Enquiry Description':''});
 
 
       console.log(this.excel_data);
@@ -719,7 +757,7 @@ export class UploadFileModalComponent implements OnInit {
     {
       this.excel_loader = true;
 
-        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'',});
+        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'','ERP Code':'','Alternate Mobile':'','GST':'','Latitude':'','Longitude':'','Pincode':'','Assign Distributor':'','Assign User':'','Active':''});
 
 
       console.log(this.excel_data);
@@ -748,6 +786,20 @@ export class UploadFileModalComponent implements OnInit {
       this.excel_loader = true;
 
         this.excel_data.push({'State':'','District':'','Area/RouteName':'','Beat Code':''});
+
+
+      console.log(this.excel_data);
+      this.serve.exportAsExcelFile(this.excel_data, 'SAMPLE '+type+' EXCEL');
+
+      setTimeout (() => {
+        this.excel_loader = false;
+      }, 700);
+    }
+    else if(type == 'Users')
+    {
+      this.excel_loader = true;
+
+        this.excel_data.push({'Employee Id':'','Name':'','Email':'','Team Name':'','Team State':'','Team Code':'','Mobile':'','Designation':'','Date of Joining':'','Date of Leaving':'','Address':'','State Name':'','District Name':'','Pincode':'','Region':'','RSM Code':''});
 
 
       console.log(this.excel_data);

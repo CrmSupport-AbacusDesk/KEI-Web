@@ -122,10 +122,10 @@ this.salesUserLIst()
     this.data={}
 this.travel_list=[]
   }
-  getTravelList(action: any = '') {
-    if (action == "refresh") {
-      this.search = {};
-    }
+  getTravelList() {
+    // if (action == "refresh") {
+    //   this.search = {};
+    // }
 this.travel_list=[]
     this.loader = true;
     if (this.search.date_to)
@@ -263,7 +263,7 @@ this.travel_list=[]
         this.serve.fetchData({"user_id":id,'month':month,'year':year},"travel/delete_travel_plan").subscribe((result=>{
           console.log(result);
           this.refresh();
-          this.getTravelList('refresh');
+          this.getTravelList();
 
         }))
       }})
@@ -291,7 +291,7 @@ this.travel_list=[]
         this.serve.fetchData({"travel_id":id},"travel/delete_travel_plan").subscribe((result=>{
           console.log(result);
           this.refresh();
-          this.getTravelList('refresh');
+          this.getTravelList();
 
         }))
       }})

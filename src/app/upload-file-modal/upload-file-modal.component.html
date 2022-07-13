@@ -59,6 +59,36 @@
   </div>
 
 
+  <div class="edit-modal" *ngIf="come_from == 'Users'">
+
+    <div *ngIf="loader">
+        <mat-spinner class="loader">
+            <div><p>Loading....</p></div>
+        </mat-spinner>
+    </div>
+
+    <p class="heading">Upload Users</p>
+    <div mat-dialog-content style="padding: 0px 15px;">
+        <div class="excel-container grid-one-column">
+            <div class="excel-box">
+                <label>
+                    <form name="couponForm" #f="ngForm" novalidate autocomplete="off">
+                        <input type="file"  (change)="onUploadChange($event)" name="fileupload" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"  style="display: none;">
+                    </form>
+                    <img src="assets/img/excel.svg">
+                    <p *ngIf="excel_name == ''">Click Here To Upload User Excel(In csv format)</p>
+                    <p *ngIf="excel_name != ''">{{excel_name}}</p>
+                </label>
+                <a (click)="download_sample_excel('Users')">Users sample file</a>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="warn" [mat-dialog-close]="false">Close</button>
+        <button mat-raised-button color="accent" (click)="upload_Users_excel()" accept=".csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">Upload</button>
+    </div>
+  </div>
+
   <div class="edit-modal" *ngIf="come_from == 'lead'">
 
     <div *ngIf="loader">

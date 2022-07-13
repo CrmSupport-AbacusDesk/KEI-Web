@@ -120,6 +120,8 @@ export class LeadListComponent implements OnInit {
       this.search_val.created_by='';
       this.search_val.company_name='';
       this.search_val.assign_user='';
+      this.search_val.product_name='';
+      this.search_val.country='';
       this.leadList();
     });
 

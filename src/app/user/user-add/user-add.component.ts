@@ -4,6 +4,7 @@ import { DatabaseService } from 'src/_services/DatabaseService';
 import { Router } from '@angular/router';
 import { DialogComponent } from 'src/app/dialog.component';
 import {  sessionStorage} from 'src/app/localstorage.service';
+import * as moment from 'moment';
 
 
 @Component({
@@ -124,7 +125,12 @@ export class UserAddComponent implements OnInit {
     console.log(this.data);
     
     // return;
-    
+    if(this.data.date_joining){
+      this.data.date_joining = moment(this.data.date_joining).format('YYYY-MM-DD');
+      
+  this.data.date_joining=this.data.date_joining;
+  
+      }
     
     // if (this.data.userrole == '8')
     if (this.data.user_type == 'System User')

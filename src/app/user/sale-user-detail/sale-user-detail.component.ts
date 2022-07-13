@@ -114,7 +114,7 @@ export class SaleUserDetailComponent implements OnInit {
       
       this.access_level=this.detail.access_level;
       console.log(this.access_level)
-      this.assign_users(this.access_level);
+      this.assign_users(this.access_level,this.detail.team_code);
       this.team_edit = result['user_detail']['data']['assign_user'];
       console.log(this.team_edit);
       this.detail['user_pop_gift']  = this.detail['user_pop_gift'];
@@ -363,10 +363,12 @@ export class SaleUserDetailComponent implements OnInit {
       //   }
       // }
 
-      assign_users(accesslevel)
+      assign_users(accesslevel,code)
       {
         console.log(accesslevel);
-        this.serve.fetchData({'user_type':accesslevel,'user_id':this.user_id},"User/assign_users").subscribe((response=>{
+        console.log(code);
+
+        this.serve.fetchData({'user_type':accesslevel,'user_id':this.user_id,'team_code':code},"User/assign_users").subscribe((response=>{
           console.log(response);
           
           

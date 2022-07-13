@@ -165,6 +165,30 @@
                             </div>
                           </li>
                         </ul>
+                        <ul>
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/category.svg" class="fix-img">
+                              <span>Stage</span>
+                              <p>{{lead_detail.stage?lead_detail.stage:'--'}}</p>
+                            </div>
+                          </li> -->
+
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/description.svg" class="fix-img">
+                              <span>Product name</span>
+                              <p>{{lead_detail.product_name?lead_detail.product_name:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/description.svg" class="fix-img">
+                              <span>Description</span>
+                              <p>{{lead_detail.description?lead_detail.description:'--'}}</p>
+                            </div>
+                          </li>
+                        </ul>
                         <ul style="align-items:flex-start;">
                           <li class="flat-item">
                             <ul>
@@ -178,21 +202,15 @@
                               </li> -->
 
                             </ul>
-                            <ul *ngIf="lead_detail.type == '9'" >
+                           
+                            <ul >
                               <li>
                                 <div class="cs-box" >
                                   <img src="assets/img/description.svg" class="fix-img">
-                                  <span>Product Name</span>
-                                  <p>{{lead_detail.product_name?lead_detail.product_name:'--'}}</p>
-                                </div>
-                              </li>
-                            </ul>
-                            <ul *ngIf="lead_detail.type == '9'">
-                              <li>
-                                <div class="cs-box" >
-                                  <img src="assets/img/description.svg" class="fix-img">
-                                  <span> Enquiry Description</span>
-                                  <p>{{lead_detail.enquiry_desc?lead_detail.enquiry_desc:'--'}}</p>
+                                  <span> Enquiry Id</span>
+                                     <!-- <div [innerHtml]="lead_detail.enquiry_desc"></div> -->
+
+                                  <p>{{lead_detail.query_id?lead_detail.query_id:'--'}}</p>
                                 </div>
                               </li>
                             </ul>
@@ -200,11 +218,25 @@
                               <li>
                                 <div class="cs-box" >
                                   <img src="assets/img/description.svg" class="fix-img">
-                                  <span>Description</span>
-                                  <p>{{lead_detail.description?lead_detail.description:'--'}}</p>
+                                  <span> Recieved As</span>
+                                     <!-- <div [innerHtml]="lead_detail.enquiry_desc"></div> -->
+
+                                  <p>{{lead_detail.q_type?lead_detail.q_type:'--'}}</p>
                                 </div>
                               </li>
                             </ul>
+                            <ul >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Enquiry Description</span>
+                                     <div [innerHtml]="lead_detail.enquiry_desc"></div>
+
+                                  <!-- <p>{{lead_detail.enquiry_desc?lead_detail.enquiry_desc:'--'}}</p> -->
+                                </div>
+                              </li>
+                            </ul>
+                           
 
                             <ul *ngIf="lead_detail.reason">
                               <li>
