@@ -34,6 +34,8 @@ export class LocationMasterComponent implements OnInit {
   loader:any = '';
   userData: any;
   userId: any;
+  excel_data:any=[];
+
   userName: any;
   
   assign_login_data: any = [];
@@ -276,6 +278,29 @@ export class LocationMasterComponent implements OnInit {
 
     }))
     this.area_list();
+  }
+
+
+  exp_data:any=[];
+
+  exportAsXLSX():void {
+    this.serve.FileData({'user_id':this.userId,'search':this.search,},"User/area_list")
+    .subscribe(resp=>{
+      console.log(resp);
+      this.exp_data = resp['area_list'];
+      console.log(this.exp_data);
+      for(let i=0;i<this.exp_data.length;i++)
+      {
+        this.excel_data.push({'State':this.exp_data[i].state,'District':this.exp_data[i].distirct,'Area Name':this.exp_data[i].area,'Beat Code':this.exp_data[i].beat_code,});
+      }
+
+      this.serve.exportAsExcelFile(this.excel_data, 'BEAT MASTER SHEET');
+      this.excel_data = [];
+      this.exp_data = [];
+
+    })
+
+
   }
 
 }

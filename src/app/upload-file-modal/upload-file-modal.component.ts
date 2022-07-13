@@ -402,7 +402,7 @@ export class UploadFileModalComponent implements OnInit {
 
     this.loader=1;
 
-    this.serve.FileData(this.formData, 'lead/import_distributor_excel')
+    this.serve.FileData(this.formData, 'user/import_distributor_excel')
     .subscribe(d => {
 
       this.dialogRef.disableClose = false;
@@ -705,7 +705,7 @@ export class UploadFileModalComponent implements OnInit {
     {
       this.excel_loader = true;
 
-        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'','Source':'','Description':''});
+        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'','Source':'','Description':'','Alternate Mobile':'','Product Name':'','Enquiry Description':''});
 
 
       console.log(this.excel_data);
@@ -719,7 +719,7 @@ export class UploadFileModalComponent implements OnInit {
     {
       this.excel_loader = true;
 
-        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'',});
+        this.excel_data.push({'Mobile no':'','Company name':'','Name':'','State':'','District':'','City':'','Area':'','Address':'','Email id':'','ERP Code':'','Alternate Mobile':'','GST':'','Latitude':'','Longitude':'','Pincode':'','Assign Distributor':'','Assign User':'','Active':''});
 
 
       console.log(this.excel_data);

@@ -271,8 +271,25 @@
           <div class="row">
             <div class="col s6">
               <mat-form-field class="cs-input" appearance="outline">
-                <mat-label>Sales Type</mat-label>
-                <input matInput placeholder="Sales Type" name="department" #department="ngModel" [(ngModel)]="data.department"
+                <mat-label>Date of joining</mat-label>
+                <input name="D.O.J" matInput [matDatepicker]="pickers" placeholder="" #date_joining="ngModel" readonly [(ngModel)]="data.date_joining">
+                <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                <mat-datepicker #pickers></mat-datepicker>
+            </mat-form-field>
+            </div>
+            <div class="col s6">
+              <mat-form-field class="cs-input" appearance="outline">
+                <mat-label>Team State</mat-label>
+                <input matInput placeholder="" name="team_name" #team_state="ngModel" [(ngModel)]="data.team_state"
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col s6">
+              <mat-form-field class="cs-input" appearance="outline">
+                <mat-label>Team Code</mat-label>
+                <input matInput placeholder="Team Code" name="team_code" #team_code="ngModel" [(ngModel)]="data.team_code"
                 >
               </mat-form-field>
             </div>
@@ -323,7 +340,7 @@
        
       </div>
       <div class="row">
-        <div class="col s4 ">
+        <div class="col s3 ">
           <mat-form-field class="cs-input" appearance="outline">
             <mat-label>City</mat-label>
             <input matInput placeholder="City ..." name="city" #city="ngModel" [(ngModel)]="data.city"
@@ -331,7 +348,7 @@
           </mat-form-field>
         </div>
         
-        <div class="col s4 ">
+        <div class="col s3 ">
           <mat-form-field class="cs-input" appearance="outline" >
             <mat-label>Pincode</mat-label>
             <input matInput name="pincode" placeholder="Type Here ..." #pincode="ngModel" maxlength="6"
@@ -341,12 +358,27 @@
             </div>
           </mat-form-field>
         </div>
-        <div class="col s4 ">
+        <div class="col s2 ">
+          <mat-form-field class="cs-input" appearance="outline" >
+            <mat-label>Region</mat-label>
+            <input matInput name="region" type="input" placeholder="Type Here ..." #region="ngModel"
+            [(ngModel)]="data.region" >
+          
+          </mat-form-field>
+        </div>
+        <div class="col s2 ">
           <mat-form-field class="cs-input" appearance="outline" >
             <mat-label>Distance (From Ofc To Home)</mat-label>
             <input matInput name="distance" type="tel" placeholder="Type Here ..." #distance="ngModel"
             [(ngModel)]="data.distance" >
           
+          </mat-form-field>
+        </div>
+        <div class="col s2">
+          <mat-form-field class="cs-input" appearance="outline">
+            <mat-label>Sales Type</mat-label>
+            <input matInput placeholder="Sales Type" name="department" #department="ngModel" [(ngModel)]="data.department"
+            >
           </mat-form-field>
         </div>
       </div>

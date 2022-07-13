@@ -27,7 +27,9 @@ export class DashboardComponent implements OnInit {
   latest_checkin:any;
   exec_Info:any;
   counter_Info:any;
+  lead_network:any=[];
   today_date:any;
+  customer_Info:any=[]
   id:any;
   public barChartLabels: Label = [];
   public barChartType: ChartType = 'bar';
@@ -36,6 +38,8 @@ export class DashboardComponent implements OnInit {
   login_data:any={};
   public barChartData: ChartDataSets[] = [];
   exec_Info_month: any;
+  checkin_network:any=[];
+  travel_network:any=[];
 
 
 
@@ -94,11 +98,12 @@ console.log(this.id);
     // });
 
     // chart.render();
-    // this.count_data();
+    this.count_data();
     this.order_dashboard();
-    this.latestOrders();
+    this.latesttravelplan();
     this.latestCheckin();
-    this.salesExecDetail();
+    this.customernetwork();
+
     this.countersInfo();
   }
 
@@ -146,9 +151,9 @@ console.log(this.id);
     console.log(this.login_data);
 this.id=this.login_data.id
 
-    this.serve.fetchData({'user_id':this.login_data.id,'user_type': this.login_data.type},"Dashboard/distribution_network").subscribe((result=>{
+    this.serve.fetchData({'user_id':this.login_data.id},"Dashboard/dashboardDataCount").subscribe((result=>{
       console.log(result);
-      this.top_cards=result['getDashboard'];
+      this.top_cards=result;
 
       console.log(this.count);
 
@@ -156,13 +161,13 @@ this.id=this.login_data.id
 
     }))
   }
-  latestOrders()
+  latesttravelplan()
   {
     console.log('test');
     console.log(this.login_data);
 this.id=this.login_data.id
 
-    this.serve.fetchData({'user_id':this.login_data.id,'user_type': this.login_data.type},"Dashboard/latest_orders").subscribe((result=>{
+    this.serve.fetchData({'user_id':this.login_data.id},"Dashboard/latest_orders").subscribe((result=>{
       console.log(result);
       this.latest_orders=result['latest_orders'];
 
@@ -279,7 +284,7 @@ this.id=this.login_data.id
     // }
 
     latestCheckin(){
-      this.serve.fetchData({'user_id':this.login_data.id,'user_type': this.login_data.type},"Dashboard/latest_checking").subscribe((result=>{
+      this.serve.fetchData({'user_id':this.login_data.id},"Dashboard/latest_checking").subscribe((result=>{
         console.log(result);
         this.latest_checkin=result['latest_checking'];
         console.log(this.latest_checkin);
@@ -288,21 +293,26 @@ this.id=this.login_data.id
       }))
     }
 
-    salesExecDetail(){
-      this.serve.fetchData({'user_id':this.login_data.id,'user_type': this.login_data.type},"Dashboard/User_info").subscribe((result=>{
+    customernetwork(){
+      this.serve.fetchData({'user_id':this.login_data.id,'user_type':this.login_data.type},"Dashboard/dashboardDataNew").subscribe((result=>{
         console.log(result);
-        this.exec_Info=result['User_info']['result'];
-        console.log(this.exec_Info);
-        this.exec_Info_month = result['User_info']['month'];
-        console.log(this.exec_Info_month);
+        this.customer_Info=result['customer_list'];
+        console.log(this.customer_Info);
+        this.lead_network = result['lead_list'];
+        console.log(this.lead_network);
+        this.checkin_network = result['checkin_list'];
+        this.travel_network = result['travel_list'];
+
+
 
 
 
       }))
     }
 
+   
     countersInfo(){
-      this.serve.fetchData({'user_id':this.login_data.id,'user_type': this.login_data.type},"Dashboard/info").subscribe((result=>{
+      this.serve.fetchData({'user_id':this.login_data.id},"Dashboard/info").subscribe((result=>{
         console.log(result);
         this.counter_Info=result['info'];
         console.log( this.counter_Info);

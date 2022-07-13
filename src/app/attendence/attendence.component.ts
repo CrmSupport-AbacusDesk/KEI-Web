@@ -43,6 +43,7 @@ export class AttendenceComponent implements OnInit {
   count: any;
   start:any=0;
   page_limit:any=50
+  exp_loader:any=false;
 
   assign_login_data2: any = [];
 
@@ -181,6 +182,7 @@ attendence_type : any ='Present';
     this.attendance_list(func_name, type);
     }
   attendance_list(func_name, type) {
+    this.exp_loader = true;
     
     this.loader = 1;
     if (Object.getOwnPropertyNames(this.data).length != 0) {
@@ -205,6 +207,7 @@ attendence_type : any ='Present';
     .subscribe(((result: any) => {
       console.log(result);
       console.log(result);
+      this.exp_loader = false;
 
       if(type==1){
       this.attendancelist = result;

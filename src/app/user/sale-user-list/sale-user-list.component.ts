@@ -200,7 +200,7 @@ this.serve.count_list();
 
   exportAsXLSX(): void {
     for (let i = 0; i < this.userlist.length; i++) {
-      this.excel_data.push({ 'Employee Code': this.userlist[i].employee_id, 'Name': this.userlist[i].name, Mobile: this.userlist[i].contact_01, Designation: this.userlist[i].role_name, ReportingManager: this.userlist[i].assign_user, 'Address ': this.userlist[i].street, 'State ': this.userlist[i].state_name, 'District ': this.userlist[i].district_name, 'City ': this.userlist[i].city, 'Pincode ': this.userlist[i].pincode,'Distance from ofc to home': this.userlist[i].name });
+      this.excel_data.push({'Team State': this.userlist[i].team_state,'Team Code': this.userlist[i].team_code,'Team Name': this.userlist[i].team_name, 'Employee Code': this.userlist[i].employee_id, 'Name': this.userlist[i].name, Mobile: this.userlist[i].contact_01, Designation: this.userlist[i].role_name, ReportingManager: this.userlist[i].assign_user,ReportingManagerCode: this.userlist[i].assign_user_code, 'Address ': this.userlist[i].street, 'State ': this.userlist[i].state_name, 'District ': this.userlist[i].district_name, 'City ': this.userlist[i].city, 'Pincode ': this.userlist[i].pincode,'Distance from ofc to home': this.userlist[i].distance, 'Region':this.userlist[i].distance});
     }
     this.serve.exportAsExcelFile(this.excel_data, 'USER SHEET');
   }
