@@ -87,7 +87,7 @@
                 <th class="w100">Team Code</th>
 
                 <th class="w150">Team Name</th>
-                <th class="w70">Employee Code</th>
+                <th class="w100">Employee Code</th>
                 <th class="w150">Assigned To</th>
 
                 <th class="w90">Date Created</th>
@@ -142,7 +142,7 @@
                
                 
 
-                <th class="w70">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <input matInput placeholder="EmpCode. . ." name="employee_id" (keyup.enter)="distributorList()" [(ngModel)]="search_val.employee_id" >
@@ -264,13 +264,13 @@
                 <td class="w70">{{list.team_state}}
                   
                 </td>
-                <td class="w100">{{list.team_code}}
+                <td class="w100" style="word-wrap: break-word;">{{list.team_code}}
                   
                 </td>
-                <td class="w150">{{list.team_name}}
+                <td class="w150" style="word-wrap: break-word;">{{list.team_name}}
                   
                 </td>
-                <td class="w70" style="word-wrap:;">{{list.employee_id}}
+                <td class="w100" style="word-wrap: break-word;">{{list.employee_id}}
                   
                 </td>
                 <td class="w150">{{list.assign_user}}
