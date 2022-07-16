@@ -3,7 +3,7 @@
     <div class="page-heading">
       <div class="heading-text">
         <h2>Travel Plan </h2>
-        <p>{{travel_list.length}}</p>
+        <p>{{count}}</p>
       </div>
       <div class="top-pagination">
 
@@ -12,7 +12,22 @@
 
                  <a class="refresh-btn" mat-raised-button (click)="refresh()" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
             </li>
-          
+            <li>
+              <p>Pages {{pagenumber}} Of {{total_page}}</p>
+          </li>
+          <li>
+              <button mat-button class="left-btn" (click)="start=start-page_limit; getTravelList()" [disabled]="pagenumber == 1">
+      <i class="material-icons">keyboard_arrow_left</i></button>
+          </li>
+          <li>
+              <input type="text" placeholder="GO TO" name="pagenumber" (keyup.enter)="start=(pagenumber*page_limit)-page_limit; getTravelList()" [(ngModel)]="pagenumber" min="1" max={{total_page}}>
+          </li>
+
+          <li>
+              <button mat-button class="right-btn" (click)="start=start+page_limit; getTravelList()" [disabled]="pagenumber == total_page">
+        <i class="material-icons">keyboard_arrow_right</i>
+      </button>
+          </li>
 
         </ul>
 

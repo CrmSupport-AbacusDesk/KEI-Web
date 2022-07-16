@@ -19,6 +19,7 @@ import * as XLSX from 'xlsx';
 export class ListExpenseComponent implements OnInit
 {
   @ViewChild('table') table: ElementRef;
+  today_date: Date;
 
   food_expense_list:any=[];
   out_expense_list:any=[];
@@ -199,13 +200,16 @@ count_list:any=[]
       this.location.back()
     }
     excel_data:any=[];
+    today_date1:any
     exportAsXLSX():void {
       for(let i=0;i<this.expense_list.length;i++){
-        this.excel_data.push({'Date':this.expense_list[i].dateCreated,'UserName':this.expense_list[i].userName,'Designation':this.expense_list[i].userType,'Expense type':this.expense_list[i].expenseType,'Amount':this.expense_list[i].totalAmt,'Approved Amount':this.expense_list[i].totalApprovedAmount,'seniorStatus':this.expense_list[i].seniorStatus,'A/C Status':this.expense_list[i].acStatus});
+    this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
+
+        this.excel_data.push({'Date':this.expense_list[i].dateCreated,'Team State': this.expense_list[i].team_state,'Team Code': this.expense_list[i].team_code,'Team Name': this.expense_list[i].team_name,'Employee Id': this.expense_list[i].employee_id,'UserName':this.expense_list[i].userName,'Designation':this.expense_list[i].userType,'Date To':this.expense_list[i].date_to,'Date From':this.expense_list[i].date_from,'Expense type':this.expense_list[i].expenseType,'Total Working Days':this.expense_list[i].localConv[0].working_days,'Total GPS Kms':this.expense_list[i].localConv[0].google_distance,'Home To Office Distance':this.expense_list[i].localConv[0].home_distance,' Distance Travel':this.expense_list[i].localConv[0].distance,'Mode Of Travel':this.expense_list[i].localConv[0].modeOfTravel,'Amount':this.expense_list[i].totalAmt,'seniorStatus':this.expense_list[i].seniorStatus,'A/C Status':this.expense_list[i].acStatus});
 
       }
       console.log(this.excel_data);
-      this.serve.exportAsExcelFile(this.excel_data, 'Expense Sheet');
+      this.serve.exportAsExcelFile(this.excel_data, 'Expense Sheet'+'-' +this.today_date1);
     this.excel_data=[];
 
     }

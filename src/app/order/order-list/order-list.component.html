@@ -156,6 +156,8 @@
                 <td class="w100"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/order-detail/{{list.id}}" routerLinkActive="active">{{list.order_no}}</a></td>
                 <td class="w100" *ngIf="list.type==2"> Dealer</td>
                 <td class="w100" *ngIf="list.type==1">Distributor</td>
+                <td class="w100" *ngIf="list.type==12">Direct Customer</td>
+
                 <td class="w250">{{list.company_name}}</td>
                 <td class="w150">{{list.name}}-{{list.mobile}}
 

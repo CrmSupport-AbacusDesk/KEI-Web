@@ -85,7 +85,7 @@
                           <th class="w250">District</th>
                           <th class="w250">Area/Route Name</th>
 
-                          <th >Beat Code</th>
+                          <th >Beat Code{{editLocation}}</th>
                           <!-- <th class="w100">Description</th> -->
                           <th class="w200 text-center" >Action</th>
                         </tr>
@@ -122,8 +122,7 @@
                           <th>
                             <div class="th-search-acmt">
                               <mat-form-field>
-                                <input type="text"  matInput placeholder="Area...." name="area"  [(ngModel)]="search.area" (keyup.enter)="area_list()" >
-                              
+                                <input type="text"  matInput placeholder="Area...." name="beat_code"  [(ngModel)]="search.beat_code" (keyup.enter)="area_list()" >
                               </mat-form-field>
                             </div>
                           </th>
@@ -142,11 +141,12 @@
                           <td class="w250">{{data.state}}</td>
                           <td class="w250">{{data.distirct}}</td>
                           <td class="w250">{{data.area}}</td>
-
+                          
                           <td *ngIf="editLocation != data.id">{{data.beat_code}}</td>
                           <td *ngIf="editLocation == data.id">
                             <div class="place-input active">
-                              <input name="Area{{i}}" type="text" placeholder="Enter Beat Code" #beat_code="ngModel" [(ngModel)]="data.beat_code">
+                              <!-- <td class="w250">{{data.beat_code}}</td> -->
+                              <input name="Area" type="text" placeholder="Enter Beat Code" #beat_code="ngModel" [(ngModel)]="data.beat_code">
                           </div>
                           </td>
 
@@ -204,4 +204,7 @@
       </div>
     </form>
   </div>
+</div>
+<div class="fix-btn" >
+  <a class="bottom-btn ecxel-btn" matTooltip="Download Excel" matTooltipPosition="above" mat-raised-button (click)="exportAsXLSX()"><img src="assets/img/excel.svg"></a>
 </div>

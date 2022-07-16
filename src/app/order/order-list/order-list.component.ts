@@ -273,12 +273,14 @@ export class OrderListComponent implements OnInit {
     exp_loader:any=false;
     exp_data:any=[];
     excel_data:any=[];
+    today_date1:any
     //
     exportAsXLSX():void
     {
       this.exp_loader = true;
+      this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
 
-      this.serve.FileData({'search':this.search_val,'status':this.view_tab},"Order/primary_order_excel")
+      this.serve.FileData({'search':this.search_val},"Order/primary_order_excel")
       .subscribe(resp=>{
         console.log(resp);
         this.exp_data = resp['primary_order_excel'].result;
@@ -286,11 +288,23 @@ export class OrderListComponent implements OnInit {
 
         for(let i=0;i<this.exp_data.length;i++)
         {
-          this.excel_data.push({'Date':this.exp_data[i].date_created,'Created By':this.exp_data[i].created_by_name,'Order Id':this.exp_data[i].id,'Company Name':this.exp_data[i].company_name,});
+          if (this.exp_data[i].type == '1') {
+            this.exp_data[i].type = 'Distributor'
+          }
+          if (this.exp_data[i].type == '2') {
+            this.exp_data[i].type = 'Dealer'
+            console.log(this.exp_data[i].dr_type)
+          }
+        
+          if (this.exp_data[i].type == '12') {
+            this.exp_data[i].type = 'Direct Customer'
+          }
+          this.excel_data.push({'Date':this.exp_data[i].date_created, 'Team State': this.exp_data[i].team_state,'Team Code': this.exp_data[i].team_code,'Team Name': this.exp_data[i].team_name,'Employee Id': this.exp_data[i].employee_id,'Created By':this.exp_data[i].created_by_name,'Order Id':this.exp_data[i].id,'Company Name':this.exp_data[i].company_name,'Contact Person':this.exp_data[i].name,'Mobile':this.exp_data[i].mobile,'Type':this.exp_data[i].type,'Total Item':this.exp_data[i].item_count,'Total Qty':this.exp_data[i].total_qty,'Total Amount':this.exp_data[i].total_amount});
         }
         this.exp_loader = false;
+        this.serve.exportAsExcelFile(this.excel_data, ' Primary-Order'+'-' +this.today_date1);
 
-        this.serve.exportAsExcelFile(this.excel_data, 'Primary-Order');
+        // this.serve.exportAsExcelFile(this.excel_data, 'Primary-Order');
         this.excel_data = [];
         this.exp_data = [];
       });

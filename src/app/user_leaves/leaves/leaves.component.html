@@ -71,15 +71,23 @@
               <tr>
                 <th class="w50">S NO</th>
                 <th class="w110">Date Created</th>
+                <th class="w80"> Team State</th>
+
+
+                <th class="w110">Team Code</th>
+                <th class="w110">Team Name</th>
+                <th class="w110">Employee Code</th>
+
                 <th class="w110">Created By</th>
                 <th class="w120">Leave Type</th>
                 <th class="w90">Type</th>
+                <th class="w90"> Short Leave Type</th>
 
                 <th class="w90">Start Date</th>
                 <th class="w90">End Date</th>
-                <th class="w80 text-center">Total Days</th>
+                <th class="w80">Total Days</th>
                 <th>Description</th>
-                <th class="w120">Status</th>
+                <th class="w100">Status</th>
                 <th class="w60 text-center">Action</th>
               </tr>
             </table>
@@ -98,7 +106,34 @@
                     </mat-form-field>
                   </div>
                 </th>
-
+                <th class="w80">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput placeholder="Search" name="state" [(ngModel)]="search.team_state" (keyup.enter)="leaveList()" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput placeholder="Search" name="created_by" [(ngModel)]="search.team_code" (keyup.enter)="leaveList()" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput placeholder="Search" name="created_by" [(ngModel)]="search.team_name" (keyup.enter)="leaveList()" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w110">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input">
+                      <input matInput placeholder="Search" name="created_by" [(ngModel)]="search.employee_id" (keyup)="leaveList()" >
+                    </mat-form-field>
+                  </div>
+                </th>
                 <th class="w110">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input">
@@ -108,12 +143,13 @@
                 </th>
                 <th class="w120"></th>
                 <th class="w90"></th>
+                <th class="w90"></th>
 
                 <th class="w90"></th>
                 <th class="w90"></th>
                 <th class="w80"></th>
                 <th></th>
-                <th class="w120">
+                <th class="w100">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input">
                       <input matInput placeholder="Search" name="status" [(ngModel)]="search.status" (keyup)="leaveList()" >
@@ -132,19 +168,26 @@
               <tr *ngFor="let leave of leave_list;let i=index;">
                 <td class="w50">{{i+1}}</td>
                 <td class="w110">{{leave.date_created | date :' d MMM, y - H:mm:ss'}}</td>
+                <td class="w80" >{{leave.team_state}}</td>
+                <td class="w110" >{{leave.team_code}}</td>
+                <td class="w110" >{{leave.team_name}}</td>
+                <td class="w110" >{{leave.employee_id}}</td>
+
+
                 <td class="w110" >{{leave.created_by_name}}</td>
                 <td  class="w120">{{leave.leave_type}}</td>
                 <td class="w90">{{leave.type}}</td>
+                <td class="w90">{{leave.short_leave_type}}</td>
 
                 <td class="w90">{{leave.leave_start_date | date :' d MMM, y'}}</td>
                 <td class="w90">{{leave.leave_end_date | date :' d MMM, y'}}</td>
-                <td class="w80 text-center">{{leave.total_days}}</td>
+                <td class="w80">{{leave.total_days}}</td>
                 <td  matTooltip=" {{leave.description}}" matTooltipPosition="above">
                   <div class="one-line">
                       {{leave.description}}
                   </div>
               </td>
-                <td class="w120" [ngClass]="{'yellow-clr':leave.status=='Pending','red-clr':leave.status=='Reject','green-clr':leave.status=='Approved'}" matTooltip="({{leave.status=='Reject' ? leave.reject_remark : ''}})">
+                <td class="w100" [ngClass]="{'yellow-clr':leave.status=='Pending','red-clr':leave.status=='Reject','green-clr':leave.status=='Approved'}" matTooltip="({{leave.status=='Reject' ? leave.reject_remark : ''}})">
                   <strong>{{leave.status | uppercase}}</strong>
                   <div class="one-line">
                     <span *ngIf="leave.reject_remark !=''"> ({{leave.reject_remark}})</span>

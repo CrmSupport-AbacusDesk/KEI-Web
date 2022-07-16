@@ -27,9 +27,9 @@
 
       <div class="tabs ml15">
         <ul>
-          <li><a class="" [ngClass]="active_tab == 'pending' ? 'active' : ''" (click)="active_tab = 'pending';followUpList();">Pending  <span class="counter">{{followup_list.pending_count}}</span></a></li>
-          <li><a class="" [ngClass]="active_tab == 'upcoming' ? 'active' : ''" (click)="active_tab = 'upcoming';followUpList();">Upcoming <span class="counter">{{followup_list.upcoming_count}} </span></a></li>
-          <li><a class="" [ngClass]="active_tab == 'complete' ? 'active' : ''" (click)="active_tab = 'complete';followUpList();">Complete <span class="counter">{{followup_list.complete_count}}</span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'pending' ? 'active' : ''" (click)="active_tab = 'pending';followUpList();">Pending  <span class="counter">{{count_list.pending_count}}</span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'upcoming' ? 'active' : ''" (click)="active_tab = 'upcoming';followUpList();">Upcoming <span class="counter">{{count_list.upcoming_count}} </span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'complete' ? 'active' : ''" (click)="active_tab = 'complete';followUpList();">Complete <span class="counter">{{count_list.complete_count}}</span></a></li>
         </ul>
       </div>
     </div>
@@ -112,7 +112,7 @@
         <div class="table-container">
           <div class="table-content">
             <table>
-              <tr *ngFor="let list of count_list;let i=index">
+              <tr *ngFor="let list of followup_list;let i=index">
                 <td class="w80">{{list.date_created |date : 'd MMM y'}}</td>
                 <td class="w100">{{list.name!=''?list.name:'--'}}</td>
                 <td class="w150" *ngIf="list.dr_id != '0'"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/distribution-detail/{{list.dr_id}}"routerLinkActive="active">{{list.company_name | titlecase}}</a>

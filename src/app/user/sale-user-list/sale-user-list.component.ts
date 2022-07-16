@@ -8,6 +8,8 @@ import { MatDialog } from '@angular/material';
 import { UpdateAdminModelComponent } from '../update-admin-model/update-admin-model.component';
 import { UserTargetModalComponent } from '../user-target-modal/user-target-modal.component';
 import { sessionStorage } from 'src/app/localstorage.service';
+import { UploadFileModalComponent } from 'src/app/upload-file-modal/upload-file-modal.component';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-sale-user-list',
@@ -36,12 +38,14 @@ export class SaleUserListComponent implements OnInit {
   userData: any;
   userId: any;
   userName: any;
+  today_date:Date;
+
   assign_login_data: any = [];
   view_edit : boolean = true;
   view_add : boolean = true;
   view_delete : boolean = true;
 
-  constructor(public alert: DialogComponent, public serve: DatabaseService, public rout: Router, public dialog2: MatDialog,public session: sessionStorage) {
+  constructor(public alert: DialogComponent, public serve: DatabaseService, public alrt:MatDialog, public rout: Router, public dialog2: MatDialog,public session: sessionStorage) {
 
     this.assign_login_data = this.session.getSession();
     this.assign_login_data = this.assign_login_data.value;
@@ -120,6 +124,20 @@ export class SaleUserListComponent implements OnInit {
     });
   }
 
+  upload_excel()
+  {
+    const dialogRef = this.alrt.open(UploadFileModalComponent,{
+      width: '500px',
+      data:{
+        'from':'Users',
+        // 'type':this.type_id
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.getUserList(0, 10,2);
+
+    });
+  }
   userDetail(id) {
     let value = { "id": id }
     this.serve.fetchData(value, "User/user_detail").subscribe((result) => {
@@ -197,12 +215,17 @@ this.serve.count_list();
 
 
 
-
+  today_date1:any
   exportAsXLSX(): void {
+    this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
+console.log(this.userlist);
+
     for (let i = 0; i < this.userlist.length; i++) {
-      this.excel_data.push({ 'Employee Code': this.userlist[i].employee_id, 'Name': this.userlist[i].name, Mobile: this.userlist[i].contact_01, Designation: this.userlist[i].role_name, ReportingManager: this.userlist[i].assign_user, 'Address ': this.userlist[i].street, 'State ': this.userlist[i].state_name, 'District ': this.userlist[i].district_name, 'City ': this.userlist[i].city, 'Pincode ': this.userlist[i].pincode,'Distance from ofc to home': this.userlist[i].name });
+     console.log(this.userlist[i].attendance.attend_date);
+     
+      this.excel_data.push({'Team State':this.userlist[i].team_state,'Team Code':this.userlist[i].team_code,'Team Name':this.userlist[i].team_name,'Employee Id':this.userlist[i].employee_id,'Name':this.userlist[i].name,'Email':this.userlist[i].email,'Mobile':this.userlist[i].contact_01,'Designation':this.userlist[i].role_name,'Date of Joining':this.userlist[i].date_joining,'Date of Leaving':this.userlist[i].date_leaving,'Address':this.userlist[i].street,'State Name':this.userlist[i].state_name,'District Name':this.userlist[i].district_name,'Pincode':this.userlist[i].pincode,'Region':this.userlist[i].distance,'RSM Code':this.userlist[i].assign_user_code ,'RSM Name' : this.userlist[i].assign_user});
     }
-    this.serve.exportAsExcelFile(this.excel_data, 'USER SHEET');
+    this.serve.exportAsExcelFile(this.excel_data, 'USER SHEET'+'-' +this.today_date1);
   }
 
   deleteOrder(id) {

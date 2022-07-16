@@ -336,9 +336,10 @@ export class SecondaryOrderListComponent implements OnInit {
   exp_loader: any = false;
   exp_data: any = [];
   excel_data: any = [];
-
+  today_date1:any
   exportAsXLSX(): void {
     this.exp_loader = true;
+    this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
 
     this.serve.FileData({ 'search': this.search_val }, "Order/secondary_order_excel")
       .subscribe(resp => {
@@ -346,11 +347,15 @@ export class SecondaryOrderListComponent implements OnInit {
         this.exp_data = resp['order_list'].result;
 
         for (let i = 0; i < this.exp_data.length; i++) {
-          this.excel_data.push({ 'Date': this.exp_data[i].date_created, 'Created By': this.exp_data[i].created_by_name, 'Order Id': this.exp_data[i].id, 'Company Name': this.exp_data[i].company_name, 'Company Id': this.exp_data[i].dr_id,'Distributor': this.exp_data[i].distributor_name });
+          if (this.exp_data[i].type == '3') {
+            this.exp_data[i].type = 'Retailer'
+          }
+          this.excel_data.push({ 'Date': this.exp_data[i].date_created, 'Team State': this.exp_data[i].team_state,'Team Code': this.exp_data[i].team_code,'Team Name': this.exp_data[i].team_name,'Employee Id': this.exp_data[i].employee_id, 'Created By': this.exp_data[i].created_by_name, 'Order Id': this.exp_data[i].id, 'Company Name': this.exp_data[i].company_name, 'Contact Person':this.exp_data[i].name,'Mobile':this.exp_data[i].mobile,'Distributor': this.exp_data[i].distributor_name,'Total Item':this.exp_data[i].item_count,'Total Qty':this.exp_data[i].total_qty,'Total Amount':this.exp_data[i].total_amount });
         }
         this.exp_loader = false;
+        this.serve.exportAsExcelFile(this.excel_data, ' Secondary-Order'+'-' +this.today_date1);
 
-        this.serve.exportAsExcelFile(this.excel_data, 'Secondary-Order');
+        // this.serve.exportAsExcelFile(this.excel_data, 'Secondary-Order''-' +this.today_date1);
         this.excel_data = [];
         this.exp_data = [];
       });

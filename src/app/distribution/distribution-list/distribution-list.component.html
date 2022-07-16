@@ -59,8 +59,8 @@
     </div>
     <div  class="tabs ml15">
       <ul>
-      <li><a class="" [ngClass]="active_tab == 'active' ? 'active' : ''" (click)="active_tab = 'active'; distributorList();">Active <span class="counter">{{all_count.active}}</span></a></li>
-      <li><a class="" [ngClass]="active_tab == 'notactive' ? 'active' : ''" (click)="active_tab = 'notactive'; distributorList();">NotActive <span class="counter">{{all_count.notactive}}</span></a></li>
+      <li><a class="" [ngClass]="active_tab == 'active' ? 'active' : ''" (click)="active_tab = 'active'; distributorList();">Existing <span class="counter">{{all_count.active}}</span></a></li>
+      <li><a class="" [ngClass]="active_tab == 'notactive' ? 'active' : ''" (click)="active_tab = 'notactive'; distributorList();">New <span class="counter">{{all_count.notactive}}</span></a></li>
     </ul>
     </div>
       </div>
@@ -82,16 +82,25 @@
           <div class="table-head" >
             <table class="sno-border">
               <tr>
-                <th class="w20">S.no.</th>
+                <th class="w30">S.no.</th>
+                <th class="w70">Team State</th>
+                <th class="w100">Team Code</th>
+
+                <th class="w150">Team Name</th>
+                <th class="w100">Employee Code</th>
+                <th class="w150">Assigned To</th>
 
                 <th class="w90">Date Created</th>
                 <th class="w80">Created By</th>         
                 <th class="w80">ERP Code</th>
-                <th *ngIf="type_id=='3'"class="w150" >Beat Code</th>
+                <th *ngIf="type_id=='3'"class="w100" >Beat Code</th>
 
                 <th class="w170">Company Name</th>
                 <th class="w150">Contact Person</th>
                 <th class="w80">Contact Number</th>
+                <th *ngIf="type_id=='3'"class="w150" >Assign Distributor</th>
+                <th *ngIf="type_id=='3'"class="w150" >Assign Distributor Code</th>
+
                 <th class="w100">State Name</th>
                 <!-- <th class="w130">Password</th> -->
                 <!-- <th class="w80">Secondary Sale</th> -->
@@ -100,7 +109,6 @@
 
 
                 <!-- <th class="w100">Credit Limit</th> -->
-                <th class="w150">Assigned To</th>
                 <th class="w50">Status</th>
 
               </tr>
@@ -109,8 +117,45 @@
           <div class="table-head bdrt" >
             <table class="sno-border">
               <tr>
-                <th class="w20"></th>
+                <th class="w30"></th>
+                <th class="w70">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="state. . ." name="team_state" (keyup.enter)="distributorList()" [(ngModel)]="search_val.team_state" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Team code. . ." name="team_code" (keyup.enter)="distributorList()" [(ngModel)]="search_val.team_code" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Team Name. . ." name="team_name" (keyup.enter)="distributorList()" [(ngModel)]="search_val.team_name" >
+                    </mat-form-field>
+                  </div>
+                </th>
+               
+                
 
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="EmpCode. . ." name="employee_id" (keyup.enter)="distributorList()" [(ngModel)]="search_val.employee_id" >
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w150">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Assigned To. . ." name="assign_user" (keyup.enter)="distributorList()" [(ngModel)]="search_val.assign_user" >
+                    </mat-form-field>
+                  </div>
+                </th>
                 <th class="w90">
                   <div class="th-search-acmt">
                     <mat-form-field class="cs-input date-column infix-bodr">
@@ -124,7 +169,7 @@
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <!-- getItemsList('created_by',value.search) -->
-                      <input matInput placeholder="Created By. . ." type="text" name="created_by" [(ngModel)]="search_val.created_by" (keyup)="distributorList()">
+                      <input matInput placeholder="Created By. . ." type="text" name="created_by" [(ngModel)]="search_val.created_by" (keyup.enter)="distributorList()">
                     </mat-form-field>
                   </div>
                 </th>
@@ -133,15 +178,15 @@
                 <th class="w80">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
-                      <input matInput placeholder="ERP Code. . ." type="text" name="customer_code" [(ngModel)]="search_val.customer_code" (keyup)="distributorList()">
+                      <input matInput placeholder="ERP Code. . ." type="text" name="customer_code" [(ngModel)]="search_val.customer_code" (keyup.enter)="distributorList()">
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w150"*ngIf="type_id=='3'">
+                <th class="w100"*ngIf="type_id=='3'">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <!-- getItemsList('created_by',value.search) -->
-                      <input matInput placeholder="Beat code. . ." type="text" name="beat_code" [(ngModel)]="search_val.beat_code" (keyup)="distributorList()">
+                      <input matInput placeholder="Beat code. . ." type="text" name="beat_code" [(ngModel)]="search_val.beat_code" (keyup.enter)="distributorList()">
                     </mat-form-field>
                   </div>
                 </th>
@@ -167,6 +212,22 @@
                     </mat-form-field>
                   </div>
                 </th>
+                <th class="w150"*ngIf="type_id=='3'">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <!-- getItemsList('created_by',value.search) -->
+                      <input matInput placeholder="Distributor. . ." type="text" name="assign_distributor" [(ngModel)]="search_val.assign_distributor" (keyup)="distributorList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w150"*ngIf="type_id=='3'">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <!-- getItemsList('created_by',value.search) -->
+                      <input matInput placeholder="Distributor. . ." type="text" name="assign_distributor" [(ngModel)]="search_val.assign_distributor_code" (keyup)="distributorList()">
+                    </mat-form-field>
+                  </div>
+                </th>
                 <th class="w100">
                   <div class="th-search">
                     <select (change)="distributorList()" name="state" [(ngModel)]="search_val.state">
@@ -187,13 +248,7 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w150">
-                  <div class="th-search-acmt">
-                    <mat-form-field class="example-full-width cs-input select-input">
-                      <input matInput placeholder="Assigned To. . ." name="assign_user" (keyup)="distributorList()" [(ngModel)]="search_val.assign_user" >
-                    </mat-form-field>
-                  </div>
-                </th>
+               
                 <th class="w50"></th>
 
               </tr>
@@ -205,19 +260,39 @@
           <div class="table-content">
             <table class="sno-border" >
               <tr *ngFor="let list of distributor_list;let i=index">
-                <td class="w20">{{i+1+start}}</td>
-
+                <td class="w30">{{i+1+start}}</td>
+                <td class="w70">{{list.team_state}}
+                  
+                </td>
+                <td class="w100" style="word-wrap: break-word;">{{list.team_code}}
+                  
+                </td>
+                <td class="w150" style="word-wrap: break-word;">{{list.team_name}}
+                  
+                </td>
+                <td class="w100" style="word-wrap: break-word;">{{list.employee_id}}
+                  
+                </td>
+                <td class="w150">{{list.assign_user}}
+                  
+                </td>
                 <td class="w90">{{list.date_created | date : 'd MMM y'}}</td>
                 <td *ngIf="!list.created_name" class="w80">Admin</td>
                 <td *ngIf="list.created_name" class="w80">{{list.created_name}}</td>
-                <td  class="w80">{{list.dr_code?list.dr_code:'N/A'}}</td>
-                <td class="w150"*ngIf="type_id=='3'" >
+                <td  class="w80"><a  class="link-btn" mat-button (click)="tothepage(list.id,list.state,list.type)">{{list.dr_code?list.dr_code:'N/A'}}</a></td>
+                <td class="w100"*ngIf="type_id=='3'" >
                     {{list.beat_code?list.beat_code:'--'}}- {{list.route?list.route:'--'}}
                 </td>
                
                 <td class="w170"><a  class="link-btn" mat-button (click)="tothepage(list.id,list.state,list.type)">{{list.company_name}}</a></td>
                 <td class="w150">{{list.contactperson}}</td>
-                <td class="w80">{{list.mobile}}</td>
+                <td class="w80"><a  class="link-btn" mat-button (click)="tothepage(list.id,list.state,list.type)">{{list.mobile}}</a></td>
+                <td class="w150"*ngIf="type_id=='3'" >
+                  {{list.assign_distributor?list.assign_distributor:'--'}}
+              </td>
+                <td class="w150"*ngIf="type_id=='3'" >
+                  {{list.assign_distributor_code?list.assign_distributor_code:'--'}}
+              </td>
                 <td class="w100">{{list.state ? list.state : '--'}}</td>
              
                 <!-- <td class="w80">
@@ -227,23 +302,24 @@
                 </td> -->
                 <td class="w80">
                  {{list.last_checkin | date : 'd MMM y'}}
+                 <div class="action-btns">
+                  <!-- <a  mat-button class="view" (click)="userDetail(list.id)"><i class="material-icons">remove_red_eye</i> View</a> -->
+                  <button mat-button class="delete" (click)="deleteUser(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
+                </div>
                 </td>
-                <td class="w150">{{list.assign_user}}</td>
+               
                 <td class="w50 text-center">
                   <mat-slide-toggle  [checked]="list.checkin_active == '0'"  (click)="userStatus(i,list.id,list.created_name)"></mat-slide-toggle>
                 <!-- <td class="w100">{{list.credit_limit?list.credit_limit:'--'}}</td> -->
                
-                  <div class="action-btns">
-                    <a *ngIf="edit=='true'" mat-button class="view" (click)="userDetail(list.id)"><i class="material-icons">remove_red_eye</i> View</a>
-                    <button *ngIf="delete=='true'" mat-button class="delete" (click)="deleteUser(list.id)"><i class="material-icons">delete_sweep</i> Delete</button>
-                  </div>
+                 
                 </td>
               </tr>
 
               <ng-container *ngFor="let lead of skelton">
                 <tr class="sk-loading sno-border"  *ngIf="loader">
-                  <td class="w20"><div>&nbsp;</div></td>
-                  <td class="w90"><div>&nbsp;</div></td>
+                  <td class="w30"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
 
                   <td class="w80"><div>&nbsp;</div></td>
                   <td class="w150"><div>&nbsp;</div></td>
@@ -251,6 +327,7 @@
                   <td class="w150"><div>&nbsp;</div></td>
                   <td class="w100"><div>&nbsp;</div></td>
                   <td class="w100"><div>&nbsp;</div></td>
+                  <td *ngIf="type_id!='3'&&type_id!='4'" class="w80"><div>&nbsp;</div></td>
                   <td *ngIf="type_id!='3'&&type_id!='4'" class="w80"><div>&nbsp;</div></td>
                   <!-- <td class="w100"><div>&nbsp;</div></td> -->
                   <td class="w80"><div>&nbsp;</div></td>

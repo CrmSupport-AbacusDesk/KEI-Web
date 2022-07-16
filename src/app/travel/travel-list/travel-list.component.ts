@@ -92,6 +92,8 @@ this.salesUserLIst()
      
     }))
   }
+  today_date1:any
+
   upload_excel() {
     const dialogRef = this.alrt.open(UploadFileModalComponent, {
       width: '500px',
@@ -122,12 +124,14 @@ this.salesUserLIst()
     this.data={}
 this.travel_list=[]
   }
-  getTravelList(action: any = '') {
-    if (action == "refresh") {
-      this.search = {};
-    }
+  getTravelList() {
+    // if (action == "refresh") {
+    //   this.search = {};
+    // }
 this.travel_list=[]
     this.loader = true;
+    this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
+
     if (this.search.date_to)
       this.search.date_to = moment(this.search.date_to).format('YYYY-MM-DD');
 
@@ -233,6 +237,7 @@ this.travel_list=[]
   exportAsXLSX(): void {
     for (let i = 0; i < this.travel_list.length; i++) {
     
+      this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
 
 
 
@@ -241,7 +246,7 @@ this.travel_list=[]
         console.log("in if");
 
   
-        this.excel_data.push({ 'Date': this.travel_list[i].date_from,   'ERPCode':this.travel_list[i].executive_erp_id, 'Executive name': this.travel_list[i].name, 'Area\Route Name': this.travel_list[i].city,'Beat Code': this.travel_list[i].beat_code, 'TravelType': this.travel_list[i].travel_type,'Remarks':this.travel_list[i].status_remark,'Status': this.travel_list[i].status,});
+        this.excel_data.push({ 'Date': this.travel_list[i].date_from, 'Team State': this.travel_list[i].team_state,'Team Code': this.travel_list[i].team_code,'Team Name': this.travel_list[i].team_name,  'ERPCode':this.travel_list[i].executive_erp_id, 'Executive name': this.travel_list[i].name, 'Area\Route Name': this.travel_list[i].city,'Beat Code': this.travel_list[i].beat_code, 'TravelType': this.travel_list[i].travel_type,'Remarks':this.travel_list[i].status_remark,'Status': this.travel_list[i].status,});
 
       // }
      
@@ -253,7 +258,7 @@ this.travel_list=[]
     console.log(this.travel_list.length);
 
     console.log(this.excel_data);
-    this.serve.exportAsExcelFile(this.excel_data, 'Travel Plan Sheet');
+    this.serve.exportAsExcelFile(this.excel_data, 'Travel Plan Sheet'+'-' +this.today_date1);
     this.excel_data = [];
 
   }
@@ -263,7 +268,7 @@ this.travel_list=[]
         this.serve.fetchData({"user_id":id,'month':month,'year':year},"travel/delete_travel_plan").subscribe((result=>{
           console.log(result);
           this.refresh();
-          this.getTravelList('refresh');
+          this.getTravelList();
 
         }))
       }})
@@ -291,7 +296,7 @@ this.travel_list=[]
         this.serve.fetchData({"travel_id":id},"travel/delete_travel_plan").subscribe((result=>{
           console.log(result);
           this.refresh();
-          this.getTravelList('refresh');
+          this.getTravelList();
 
         }))
       }})

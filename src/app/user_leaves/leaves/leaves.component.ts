@@ -138,14 +138,16 @@ export class LeavesComponent implements OnInit {
     }));
   }
   excel_data:any=[];
+  today_date1:any
   exportAsXLSX():void
   {
+    this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
 
       for(let i=0;i<this.leave_list.length;i++)
       {
-        this.excel_data.push({'Date':this.leave_list[i].date_created,'Created By':this.leave_list[i].created_by_name,'Leave Subject Type':this.leave_list[i].leave_type,'Leave Type':this.leave_list[i].type,'Leave Start Date':this.leave_list[i].leave_start_date,'Leave End Date':this.leave_list[i].leave_end_date,'Total Days':this.leave_list[i].total_days,'Description':this.leave_list[i].description});
+        this.excel_data.push({'Date':this.leave_list[i].date_created, 'Team State': this.leave_list[i].team_state,'Team Code': this.leave_list[i].team_code,'Team Name': this.leave_list[i].team_name,'Employee Id': this.leave_list[i].employee_id,'Created By':this.leave_list[i].created_by_name,'Leave Type':this.leave_list[i].leave_type,'Type':this.leave_list[i].type,'Short Leave Type':this.leave_list[i].short_leave_type,'Leave Start Date':this.leave_list[i].leave_start_date,'Leave End Date':this.leave_list[i].leave_end_date,'Total Days':this.leave_list[i].total_days,'Description':this.leave_list[i].description,'Status':this.leave_list[i].status});
       }
-      this.serve.exportAsExcelFile(this.excel_data, 'Leave List');
+      this.serve.exportAsExcelFile(this.excel_data, 'Leave List'+'-' +this.today_date1);
       this.excel_data = [];
       // this.leave_list = [];
 

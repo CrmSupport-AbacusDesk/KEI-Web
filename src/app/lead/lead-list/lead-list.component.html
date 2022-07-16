@@ -125,14 +125,18 @@
                   <th class="w20">S.no.</th>
 
                   <th class="w50">Date</th>
+                  <th class="w50"*ngIf="type_id=='9'">Time</th>
+
                   <th class="w100">Created By</th>
                   <th class="w150" *ngIf="type_id!='10'">Company Name</th>
                   <th class="w80" *ngIf="type_id=='10'">Contact Person</th>
 
+                  <th class="w100">Product Name</th>
                   <th class="w50">Mobile no.</th>
 
                   <th class="w50">Source</th>
-                  <th class="w80"> State</th>
+                  <th class="w80">State</th>
+                  <th class="w80">County</th>
                   <th *ngIf="active_tab =='lost'|| active_tab =='Disqualified'" class="w100">Reason</th>
                 <th class="w80">Last Checkin</th>
 
@@ -157,7 +161,9 @@
                       </mat-form-field>
                     </div>
                   </th>
-
+                  <th class="w50"*ngIf="type_id=='9'">
+                   
+                  </th>
                   <th class="w100">
                     <div class="th-search-acmt">
                       <mat-form-field class="example-full-width cs-input select-input">
@@ -181,6 +187,13 @@
                       </mat-form-field>
                     </div>
                   </th>
+                  <th class="w100">
+                    <div class="th-search-acmt">
+                      <mat-form-field class="example-full-width cs-input select-input">
+                        <input matInput placeholder="Product name. . ." type="text" name="product_name" [(ngModel)]="search_val.product_name" (keyup.enter)="leadList()">
+                      </mat-form-field>
+                    </div>
+                  </th>
                   <th class="w50">
                     <div class="th-search-acmt">
                       <mat-form-field class="example-full-width cs-input select-input">
@@ -201,6 +214,13 @@
                         <option value="">Select an Option</option>
                         <option *ngFor="let val of state_list">{{val}}</option>
                       </select>
+                    </div>
+                  </th>
+                  <th class="w80">
+                    <div class="th-search-acmt">
+                      <mat-form-field class="example-full-width cs-input select-input">
+                        <input matInput placeholder="County . . ." type="text" name="country" [(ngModel)]="search_val.country" (keyup.enter)="leadList()">
+                      </mat-form-field>
                     </div>
                   </th>
 
@@ -234,6 +254,8 @@
                 <td class="w20">{{i+1+start}}</td>
 
                   <td class="w50">{{lead.date_created | date :' d MMM, y'}}</td>
+                  <td class="w50"*ngIf="type_id=='9'">{{lead.date_created | date : 'h:mm a'}}</td>
+
                   <td class="w100">{{lead.created_name}}</td>
 
 
@@ -244,10 +266,12 @@
                     </a>
                   </td>
                   <td class="w80"*ngIf="type_id=='10'">{{lead.name? lead.name : '--'}}</td>
-                  <td class="w50"> {{lead.mobile ? lead.mobile : 'N/A'}}</td>
+                  <td class="w100">{{lead.product_name ? lead.product_name : "N/A"}}</td>
+                  <td class="w50"><a  mat-button class="link-btn " routerLink="/lead-detail/{{lead.id}}" routerLinkActive="active" > {{lead.mobile ? lead.mobile : 'N/A'}}</a></td>
 
                   <td class="w50">{{lead.source ? lead.source : 'N/A'}}</td>
                   <td class="w80">{{lead.state}}</td>
+                  <td class="w80">{{lead.country}}</td>
                   <td *ngIf="active_tab =='lost'|| active_tab =='Disqualified'" class="w100">{{lead.reason && lead.reason !=''? lead.reason : '-'}}</td>
                   <td class="w80">{{lead.last_checkin| date :' d MMM, y'}}</td>
 
@@ -258,7 +282,7 @@
                   <td class="w150">
                     {{lead.assigned_to && lead.assigned_to !=''? lead.assigned_to : '-'}}
                     <div class="action-btns">
-                      <a  mat-button class="view" routerLink="/lead-detail/{{lead.id}}" routerLinkActive="active"><i class="material-icons">remove_red_eye</i> View</a>
+                      <!-- <a  mat-button class="view" routerLink="/lead-detail/{{lead.id}}" routerLinkActive="active"><i class="material-icons">remove_red_eye</i> View</a> -->
                       <button  mat-button class="delete" (click)="deleteLead(lead.id)"><i class="material-icons">delete_sweep</i> Delete</button>
                     </div>
                   </td>

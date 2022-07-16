@@ -396,39 +396,95 @@ st_user:any
         console.log(this.login_data.type)
         console.log(this.st_user);
        
+        this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+        console.log();
+        
+        if(this.st_user.data)
+        {
+            this.login_data = this.st_user.data
+            this.http.post(this.dbUrl +  "Attendance/count_data",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
+                if (r) {
+                    this.counterArray = r;
+                    console.log("Service File Data : ",this.counterArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+        else
+        {
+            this.http.post(this.dbUrl +  "Attendance/count_data",{}).subscribe(r => {
+                if (r) {
+                    this.counterArray = r;
+                    console.log("Service File Data : ",this.counterArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
 
-        this.http.post(this.dbUrl +  "Attendance/count_data",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
-            if (r) {
-                this.counterArray = r;
-                console.log("Service File Data : ",this.counterArray);
-            }
-            else{
-                console.log("counter Error in DatabaseService File");
-            }
-        });
+      
     }
 
     dr_list() {
-        this.http.post(this.dbUrl +"Dashboard/distributionNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
-            if (r) {
-                this.drArray = r['modules'];
-                console.log(this.drArray);
-            }
-            else{
-                console.log("counter Error in DatabaseService File");
-            }
-        });
+        this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+        if(this.st_user.data)
+        {
+            this.login_data = this.st_user.data
+
+            this.http.post(this.dbUrl +"Dashboard/distributionNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
+                if (r) {
+                    this.drArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+        else
+        {
+            this.http.post(this.dbUrl +"Dashboard/distributionNetworkModule",{}).subscribe(r => {
+                if (r) {
+                    this.drArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
     }
     lead_list() {
-        this.http.post(this.dbUrl + "Dashboard/leadNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
-            if (r) {
-                this.leadArray = r['modules'];
-                console.log(this.drArray);
-            }
-            else{
-                console.log("counter Error in DatabaseService File");
-            }
-        });
+        this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+        if(this.st_user.data)
+        {
+            this.login_data = this.st_user.data
+
+            this.http.post(this.dbUrl + "Dashboard/leadNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
+                if (r) {
+                    this.leadArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+        else
+        {
+            this.http.post(this.dbUrl + "Dashboard/leadNetworkModule",{}).subscribe(r => {
+                if (r) {
+                    this.leadArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
     }
 
 

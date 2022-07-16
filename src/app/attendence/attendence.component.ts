@@ -43,6 +43,7 @@ export class AttendenceComponent implements OnInit {
   count: any;
   start:any=0;
   page_limit:any=50
+  exp_loader:any=false;
 
   assign_login_data2: any = [];
 
@@ -181,6 +182,7 @@ attendence_type : any ='Present';
     this.attendance_list(func_name, type);
     }
   attendance_list(func_name, type) {
+    this.exp_loader = true;
     
     this.loader = 1;
     if (Object.getOwnPropertyNames(this.data).length != 0) {
@@ -205,6 +207,7 @@ attendence_type : any ='Present';
     .subscribe(((result: any) => {
       console.log(result);
       console.log(result);
+      this.exp_loader = false;
 
       if(type==1){
       this.attendancelist = result;
@@ -333,13 +336,14 @@ leave:any
   attendancelist1:any=[]
   leave_type:any
   description:any
-
+  today_date1:any
 exportAsXLSX() {
-  this.loader = 1;
+  this.exp_loader = true;
   if (Object.getOwnPropertyNames(this.data).length != 0) {
     // this.pagelimit = 0;
     this.attendancelist = [];
   }
+  this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
 
   if (this.data.date_created)
   this.data.date_created = moment(this.data.date_created).format('YYYY-MM-DD');
@@ -374,23 +378,25 @@ exportAsXLSX() {
 console.log(this.leave_type);
 
       
-      this.excel_data.push({ 'Date': this.attendancelist1[i].attend_date, 'Employe Code': this.attendancelist1[i].employee_id,'User Name': this.attendancelist1[i].name, 'Leave':this.leave,'Leavee Type': this.leave_type,'Description':this.description,
+      this.excel_data.push({ 'Date': this.attendancelist1[i].attend_date,'Team State':this.attendancelist1[i].team_state,'Team Code':this.attendancelist1[i].team_code,'Team Name':this.attendancelist1[i].team_name,   'Employe Code': this.attendancelist1[i].employee_id,'User Name': this.attendancelist1[i].name, 'Leave':this.leave,'Leave Type': this.leave_type,'Description':this.description,
     });
   }
   else{
  
 
   
-  this.excel_data.push({ 'Date': this.attendancelist1[i].attend_date, 'Employe Code': this.attendancelist1[i].employee_id,'User Name': this.attendancelist1[i].name, 'Start Time': this.attendancelist1[i].start_time, 'Start Location': this.attendancelist1[i].start_address, 'Stop Time': this.attendancelist1[i].stop_time, 'Stop Location': this.attendancelist1[i].stop_address,
+  this.excel_data.push({ 'Date': this.attendancelist1[i].attend_date, 'Team State':this.attendancelist1[i].team_state,'Team Code':this.attendancelist1[i].team_code,'Team Name':this.attendancelist1[i].team_name,  'Employe Code': this.attendancelist1[i].employee_id,'User Name': this.attendancelist1[i].name, 'Start Time': this.attendancelist1[i].start_time, 'Start Location': this.attendancelist1[i].start_address, 'Stop Time': this.attendancelist1[i].stop_time, 'Stop Location': this.attendancelist1[i].stop_address,
 });
 }
   }
-  this.serve.exportAsExcelFile(this.excel_data, 'Attendance Sheet');
+  this.serve.exportAsExcelFile(this.excel_data, 'Attendance Sheet'+'-' +this.today_date1);
 
+  this.exp_loader = false;
 
     console.log(this.attendancelist);
 
     this.att_temp = result;
+    this.excel_data=[]
 
 
     console.log(this.attendancelist);
@@ -405,10 +411,13 @@ console.log(this.leave_type);
 
 }
 exportAsXLSX1() {
-  this.loader = 1;
+  // this.loader = 1;
+  this.exp_loader = true;
+
   if (Object.getOwnPropertyNames(this.data).length != 0) {
     // this.pagelimit = 0;
   }
+  this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
 
   if (this.data.date_created)
   this.data.date_created = moment(this.data.date_created).format('YYYY-MM-DD');
@@ -427,6 +436,7 @@ exportAsXLSX1() {
 
     this.attendancelist1 = result
 
+console.log(this.attendancelist1)
 
 
     // console.log(tmpDay);
@@ -453,15 +463,17 @@ exportAsXLSX1() {
 console.log(this.leave_type);
 
       
-      this.excel_data.push({ 'Date': this.attendancelist1[i].date,  'Employee Code': this.attendancelist1[i].user_attendence_data[j].employee_id,'User Name': this.attendancelist1[i].user_attendence_data[j].name, 'Leave':this.leave,'Leavee Type': this.leave_type,'Description':this.description,
+      this.excel_data.push({ 'Date': this.attendancelist1[i].date,'Team State':this.attendancelist1[i].user_attendence_data[j].team_state,'Team Code':this.attendancelist1[i].user_attendence_data[j].team_code,'Team Name':this.attendancelist1[i].user_attendence_data[j].team_name,  'Employee Code': this.attendancelist1[i].user_attendence_data[j].employee_id,'User Name': this.attendancelist1[i].user_attendence_data[j].name, 'Leave':this.leave,'Leave Type': this.leave_type,'Description':this.description,
     });
        }
 else{
 
-this.excel_data.push({ 'Date': this.attendancelist1[i].date, 'Employee Code': this.attendancelist1[i].user_attendence_data[j].employee_id,'User Name': this.attendancelist1[i].user_attendence_data[j].name, 'Start Time': this.attendancelist1[i].user_attendence_data[j].start_time, 'Start Location': this.attendancelist1[i].user_attendence_data[j].start_address, 'Stop Time': this.attendancelist1[i].user_attendence_data[j].stop_time, 'Stop Location': this.attendancelist1[i].user_attendence_data[j].stop_address,'Weekly Off': this.attendancelist1[i].user_attendence_data[j].weekly_off,
+this.excel_data.push({ 'Date': this.attendancelist1[i].date,'Team State':this.attendancelist1[i].user_attendence_data[j].team_state,'Team Code':this.attendancelist1[i].user_attendence_data[j].team_code,'Team Name':this.attendancelist1[i].user_attendence_data[j].team_name,   'Employee Code': this.attendancelist1[i].user_attendence_data[j].employee_id,'User Name': this.attendancelist1[i].user_attendence_data[j].name, 'Start Time': this.attendancelist1[i].user_attendence_data[j].start_time, 'Start Location': this.attendancelist1[i].user_attendence_data[j].start_address, 'Stop Time': this.attendancelist1[i].user_attendence_data[j].stop_time, 'Stop Location': this.attendancelist1[i].user_attendence_data[j].stop_address,'Weekly Off': this.attendancelist1[i].user_attendence_data[j].weekly_off,
 });}}}
-  this.serve.exportAsExcelFile(this.excel_data, 'Attendance Sheet');
+  this.serve.exportAsExcelFile(this.excel_data, 'Attendance Sheet'+'-' +this.today_date1);
+  this.exp_loader = false;
 
+  this.excel_data=[]
 
     console.log(this.attendancelist);
 
