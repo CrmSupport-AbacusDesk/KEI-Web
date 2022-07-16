@@ -19,6 +19,7 @@ import * as XLSX from 'xlsx';
 export class ListExpenseComponent implements OnInit
 {
   @ViewChild('table') table: ElementRef;
+  today_date: Date;
 
   food_expense_list:any=[];
   out_expense_list:any=[];
@@ -40,7 +41,6 @@ hotel:any=0
 total:any
 count_list:any=[]
   expense_list:any=[];
-  pagelimit:any=0;
   search:any={};
   active_tab = 'Pending';
   loader:any;
@@ -49,7 +49,12 @@ count_list:any=[]
   searchData: any;
   search_val: any = {}
   backButton: boolean = false;
-list1:any=[]
+ list1:any=[]
+ start:any=0;
+
+ total_page:any;
+ pagenumber:any;
+ page_limit:any=50;
 
 
 
@@ -131,11 +136,15 @@ list1:any=[]
     }
 
     this.serve.fetchData({
-      'user_id': this.assign_login_data2.id, 'start': this.expense_list.length, 'pagelimit': this.pagelimit, 'search': this.search, 'expenseStatus': this.active_tab, 'user_type': this.assign_login_data2.type},"Expense/expense_list").subscribe((result=>
+      'user_id': this.assign_login_data2.id, 'start':this.start, 'pagelimit': this.page_limit, 'search': this.search, 'expenseStatus': this.active_tab, 'user_type': this.assign_login_data2.type},"Expense/expense_list").subscribe((result=>
     {
       console.log(result);
       this.count_list=result;
       this.expense_list=result['result'];
+      console.log(this.count_list);
+
+      this.total_page = Math.ceil(this.count_list.count/this.page_limit);
+      this.pagenumber = Math.ceil(this.start/this.page_limit)+1;
 
 
       if(this.expense_list.length ==0)
@@ -191,13 +200,16 @@ list1:any=[]
       this.location.back()
     }
     excel_data:any=[];
+    today_date1:any
     exportAsXLSX():void {
       for(let i=0;i<this.expense_list.length;i++){
-        this.excel_data.push({'Date':this.expense_list[i].dateCreated,'UserName':this.expense_list[i].userName,'Designation':this.expense_list[i].userType,'Expense type':this.expense_list[i].expenseType,'Amount':this.expense_list[i].totalAmt,'Approved Amount':this.expense_list[i].totalApprovedAmount,'seniorStatus':this.expense_list[i].seniorStatus,'A/C Status':this.expense_list[i].acStatus});
+    this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
+
+        this.excel_data.push({'Date':this.expense_list[i].dateCreated,'Team State': this.expense_list[i].team_state,'Team Code': this.expense_list[i].team_code,'Team Name': this.expense_list[i].team_name,'Employee Id': this.expense_list[i].employee_id,'UserName':this.expense_list[i].userName,'Designation':this.expense_list[i].userType,'Date To':this.expense_list[i].date_to,'Date From':this.expense_list[i].date_from,'Expense type':this.expense_list[i].expenseType,'Total Working Days':this.expense_list[i].localConv[0].working_days,'Total GPS Kms':this.expense_list[i].localConv[0].google_distance,'Home To Office Distance':this.expense_list[i].localConv[0].home_distance,' Distance Travel':this.expense_list[i].localConv[0].distance,'Mode Of Travel':this.expense_list[i].localConv[0].modeOfTravel,'Amount':this.expense_list[i].totalAmt,'seniorStatus':this.expense_list[i].seniorStatus,'A/C Status':this.expense_list[i].acStatus});
 
       }
       console.log(this.excel_data);
-      this.serve.exportAsExcelFile(this.excel_data, 'Expense Sheet');
+      this.serve.exportAsExcelFile(this.excel_data, 'Expense Sheet'+'-' +this.today_date1);
     this.excel_data=[];
 
     }

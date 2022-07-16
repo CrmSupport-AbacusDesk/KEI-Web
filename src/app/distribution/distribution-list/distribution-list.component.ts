@@ -122,7 +122,7 @@ export class DistributionListComponent implements OnInit {
       console.log(params);
       this.type_id = params.id;
       this.type = params.type;
-      console.log(this.type_id);
+      console.log(this.type);
       this.distributorList();
     });
 
@@ -162,7 +162,7 @@ export class DistributionListComponent implements OnInit {
     }
 
     this.loader=true;
-    this.serve.fetchData({ 'user_id': this.assign_login_data2.id, 'user_type': this.assign_login_data2.type, 'sort': this.sort, 'start': this.start,'active_tab':this.active_tab, 'pagelimit': this.page_limit, 'search': this.search_val, 'type': this.type_id,'login_user':this.login_dr_id},"Distributors/distributor")
+    this.serve.fetchData({ 'user_id': this.assign_login_data2.id, 'user_type': this.assign_login_data2.type, 'sort': this.sort, 'start': this.start,'active_tab':this.active_tab, 'pagelimit': this.page_limit, 'search': this.search_val, 'type': this.type_id,'login_user':this.login_dr_id,'for_excel':'false'},"Distributors/distributor")
     .subscribe((result=>{
       console.log(result);
       this.dr_list_temp=result['distributor']['distributor'];
@@ -247,6 +247,7 @@ export class DistributionListComponent implements OnInit {
     }
     refresh()
     {
+      this.search_val={};
       this.distributorList();
     }
     userDetail(id)
@@ -296,21 +297,29 @@ export class DistributionListComponent implements OnInit {
     tmpsearch1:any={};
     excel_data:any=[];
     exp_data:any=[];
-
+    today_date1:any
     exportAsXLSX():void {
+  this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
+
       this.exp_loader = true;
-      this.serve.FileData({'user_id':this.assign_login_data2.id,'search':this.search_val,'type':this.type_id,'login_user':this.login_dr_id},"Distributors/distributor")
+      this.serve.FileData({'user_id':this.assign_login_data2.id,'user_type': this.assign_login_data2.type,'search':this.search_val,'type':this.type_id,'login_user':this.login_dr_id,'for_excel':'true','active_tab':this.active_tab,},"Distributors/distributor")
       .subscribe(resp=>{
         console.log(resp);
         this.exp_data = resp['distributor'].distributor;
         console.log(this.exp_data);
         for(let i=0;i<this.exp_data.length;i++)
         {
-          this.excel_data.push({'ID':this.exp_data[i].id,'Date Created':this.exp_data[i].date_created,'Company Name':this.exp_data[i].company_name,'GST':this.exp_data[i].gst,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'Customer Code':this.exp_data[i].dr_code,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,'State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Assigned Sales User ':this.exp_data[i].assign_user,'Last Checkin':this.exp_data[i].last_checkin,' Total Primary Sale':this.exp_data[i].primary_sale.count,'Primary sale amount':this.exp_data[i].primary_sale.sum,' Total Secondary Sale':this.exp_data[i].secondary_sale.count,'Secondary sale amount':this.exp_data[i].secondary_sale.sum});
+          if(this.type=='Retailer'){
+          this.excel_data.push({'State ':this.exp_data[i].team_state,'Team Code ':this.exp_data[i].team_code,'Team Name':this.exp_data[i].team_name,'Employee Code':this.exp_data[i].employee_id,'Assigned Sales User ':this.exp_data[i].assign_user,'ID':this.exp_data[i].id,'Date Created':this.exp_data[i].date_created,'Company Name':this.exp_data[i].company_name,'GST':this.exp_data[i].gst,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'Customer Code':this.exp_data[i].dr_code,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,' Party State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Last Checkin':this.exp_data[i].last_checkin,'Latitude':this.exp_data[i].lat,'Longitude':this.exp_data[i].lng,'Beat Code':this.exp_data[i].beat_code,'Assigned Distributor Id':this.exp_data[i].assign_distributor_code,'Assigned Distributor':this.exp_data[i].assign_distributor});
         }
+        if(this.type!='Retailer'){
+          this.excel_data.push({'State ':this.exp_data[i].team_state,'Team Code ':this.exp_data[i].team_code,'Team Name':this.exp_data[i].team_name,'Employee Code':this.exp_data[i].employee_id,'Assigned Sales User ':this.exp_data[i].assign_user,'ID':this.exp_data[i].id,'Date Created':this.exp_data[i].date_created,'Company Name':this.exp_data[i].company_name,'GST':this.exp_data[i].gst,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'Customer Code':this.exp_data[i].dr_code,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,' Party State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Last Checkin':this.exp_data[i].last_checkin,'Latitude':this.exp_data[i].lat,'Longitude':this.exp_data[i].lng});
+        }
+      }
         this.exp_loader = false;
+        
 
-        this.serve.exportAsExcelFile(this.excel_data, 'DISTRIBUTOR SHEET');
+        this.serve.exportAsExcelFile(this.excel_data,this.type+' '+ 'Sheet'+'-' +this.today_date1);
         this.excel_data = [];
         this.exp_data = [];
 

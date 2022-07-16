@@ -56,6 +56,8 @@ export class DistributionEditComponent implements OnInit {
 
     this.getPinCodeList(data.district,data.state,data.city, 1);
     console.log(this.data);
+    this.getbeatlist(data.id);
+
     this.data.area = this.data.area;
     console.log(this.data.area);
     this.empData.name = this.data.name;
@@ -108,6 +110,15 @@ filter_dr(dr_name){
     }
   }
 }
+beat_list:any=[]
+getbeatlist(id){
+  this.serve.fetchData({'state':this.data.state,'district':this.data.district}, "Travel/beat_code_list_according_to_city").subscribe((response => {
+    console.log(response);
+    this.beat_list = response['beat_code_list'];
+    console.log(this.city_list);
+
+  }));
+}
 update_distribution() {
 
 
@@ -120,6 +131,11 @@ update_distribution() {
     this.dialog2.closeAll();
     this.serve.count_list();
   }))
+}
+getarea1(data1){
+  this.data.area=data1
+  console.log(this.data.area);
+  
 }
   update_address(data) {
     console.log(data);

@@ -134,7 +134,7 @@
                                                         <div class="outer">
                                                             <div class="inner">
                                                                 <span>Alternate Mobile No.</span>
-                                                                <p>{{dr_detail.landline_no?dr_detail.landline_no:'--'}}</p>
+                                                                <p>{{dr_detail.mobile2?dr_detail.mobile2:'--'}}</p>
                                                             </div>
                                                         </div>
                                                     </li>
@@ -189,7 +189,7 @@
                                                     <div class="cs-heading">
                                                         <h2>Address</h2>
                                                         <button class="edit-item" mat-raised-button color="accent"
-                                                        (click)="editAddress(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.area,dr_detail.address,'address')"><i
+                                                        (click)="editAddress(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.area,dr_detail.address,dr_detail.type,'address')"><i
                                                         class="material-icons">create</i></button>
                                                     </div>
                                                     <div class="cs-figure">
@@ -229,11 +229,19 @@
 
                                                         </ul>
                                                         <ul class="minus-top">
-                                                             <li>
+                                                             <li *ngIf="dr_detail.type!='3'">
                                                                 <div class="outer">
                                                                     <div class="inner">
                                                                         <span>Area</span>
                                                                         <p>{{dr_detail.area && dr_detail.area != null  ? dr_detail.area : '--'}}</p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li *ngIf="dr_detail.type=='3'">
+                                                                <div class="outer">
+                                                                    <div class="inner">
+                                                                        <span>Beat Code</span>
+                                                                        <p>{{dr_detail.beat_code && dr_detail.beat_code != null  ? dr_detail.beat_code : '--'}}-{{dr_detail.area && dr_detail.area != null  ? dr_detail.area : '--'}}</p>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -249,101 +257,100 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                                </div>
-
-                                                <div class="col {{dr_detail.type==1 ? 's3' : 's4'}}" *ngIf="login_data.access_level == '1'">
-                                                    <div class="details-info padding0" *ngIf="sales_executive_update!='true'">
-                                                        <div class="basic-details">
-                                                            <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
-                                                                <h2>Sales User</h2>
-                                                                <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i
-                                                                    class="material-icons">create</i></a>
-                                                                </div>
-                                                                <div class="cs-checkbox" *ngIf="dr_detail.assign_user.length!=0">
-                                                                    <div class="checkbox-outer">
-                                                                        <section class="checkbox-inner bodr0">
-                                                                            <mat-checkbox class="check-list bg-none check-none" value="1"
-                                                                            *ngFor="let row of dr_detail.assign_user">
-                                                                            <div class="name-outer">
-                                                                                <div class="outer">
-                                                                                    <div class="inner">
-                                                                                        <div class="name-inner">
-                                                                                            {{row.sales_executive_name.charAt(0).toUpperCase()}}
-                                                                                        </div>
+                                            <div class="col {{dr_detail.type==1 ? 's6' : 's6'}} mt10" *ngIf="login_data.access_level == '1' ">
+                                                <div class="details-info padding0" *ngIf="sales_executive_update!='true'">
+                                                    <div class="basic-details">
+                                                        <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
+                                                            <h2>Sales User</h2>
+                                                            <a class="edit-item" (click)="update_assigned_sales_executive('true')"><i
+                                                                class="material-icons">create</i></a>
+                                                            </div>
+                                                            <div class="cs-checkbox" *ngIf="dr_detail.assign_user.length!=0">
+                                                                <div class="checkbox-outer">
+                                                                    <section class="checkbox-inner bodr0">
+                                                                        <mat-checkbox class="check-list bg-none check-none" value="1"
+                                                                        *ngFor="let row of dr_detail.assign_user">
+                                                                        <div class="name-outer">
+                                                                            <div class="outer">
+                                                                                <div class="inner">
+                                                                                    <div class="name-inner">
+                                                                                        {{row.sales_executive_name.charAt(0).toUpperCase()}}
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="text-box">
-                                                                                <h2>{{row.sales_executive_name}}</h2>
-                                                                                <p>{{row.role_name}}</p>
-                                                                            </div>
-                                                                        </mat-checkbox>
-                                                                    </section>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="details-info padding0" *ngIf="sales_executive_update=='true'">
-                                                        <div class="basic-details">
-                                                            <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
-                                                                <h2>Sales User</h2>
-                                                                <i class="material-icons search-icon right20"
-                                                                (click)="toggleterritory('user','open')" matRipple>search</i>
-                                                                <input type="text" placeholder="search..." class="fix-search"
-                                                                (input)="getItemsList(search.search)" #search="ngModel"
-                                                                [(ngModel)]="search.search">
-                                                                <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
-                                                                matRipple>clear</i>
-                                                            </div>
-                                                            <div class="cs-logs">
-                                                                <div class="cs-checkbox">
-                                                                    <div class="checkbox-outer">
-                                                                        <section class="checkbox-inner">
-                                                                            <ng-container *ngFor="let list of asmList;let index=index"
-                                                                            aria-required="true">
-                                                                            <mat-checkbox (scroll)="scrollHandler($event)" class="check-list"
-                                                                            [(ngModel)]="list.check"
-                                                                            (change)="product_Brand(list.id,index,$event)"
-                                                                            value="{{list.name}}">{{list.name}} | {{list.role_name}}
-                                                                        </mat-checkbox>
-                                                                    </ng-container>
+                                                                        </div>
+                                                                        <div class="text-box">
+                                                                            <h2>{{row.employee_id}}|  {{row.sales_executive_name}}|  {{row.team_code}}|  {{row.team_name}}|  {{row.team_state}}</h2>
+                                                                        </div>
+                                                                    </mat-checkbox>
                                                                 </section>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="cs-btn mb10 mt10 mr10 text-right">
-                                                        <div class="in-btn sm-btn">
-                                                            <button mat-raised-button color="accent"
-                                                            (click)="update_assigned_executive(dr_detail.sales_executive)">Update</button>
+                                                </div>
+                                                <div class="details-info padding0" *ngIf="sales_executive_update=='true'">
+                                                    <div class="basic-details">
+                                                        <div class="cs-heading margin0" [ngClass]="{'active':active.user==true}">
+                                                            <h2>Sales User</h2>
+                                                            <i class="material-icons search-icon right20"
+                                                            (click)="toggleterritory('user','open')" matRipple>search</i>
+                                                            <input type="text" placeholder="search..." class="fix-search"
+                                                            (input)="getItemsList(search.search)" #search="ngModel"
+                                                            [(ngModel)]="search.search">
+                                                            <i class="material-icons close-icon" (click)="toggleterritory('user','close')"
+                                                            matRipple>clear</i>
+                                                        </div>
+                                                        <div class="cs-logs">
+                                                            <div class="cs-checkbox">
+                                                                <div class="checkbox-outer">
+                                                                    <section class="checkbox-inner">
+                                                                        <ng-container *ngFor="let list of asmList;let index=index"
+                                                                        aria-required="true">
+                                                                        <mat-checkbox (scroll)="scrollHandler($event)" class="check-list"
+                                                                        [(ngModel)]="list.check"
+                                                                        (change)="product_Brand(list.id,index,$event)"
+                                                                        value="{{list.name}}">{{list.employee_id}}|{{list.name}}|{{list.team_code}} |{{list.team_name}}|{{list.team_state}}
+                                                                    </mat-checkbox>
+                                                                </ng-container>
+                                                            </section>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="details-info mt15">
-                                                <div class="basic-details">
-                                                    <div class="cs-heading">
-                                                        <h2>Point Location</h2>
-                                                    </div>
-                                                    <div style="margin: -10px;">
-                                                        <agm-map [zoom]="zoom" center="[latitude, longitude]" [latitude]="latitude"
-                                                        [longitude]="longitude" [mapTypeId]='mapType'>
-                                                        <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
-                                                    </agm-map>
-                                                    <div class="cs-btn padding10 border-top text-right">
-                                                        <div class="in-btn sm-btn">
-                                                            <button mat-raised-button color="accent"
-                                                            (click)="update_google_location(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.address,'updateGoogleLocation')">Update
-                                                            Location</button>
-                                                        </div>
+                                                <div class="cs-btn mb10 mt10 mr10 text-right">
+                                                    <div class="in-btn sm-btn">
+                                                        <button mat-raised-button color="accent"
+                                                        (click)="update_assigned_executive(dr_detail.sales_executive)">Update</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
+<div>
+                                        <!-- <div class="details-info mt15">
+                                            <div class="basic-details">
+                                                <div class="cs-heading">
+                                                    <h2>Point Location</h2>
+                                                </div>
+                                                <div style="margin: -10px;">
+                                                    <agm-map [zoom]="zoom" center="[latitude, longitude]" [latitude]="latitude"
+                                                    [longitude]="longitude" [mapTypeId]='mapType'>
+                                                    <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+                                                </agm-map>
+                                                <div class="cs-btn padding10 border-top text-right">
+                                                    <div class="in-btn sm-btn">
+                                                        <button mat-raised-button color="accent"
+                                                        (click)="update_google_location(dr_detail.country,dr_detail.state,dr_detail.district,dr_detail.city,dr_detail.pincode,dr_detail.address,'updateGoogleLocation')">Update
+                                                        Location</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
                                     </div>
+
+                                </div>
+                                                </div>
+
+                                           
 
                                 </div>
 

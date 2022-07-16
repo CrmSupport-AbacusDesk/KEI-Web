@@ -2,7 +2,7 @@
   <div class="middle-container mb0">
     <div class="page-heading">
       <div class="heading-text">
-        <h2>Activity Report</h2>
+        <h2>Checkin Report</h2>
       </div>
 
     </div>
@@ -19,9 +19,13 @@
       <div class="cs-form date-filter">
         <mat-form-field appearance="outline" class="cs-input w150"
         >
-        <mat-label>Sales Team</mat-label>
-        <mat-select multiple name="users" #user="ngModel" [(ngModel)]="data.user_id">
-          <mat-option *ngFor="let row of systemuserlist" value="{{row.id}}" color="accent">{{row.name}}</mat-option>
+        <mat-label>Team State</mat-label>
+        <mat-select multiple name="users" #user="ngModel" [(ngModel)]="data.team_state">
+          <div class="search-block">
+            
+            <input type="text" name="dr_namee" placeholder="Search.." (input)="filter_dr(dr_namee)" #dr_namee="ngModel" [(ngModel)]="dr_namee">
+          </div>
+          <mat-option *ngFor="let row of channel_partner_list1" value="{{row.team_state}}" color="accent">{{row.team_state}}</mat-option>
         </mat-select>
       </mat-form-field>
         <mat-form-field appearance="outline" class="cs-input w150" >
@@ -48,9 +52,9 @@
     </div>
 
   </div>
-  <div class="suggestion-box" *ngIf="!activity_list.length">
+  <!-- <div class="suggestion-box" *ngIf="!activity_list.length">
     <img src="assets/img/select_please.jpg">
-  </div>
+  </div> -->
   <div class="container-outer padding0"*ngIf="activity_list.length">
     <div *ngIf="exp_loader">
       <mat-spinner class="loader">
@@ -65,19 +69,74 @@
             <table class="sno-border">
               <tr>
                 <th class="w50">S.No.</th>
+                <th class="w100 text-center">Region</th>
 
-                <th class="w100">Date Created</th>
-                <th class="w100">Created By</th>
-                <th class="w170">Company Name</th>
-                <th class="w170">Contact No.</th>
+                <th class="w100 text-center">State</th>
+                <th class="w100 text-center">Team Name</th>
 
-                <th class="w170">Activity Type</th>
+                <th class="w100 text-center">Employee ID</th>
+                <th class="w100 text-center">Sales User</th>
+                <th class="w100 text-center">Dealer/Distributor</th>
 
-                <th>Description</th>
+                <th class="w100 text-center">Retailer</th>
+                <th class="w100 text-center">Electrician</th>
+                <th class="w100 text-center">Others</th>
+                <th class="w100 text-center">Total Checkins</th>
+
+                <th class="w100 text-center">Working Days</th>
+                <th class="w100 text-center">Leave Days</th>
+                <th class="w100 text-center">Spend Hours</th>
+
+                <th class="w100 text-center">Working Hours</th>
+
+
+
               </tr>
             </table>
           </div>
+          <div class="table-head bdrt" >
+            <table>
+              <tr>
+                <th class="w50">&nbsp;</th>
+                <th class="w100">
+                  <div class="th-search-acmt">
+                    <mat-form-field class="example-full-width cs-input select-input">
+                      <input matInput placeholder="Region. . ." type="text" name="region" [(ngModel)]="search_val.region" (keyup.enter)="leadList()">
+                    </mat-form-field>
+                  </div>
+                </th>
+                <th class="w100">
+                 
+                </th>
+              
+                <th class="w100">&nbsp;</th>
 
+                <th class="w100">
+                
+                </th>
+                <th class="w100">
+                 
+                </th>
+                <th class="w100">
+                 
+                </th>
+                <th class="w100"> </th>
+                <th class="w100">&nbsp;</th>
+
+                <th class="w100 text-center">
+                
+
+              </th>
+                <th class="w100 text-center">&nbsp;</th>
+                <th class="w100 text-center">&nbsp;</th>
+                <th class="w100 text-center">&nbsp;</th>
+                <th class="w100 text-center">&nbsp;</th>
+                <th class="w100 text-center">&nbsp;</th>
+
+
+              </tr>
+            </table>
+          </div>
         </div>
 
 
@@ -86,17 +145,29 @@
             <table class="sno-border">
               <tr *ngFor="let list of activity_list;let i=index">
                 <td class="w50">{{i+1+start}}</td>
+                <td class="w100">{{list.region}}</td>
 
-                <td class="w100">{{list.date_created | date : 'd MMM y'}}</td>
-                <td  class="w100">{{list.created_by_name}}</td>
-                <td class="w170">{{list.company_name}}</td>
-                <td class="w170">{{list.mobile}}</td>
+                <td class="w100">{{list.team_state}}</td>
+                <td class="w100">{{list.team_name}}</td>
 
-                <td class="w170">{{list.activity_type}}</td>
+                <td  class="w100">{{list.employee_id}}</td>
+                <td class="w100">{{list.name}}</td>
+                <td class="w100">{{list.distributorCount}}</td>
 
-                <td>{{list.remark}}
+                <td class="w100">{{list.retailerCount}}</td>
+                <td class="w100">{{list.electricianCount}}</td>
+                <td class="w100">{{list.otherCount}}</td>
+                <td class="w100">{{list.total}}</td>
 
-                </td>
+                <td class="w100">{{list.workingDays}}</td>
+                <td class="w100">{{list.leave}}</td>
+                <td class="w100">{{list.spendhour}}</td>
+                <td class="w100">{{list.workinghour}}</td>
+
+
+
+
+               
               </tr>
 
               <ng-container *ngFor="let lead of skelton">

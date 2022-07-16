@@ -175,6 +175,9 @@ import { ConvertuploadimageComponent } from './convertuploadimage/convertuploadi
 import { AttendancemodalComponent } from './attendancemodal/attendancemodal.component';
 import { JointmodalComponent } from './jointmodal/jointmodal.component';
 import { TargetReportComponent } from './target-report/target-report.component';
+import { OrderdetailsComponent } from './orderdetails/orderdetails.component';
+import { CheckindocumentComponent } from './checkindocument/checkindocument.component';
+import { BnNgIdleService } from 'bn-ng-idle';
 
 
 
@@ -452,7 +455,9 @@ const routes: Routes = [
         ConvertuploadimageComponent,
         AttendancemodalComponent,
         JointmodalComponent,
-        TargetReportComponent
+        TargetReportComponent,
+        OrderdetailsComponent,
+        CheckindocumentComponent
 
     ],
     imports: [
@@ -496,12 +501,13 @@ const routes: Routes = [
         AuthComponentGuard,
         sessionStorage,
         DialogComponent,
+        BnNgIdleService,
         ExportexcelService,
         NgxImageCompressService,
     ],
 
     entryComponents: [ConvertuploaddocumentComponent,
-         DailyactivityComponent,
+         DailyactivityComponent,OrderdetailsComponent,CheckindocumentComponent,
         ImageModuleComponent ,DisExecutiveModelComponent,DisOtpVarificationComponent,DrDiscountComponent,UpdateAdminModelComponent,UserEmailModalComponent,ConfirmDialogComponent,EditAddressComponent,EditleadComponent,AddCategoryComponent,DistributionEditComponent,StatusModalComponent,ChangeStatusComponent,AddPrimaryOrderValueComponent,DistributionLegderModelComponent,SecOrdReportModelComponent,ProductQrCodeModelComponent,ChangeSchemeStatusModelComponent,PlumberEditModelComponent,OrderEditModalComponent,OrderDispatchComponent,
         ExpenseModalComponent,UserTargetModalComponent,JointmodalComponent,AttendancemodalComponent,TravelStatusModalComponent, ContractorMeetStatusModalComponent, VisitingCardStatusModalComponent, LeadAddActivityModelComponent, LeadAddFollowupModelComponent, QuotationDetailModalComponent,PopGiftIssueModalComponent,addTravelListModal,TravelPlanDetailComponent,DistributorModelComponent, FollowupEditComponent, ExpesneEditComponent,ConvertuploadimageComponent
 

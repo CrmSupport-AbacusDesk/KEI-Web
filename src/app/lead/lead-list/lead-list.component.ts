@@ -113,11 +113,15 @@ export class LeadListComponent implements OnInit {
       console.log(params);
       this.type_id = params.id;
       this.type = params.type;
+      console.log(this.type);
+      
       console.log(this.type_id);
       this.search_val.date_created='';
       this.search_val.created_by='';
       this.search_val.company_name='';
       this.search_val.assign_user='';
+      this.search_val.product_name='';
+      this.search_val.country='';
       this.leadList();
     });
 
@@ -306,8 +310,10 @@ export class LeadListComponent implements OnInit {
 
 
     exp_data:any=[];
-
+    today_date1:any
     exportAsXLSX():void {
+  this.today_date1=moment(this.today_date).format('DD-MM-YYYY');
+
       this.serve.FileData({'user_id':this.login_data5.id,'search':this.search_val, 'active_tab':this.active_tab,'type_id':this.type_id},"Lead/getLeadList")
       .subscribe(resp=>{
         console.log(resp);
@@ -315,10 +321,10 @@ export class LeadListComponent implements OnInit {
         console.log(this.exp_data);
         for(let i=0;i<this.exp_data.length;i++)
         {
-          this.excel_data.push({'ID':this.exp_data[i].id,'Company Name':this.exp_data[i].company_name,'Source':this.exp_data[i].source,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'WhatsApp No.':this.exp_data[i].whatsapp_no,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,'State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Last Checkin':this.exp_data[i].last_checkin,'Assigned Sales User':this.exp_data[i].assigned_to && this.exp_data[i].assigned_to !=''? this.exp_data[i].assigned_to : '-','Description':this.exp_data[i].description});
+          this.excel_data.push({'Team State ':this.exp_data[i].team_state,'Team Code ':this.exp_data[i].team_code,'Team Name':this.exp_data[i].team_name,'Employee Code':this.exp_data[i].employee_id,'Assigned Sales User':this.exp_data[i].assigned_to && this.exp_data[i].assigned_to !=''? this.exp_data[i].assigned_to : '-','Company Name':this.exp_data[i].company_name,'Source':this.exp_data[i].source,'Contact Person':this.exp_data[i].name,Mobile:this.exp_data[i].mobile,'WhatsApp No.':this.exp_data[i].whatsapp_no,Email:this.exp_data[i].email,'Address ':this.exp_data[i].address,'State ':this.exp_data[i].state,'District ':this.exp_data[i].district,'City ':this.exp_data[i].city,'Pincode ':this.exp_data[i].pincode,'Last Checkin':this.exp_data[i].last_checkin,'Description':this.exp_data[i].description,'Product Name':this.exp_data[i].product_name,'Enquiry Id':this.exp_data[i].query_id,'Recieved As':this.exp_data[i].q_type});
         }
+        this.serve.exportAsExcelFile(this.excel_data,this.type+' '+ 'Sheet'+'-' +this.today_date1);
 
-        this.serve.exportAsExcelFile(this.excel_data, 'DISTRIBUTOR SHEET');
         this.excel_data = [];
         this.exp_data = [];
 

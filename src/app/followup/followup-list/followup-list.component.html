@@ -27,9 +27,9 @@
 
       <div class="tabs ml15">
         <ul>
-          <li><a class="" [ngClass]="active_tab == 'pending' ? 'active' : ''" (click)="active_tab = 'pending';followUpList();">Pending  <span class="counter">{{followup_list.pending_count}}</span></a></li>
-          <li><a class="" [ngClass]="active_tab == 'upcoming' ? 'active' : ''" (click)="active_tab = 'upcoming';followUpList();">Upcoming <span class="counter">{{followup_list.upcoming_count}} </span></a></li>
-          <li><a class="" [ngClass]="active_tab == 'complete' ? 'active' : ''" (click)="active_tab = 'complete';followUpList();">Complete <span class="counter">{{followup_list.complete_count}}</span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'pending' ? 'active' : ''" (click)="active_tab = 'pending';followUpList();">Pending  <span class="counter">{{count_list.pending_count}}</span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'upcoming' ? 'active' : ''" (click)="active_tab = 'upcoming';followUpList();">Upcoming <span class="counter">{{count_list.upcoming_count}} </span></a></li>
+          <li><a class="" [ngClass]="active_tab == 'complete' ? 'active' : ''" (click)="active_tab = 'complete';followUpList();">Complete <span class="counter">{{count_list.complete_count}}</span></a></li>
         </ul>
       </div>
     </div>
@@ -42,15 +42,15 @@
       </mat-spinner>
     </div> -->
     <div class="container">
-      <div class="cs-table horizontal-scroll" style="width: 150%">
+      <div class="cs-table horizontal-scroll" style="width: 100%">
         <div class="sticky-head">
           <div class="table-head">
             <table>
               <tr>
                 <th class="w80">Date Created</th>
                 <th class="w100">Created By</th>
-                <th class="w200">Company Name</th>
-                <th class="w120">Company Type</th>
+                <th class="w150">Company Name</th>
+                <th class="w100">Company Type</th>
                 <th class="w80">Follow up Type</th>
                 <th class="w80">Followup Date</th>
                 <th class="w100">Assign To</th>
@@ -73,14 +73,14 @@
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w200">
+                <th class="w150">
                   <div class="th-search-acmt">
                     <mat-form-field class="example-full-width cs-input select-input">
                       <input matInput placeholder="Enter Name...."  name="company_name" [(ngModel)]="search.company_name" (keyup.enter)="followUpList()">
                     </mat-form-field>
                   </div>
                 </th>
-                <th class="w120"></th>
+                <th class="w100"></th>
                 <th class="w80">
                 </th>
                 <th class="w80">
@@ -112,12 +112,12 @@
         <div class="table-container">
           <div class="table-content">
             <table>
-              <tr *ngFor="let list of count_list;let i=index">
+              <tr *ngFor="let list of followup_list;let i=index">
                 <td class="w80">{{list.date_created |date : 'd MMM y'}}</td>
                 <td class="w100">{{list.name!=''?list.name:'--'}}</td>
-                <td class="w200" *ngIf="list.dr_id != '0'"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/distribution-detail/{{list.dr_id}}"routerLinkActive="active">{{list.company_name | titlecase}}</a>
+                <td class="w150" *ngIf="list.dr_id != '0'"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/distribution-detail/{{list.dr_id}}"routerLinkActive="active">{{list.company_name | titlecase}}</a>
                 </td>
-                <td class="w120">
+                <td class="w100">
                   <span style="font-weight: 500;" *ngIf="list.type == '1'">Distributor</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '3'">Retailer</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '2'">Dealer</span>
@@ -125,11 +125,11 @@
                   <span style="font-weight: 500;" *ngIf="list.type == '5'">Architect</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '6'">Constructor</span>
                   <span style="font-weight: 500;" *ngIf="list.type == '7'">Contractor</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '13'">Interior Designer</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '14'">Government Contractor</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '15'">Builder</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '16'">Architect</span>
-                  <span style="font-weight: 500;" *ngIf="list.type == '' || list.type != '12' && list.type != '15' && list.type != '13' && list.type != '14' && list.type != '9' && list.type != '5' && list.type != '10' && list.type != '11' && list.type != '7' && list.type != '1' && list.type != '3' && list.type != '16'">Other</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '8'">Interior Designer</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '9'">Online</span>
+                  <span style="font-weight: 500;" *ngIf="list.type == '10'">Electrician</span>
+
+                  
                 </td>
                 <td class="w80">{{list.next_follow_type!=''?list.next_follow_type:'--'}}</td>
                 <td class="w80"><a *ngIf="view_edit" class="link-btn" mat-button routerLink="/followup-detail/{{list.id}}" routerLinkActive="active">{{list.next_follow_date!=''?(list.next_follow_date | date : 'd MMM y'):'--'}}</a></td>
@@ -151,14 +151,16 @@
 
               <ng-container *ngFor="let lead of skelton">
                 <tr class="sk-loading"  *ngIf="loader">
+                  <td class="w80"><div>&nbsp;</div></td>
+
                   <td class="w100"><div>&nbsp;</div></td>
                   <td class="w150"><div>&nbsp;</div></td>
-                  <td class="w200"><div>&nbsp;</div></td>
-                  <td class="w120"><div>&nbsp;</div></td>
-                  <td class="w150"><div>&nbsp;</div></td>
                   <td class="w100"><div>&nbsp;</div></td>
-                  <td class="w150"><div>&nbsp;</div></td>
-                  <td  class="w200"><div>&nbsp;</div></td>
+                  <td class="w80"><div>&nbsp;</div></td>
+                  <td class="w80"><div>&nbsp;</div></td>
+                  <td class="w80"><div>&nbsp;</div></td>
+                  <td class="w100"><div>&nbsp;</div></td>
+                  <td  class="w150"><div>&nbsp;</div></td>
                   <td class="w50"><div>&nbsp;</div></td>
                 </tr>
               </ng-container>

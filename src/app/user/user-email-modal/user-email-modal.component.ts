@@ -6,6 +6,7 @@ import { DialogComponent } from 'src/app/dialog.component';
 import { ToastrManager } from 'ng6-toastr-notifications';
 import {  sessionStorage} from 'src/app/localstorage.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-user-email-modal',
@@ -17,6 +18,12 @@ export class UserEmailModalComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA)public data,public serve:DatabaseService,public session: sessionStorage,public dialog:MatDialog,public rout:Router,public alert:DialogComponent,public toast:ToastrManager)  {
     console.log(data);
+    if(data.type =="date_joining"){
+      this.data.doj=this.data.value
+    }
+    if(data.type =="date_leaving"){
+      this.data.date_leaving=this.data.value
+    }
     this.userData = JSON.parse(localStorage.getItem('st_user'));
     // this.userId=this.userData['data']['id'];
     // this.userName=this.userData['data']['name'];
@@ -123,6 +130,18 @@ else{
 
   update_user()
   {
+    if(this.data.doj){
+      this.data.doj = moment(this.data.doj).format('YYYY-MM-DD');
+      
+  this.data.value=this.data.doj;
+  
+      }
+      if(this.data.date_leaving){
+        this.data.date_leaving = moment(this.data.date_leaving).format('YYYY-MM-DD');
+        
+    this.data.value=this.data.date_leaving;
+    
+        } 
     if(this.data.type=='working_state'){
       this.data.value=this.a
     }

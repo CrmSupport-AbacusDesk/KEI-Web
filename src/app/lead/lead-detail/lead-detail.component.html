@@ -156,11 +156,36 @@
                               <p *ngIf="lead_detail.type == '6'">Constructor</p>
                               <p *ngIf="lead_detail.type == '7'">Contractor</p>
                               <p *ngIf="lead_detail.type == '8'">Interior Designer</p>
+                              <p *ngIf="lead_detail.type == '9'">Online</p>
 
                               <!-- <p *ngIf="lead_detail.type == '9'">Project</p>
                               <p *ngIf="lead_detail.type == '5'">End User</p>
                               <p *ngIf="lead_detail.type == '3'">Reatiler</p>
                               <p *ngIf="lead_detail.type == '1'">Distributor/Dealer</p> -->
+                            </div>
+                          </li>
+                        </ul>
+                        <ul>
+                          <!-- <li>
+                            <div class="cs-box">
+                              <img src="assets/img/category.svg" class="fix-img">
+                              <span>Stage</span>
+                              <p>{{lead_detail.stage?lead_detail.stage:'--'}}</p>
+                            </div>
+                          </li> -->
+
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/description.svg" class="fix-img">
+                              <span>Product name</span>
+                              <p>{{lead_detail.product_name?lead_detail.product_name:'--'}}</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="cs-box">
+                              <img src="assets/img/description.svg" class="fix-img">
+                              <span>Description</span>
+                              <p>{{lead_detail.description?lead_detail.description:'--'}}</p>
                             </div>
                           </li>
                         </ul>
@@ -177,15 +202,41 @@
                               </li> -->
 
                             </ul>
+                           
                             <ul >
                               <li>
                                 <div class="cs-box" >
                                   <img src="assets/img/description.svg" class="fix-img">
-                                  <span>Description</span>
-                                  <p>{{lead_detail.description?lead_detail.description:'--'}}</p>
+                                  <span> Enquiry Id</span>
+                                     <!-- <div [innerHtml]="lead_detail.enquiry_desc"></div> -->
+
+                                  <p>{{lead_detail.query_id?lead_detail.query_id:'--'}}</p>
                                 </div>
                               </li>
                             </ul>
+                            <ul >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Recieved As</span>
+                                     <!-- <div [innerHtml]="lead_detail.enquiry_desc"></div> -->
+
+                                  <p>{{lead_detail.q_type?lead_detail.q_type:'--'}}</p>
+                                </div>
+                              </li>
+                            </ul>
+                            <ul >
+                              <li>
+                                <div class="cs-box" >
+                                  <img src="assets/img/description.svg" class="fix-img">
+                                  <span> Enquiry Description</span>
+                                     <div [innerHtml]="lead_detail.enquiry_desc"></div>
+
+                                  <!-- <p>{{lead_detail.enquiry_desc?lead_detail.enquiry_desc:'--'}}</p> -->
+                                </div>
+                              </li>
+                            </ul>
+                           
 
                             <ul *ngIf="lead_detail.reason">
                               <li>
@@ -491,7 +542,7 @@
               </div>
 
 
-              <div class="details-info mt15">
+              <!-- <div class="details-info mt15">
                 <div class="basic-details">
                   <div class="cs-heading">
                     <h2>Point Location</h2>
@@ -510,7 +561,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 

@@ -32,7 +32,18 @@
                     </li>
                 </ul>
             </div>
+            <div class="top-pagination" *ngIf="show_today">
+                <ul>
+                    <li class="refresh-area">
+                        <a class="refresh-btn" mat-raised-button (click)="refresh('getattendance_today',1)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                      </li>
+                   
+                </ul>
+            </div>
             <div *ngIf="!show_today">
+                <!-- <li class="refresh-area">
+                    <a class="refresh-btn" mat-raised-button (click)="refresh('getAttendance',2)" matTooltip="Refresh"><i class="material-icons"> refresh</i></a>
+                  </li> -->
                 <div class="cs-form date-filter">
                     <mat-form-field appearance="outline" class="cs-input w150">
                         <mat-label>Date From</mat-label>
@@ -103,7 +114,11 @@
         </div>
       </div>
     <div class="container-outer padding0">
-
+        <div *ngIf="exp_loader">
+            <mat-spinner class="loader">
+              <div><p>Loading....</p></div>
+            </mat-spinner>
+          </div>
         <!-- <div *ngIf="loader">
             <mat-spinner class="loader">
                 <div><p>Loading....</p></div>
@@ -116,8 +131,14 @@
                         <table>
                             <tr>
                                 <th class="w90 text-center" *ngIf="!show_today">Date</th>
+                                <th class="w90 text-center" >Team State</th>
+                                <th class="w90 text-center" >Team Code</th>
+                                <th class="w90 text-center" >Team Name</th>
+
+
+                                <th class="w100 text-center">Employee Code</th>
+
                                 <th class="w150 text-center">User </th>
-                                <th class="w100 text-center">Work Type</th>
                                 <!-- <th class="w90 text-center">Mode</th> -->
 
                                 <th class="w90 text-center">Start Time</th>
@@ -154,16 +175,44 @@
                                         </mat-form-field>
                                     </div> -->
                                 </th>
+                                <th class="w90"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Enterstate...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.team_state">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w90"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Entercode...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.team_code">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w90"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Entername...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.team_name">
+                                    </mat-form-field>
+                                </div></th>
+                                <th class="w100"> <div class="th-search-acmt">
+                                    <mat-form-field class="example-full-width cs-input select-input">
+                                        <input matInput placeholder="Enter code...."
+                                        (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                        [(ngModel)]="data.employee_id">
+                                    </mat-form-field>
+                                </div></th>
                                 <th class="w150">
                                     <div class="th-search-acmt">
                                         <mat-form-field class="example-full-width cs-input select-input">
                                             <input matInput placeholder="Enter Name...."
-                                            (keyup)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
+                                            (keyup.enter)="show_today? attendance_list('getattendance_today',1) : attendance_list('getAttendance',2)"
                                             [(ngModel)]="data.name">
                                         </mat-form-field>
                                     </div>
                                 </th>
-                                <th class="w100">&nbsp;</th>
+                              
                                 <th class="w90">&nbsp;</th>
                                 <!-- <th class="w90">&nbsp;</th> -->
 
@@ -189,16 +238,20 @@
                         <table>
                             <tr *ngFor="let p of attendancelist">
                                 <td *ngIf="!show_today" class="w90 text-center">{{(p.date_created?p.date_created :'--') | date : 'd MMM y' }}</td>
+                                <td  class="w90 text-center">{{p.team_state}}</td>
+                                <td  class="w90 text-center">{{p.team_code}}</td>
+                                <td  class="w90 text-center">{{p.team_name}}</td>
 
-                                <td class="w150 text-center" [ngClass]="p.attend_date ? 'light-green' : ( (p.weekly_off && p.weekly_off == p.date_created_day) ? 'yellow-bgclr' : 'red-bgclr') ">{{p.name}}</td>
+                                <td  class="w100 text-center">{{p.employee_id}}</td>
 
-                                <td *ngIf="!p.work_type" class="w100 text-center">--</td>
+                                <td class="w150" [ngClass]="p.attend_date ? 'light-green' : ( (p.weekly_off && p.weekly_off == p.date_created_day) ? 'yellow-bgclr' : 'red-bgclr') ">{{p.name}}</td>
 
-                                <td *ngIf="p.work_type=='Working'" class="w100 text-center">{{p.work_type ? p.work_type : '--'}}</td>
+
+                              <!--  <td *ngIf="p.work_type=='Working'" class="w100 text-center">{{p.work_type ? p.work_type : '--'}}</td>
 
                                 <td *ngIf="p.work_type=='Travel'" class="w100 text-center"
                                 matTooltip="{{p.travel_place ? p.travel_place : '--'}}" matTooltipPosition="above">{{p.work_type ?
-                                    p.work_type : '--'}}</td>
+                                    p.work_type : '--'}}</td> -->
                                 <!-- <td class="w90 text-center">{{p.vehicle}}</td> -->
 
                                 <td class="w90 text-center">{{p.start_time?p.start_time:'--'}}</td>
@@ -228,13 +281,13 @@
                                     </td>
                                     <td class="w90 text-center">
                                         <span style="cursor: pointer;color:blue" (click)="p.today_primary_sales && p.today_primary_sales_count ? goTo(p.name,p.date_created,'primary_sale'):''">
-                                            {{p.today_primary_sales_count?p.today_primary_sales_count:'0'}} | &#8377; {{p.today_primary_sales=='NaN'?'0':p.today_primary_sales}}
+                                            {{p.today_primary_sales_count?p.today_primary_sales_count:'0'}}
                                         </span>
                                     </td>
 
                                     <td class="w90 text-center">
                                         <span style="cursor: pointer;color:blue" (click)="p.today_secondary_sales && p.today_secondary_sales_count ? goTo(p.name,p.date_created,'secondary_sale'):'--'">
-                                            {{p.today_secondary_sales_count?p.today_secondary_sales_count:'0'}} | &#8377;{{p.today_secondary_sales? conInt(p.today_secondary_sales):'0'}}
+                                            {{p.today_secondary_sales_count?p.today_secondary_sales_count:'0'}} 
                                         </span>
                                     </td>
                                     <td class="w90 text-center">

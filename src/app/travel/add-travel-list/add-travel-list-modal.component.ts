@@ -50,17 +50,24 @@ export class addTravelListModal implements OnInit {
 
 
 
-  constructor(public serve: DatabaseService, @Inject(MAT_DIALOG_DATA) public data, public Toastr: ToastrManager, public session: sessionStorage, public dialog: MatDialog, public dialog1: DialogComponent) {
+  constructor(public serve: DatabaseService, @Inject(MAT_DIALOG_DATA) public data, public Toastr: ToastrManager, public session: sessionStorage, public dialog: MatDialog, public dialog1: DialogComponent, public toast: ToastrManager,) {
 // console.log(this.data.travel.id)
-if(this.data.travel){
-this.data1.travel_type=this.data.travel.travel_type
- this.assign=this.data.travel.assign_to
-console.log(this.data.travel.date_from);
-console.log(this.assign);
-console.log(this.data1.travel_type);
+console.log(this.data)
+// console.log(this.data.travel.city)
+this.data1.route_name=this.data.row.city
+this.data1.status_remark=this.data.row.status_remark
+this.data1.date_from=this.data.row.date_from
+this.data1.sales_user_id=this.data.row.assign_to
+this.data1.beat_code=this.data.row.beat_code
+this.data1.state=this.data.row.state
+this.data1.district=this.data.row.district
+// this.data1.user_id=this.data.row.id
 
-}
-this.data.city==[]
+
+
+this.getbeatcode()
+
+console.log(this.data1.route_name)
 
 this.data.state==[]
 this.data.district==[]
@@ -70,7 +77,6 @@ this.data.district==[]
     this.logIN_user = JSON.parse(localStorage.getItem('st_user'));
     // this.data1.select_provision="testProvision";
     this.lists = new FormControl();
-    this.get_sales_user_list();
     console.log(this.lists);
     this.today=new Date();
     this.userData = JSON.parse(localStorage.getItem('st_user'));
@@ -85,81 +91,17 @@ state:any=[]
 
 
   ngOnInit() {
-    this.distributorList();
-    this.getStateList();
     this.data1.date_to = '';
     this.data1.date_from = '';
-    this.data1.travel_type=this.data.travel.travel_type
-    this.id=this.data.travel.id
 
-    this.data1.date_from=this.data.travel.date_from
-    this.data1.date_to=this.data.travel.date_to
-    this.data1.sales_user_id=this.data.travel.assign_to
 console.log(this.data.sales_user_id)
 
-    for (var i = 0; i < this.data.travel.area_dealer_list.length; i++) {
-      this.distributor.push(this.data.travel.area_dealer_list[i].dr_id)
-      console.log(this.distributor);
-      this.data1.distributor=this.distributor
-      this.data1.distributor=this.data1.distributor.toString();
-      this.data1.distributor=this.data1.distributor.split(",")
-      console.log(this.data1.distributor)
-
-  }
-  for (var i = 0; i < this.data.travel.travel_list.length; i++) {
-    this.state=(this.data.travel.travel_list[0].state)
-    this.state=this.state.toString()
-    console.log(this.state);
-   this.data1.state=this.state
-   console.log(this.data.travel.travel_list[i].district);
-
-   this.district.push(this.data.travel.travel_list[i].district)
-   this.data1.district=this.district
-
-    this.data1.district=this.data1.district.toString()
-    this.data1.district=this.data1.district.split(",")
-    console.log(this.data1.district)
-    this.city.push(this.data.travel.travel_list[i].city)
-    this.data1.city=this.city
-
-     this.data1.city=this.data1.city.toString()
-     this.data1.city=this.data1.city.split(",")
-     console.log(this.data1.city)
-    this.getDistrict(this.data1.state)
-    this.getCityList(this.data1.state,this.data1.district)
-
-}
+  
   }
 
-  get_sales_user_list() {
 
-    this.serve.fetchData({ 'access_level': 2 }, "User/sales_user_list").subscribe((result => {
-      this.salesUserList = result['sales_user_list'];
-      this.salesUserList2 = this.salesUserList;
-      console.log(this.salesUserList);
-    }))
-    this.data1.travel_type = '';
-    this.data1.distributor = '';
-    this.data1.status_remark = '';
-    this.data1.state = '';
-    this.data1.district = '';
-    console.log(this.lists);
-    this.selectedArea='';
 
-    console.log("list in get sales user" + this.lists);
-  }
-
-  get_sales_user_List(search) {
-    this.tmpsearch='';
-    this.salesUserList = [];
-    for (var i = 0; i < this.salesUserList2.length; i++) {
-      search = search.toLowerCase();
-      this.tmpsearch = this.salesUserList2[i]['name'].toLowerCase();
-      if (this.tmpsearch.includes(search)) {
-        this.salesUserList.push(this.salesUserList2[i]);
-      }
-    }
-  }
+ 
   // get_types() {
   //   this.serve.fetchData({'travel_type': this.data1.travel_type}, "API").subscribe((result => {
   //     console.log(result);
@@ -168,30 +110,7 @@ console.log(this.data.sales_user_id)
   //   }))
   // }
 
-  distributorList() {
-    if(this.data1.state==''){
-      this.data1.state=[]
-    }
-    if(this.data1.district==''){
-      this.data1.district=[]
-    }
-    this.serve.fetchData({'user_id':this.data1.sales_user_id,'state':this.data1.state,'district':this.data1.district,'city':this.data1.city}, "Travel/distributors_list").subscribe((result => {
-      this.drlist = result;
-      for (let i = 0; i < this.drlist.length; i++) {
-        if(this.drlist[i].type=="3"){
-        this.drlist[i].type='Retailer'
-       this.drlist[i].company_name=this.drlist[i].company_name+' '+'('+this.drlist[i].type+')'
-        }
-        if(this.drlist[i].type=="1"){
-         this.drlist[i].type='Distributor'
-        this.drlist[i].company_name=this.drlist[i].company_name+' '+'('+this.drlist[i].type+')'
-         }
-      }
-      this.drlist2=this.drlist;
-      console.log(this.drlist);
-    }))
-    this.search.sales_user='';
-  }
+  
 
   searchDistributor(search) {
     this.tmpsearch='';
@@ -246,6 +165,18 @@ id:any
 
         this.dialog.closeAll();
       }
+      if(result['msg']=="success"){
+
+        this.dialog1.success("Travel Plan", "Added");
+        this.loader = false;
+      }
+      else{
+
+        this.dialog1.error("Something Went Wrong Please try again !");
+        this.loader = false;
+        this.dialog.closeAll();
+
+      }
       setTimeout(() => {
         this.loader = '';
       }, 100);
@@ -253,41 +184,25 @@ id:any
   }
   update_travel_plan() {
 
-    this.data1.created_by = this.logIN_user.data.id;
-    this.data1.date_from = moment(this.data1.date_from).format('YYYY-MM-DD');
-    this.data1.date_to = moment(this.data1.date_to).format('YYYY-MM-DD');
-    console.log(this.data1);
 
-    if (this.data1.travel_type == 'Area Visit') {
-      console.log(this.lists);
-      this.data1.date_created = this.today_date;
-      this.data1.travel_list = this.lists['value'];
-
-      for (let index = 0; index < this.lists['value'].length; index++) {
-
-        this.datavar.push(this.lists['value'][index].area);
-        console.log(this.datavar);
-      }
-
-
-      this.data1.area = this.datavar;
-    }
+    
 
  this.data1.uid=this.userId;
  this.data1.uname=this.userName;
 
     // -------------
-if(this.data.travel.id){
-  console.log(this.data.travel.id)
 
-  this.serve.fetchData({'id':this.data.travel.id,'data':this.data1}, "Travel/update_travelPlan").subscribe((result => {
+
+  this.serve.fetchData({'id':this.data1.user_id,'city':this.data1.route_name,'beat_code':this.data1.beat_code,'remarks':this.data1.status_remark,'user_id':this.data1.sales_user_id}, "Travel/update_travelPlan").subscribe((result => {
     console.log(result);
 
     if ((result) == "exist") {
       this.Toastr.errorToastr("Travel Plan already exist to selected date");
     }
-    else(result== true)
+    else(result== "success")
     {
+      this.toast.successToastr("Travel Plan Updated");
+
       console.log("close dialog box");
 
       this.dialog.closeAll();
@@ -296,83 +211,14 @@ if(this.data.travel.id){
       this.loader = '';
     }, 100);
 }))
-}
+// }
 
   }
 
 
-  tmp() {
-    console.log(this.lists);
-    console.log(this.lists['value']);
-    this.selectedArea = this.lists['value'];
-  }
+ 
 
-  getStateList() {
-    this.serve.fetchData(0, "User/state_user_list").subscribe((response => {
-      console.log(response);
-      this.state_list = response['query']['state_name'];
-      this.state_list2=this.state_list;
-    }));
-
-    this.data1.distributor = '';
-    this.data1.status_remark = '';
-    this.data1.state = '';
-    this.data1.district = '';
-    this.lists['value']='';
-    this.selectedArea='';
-    this.search.sales_user='';
-    // this.lists['_pendingValue']='';
-    // this.lists='';
-    this.get_sales_user_List('');
-  }
-
-  searchStateList(search) {
-    this.tmpsearch='';
-    this.state_list = [];
-    for (var i = 0; i < this.state_list2.length; i++) {
-      search = search.toLowerCase();
-      this.tmpsearch = this.state_list2[i].toLowerCase();
-      if (this.tmpsearch.includes(search)) {
-        this.state_list.push(this.state_list2[i]);
-      }
-    }
-    this.search.sales_user='';
-  }
-
-  getDistrict(data1) {
-    this.serve.fetchData({'States':this.data1.state}, "Travel/districtList").subscribe((response => {
-      this.district_list = response;
-    for (var i = 0; i < this.district_list.length; i++) {
-
-      this.district_list2.push(this.district_list[i].district_name);
-      console.log(this.district_list2);
-    }
-
-    }));
-
-    this.data1.distributor = '';
-    this.data1.status_remark = '';
-    this.data1.district = '';
-    console.log("list in get district");
-    this.lists['value']='';
-    this.search.state_search='';
-    this.searchStateList('');
-
-    // this.lists['_pendingValue']='';
-    // this.lists='';
-  }
-  searchDistrict(search) {
-    this.tmpsearch='';
-    this.district_list = [];
-    for (var i = 0; i < this.district_list2.length; i++) {
-      search = search.toLowerCase();
-      this.tmpsearch = this.district_list2[i].toLowerCase();
-      if (this.tmpsearch.includes(search)) {
-        this.district_list.push(this.district_list2[i]);
-      }
-    }
-
-  }
+ 
 
 
   getCityList(data1,data2) {
@@ -395,47 +241,30 @@ if(this.data.travel.id){
     // this.lists['_pendingValue']='';
     // this.lists='';
     this.search.district_search='';
-    this.searchDistrict('');
 
   }
+  getbeatcode() {
 
-
-
-  // ----------------------
-  rsm: any = [];
-
-  area_assign_check(value, index, event) {
-    console.log(value);
-    console.log(index);
-    console.log(event);
-
-
-    if (event.checked) {
-      this.rsm.push(value);
-    }
-    else {
-      for (var j = 0; j < this.city_list.length; j++) {
-        if (this.city_list[index] == this.rsm[j]) {
-          this.rsm.splice(j, 1);
-        }
-      }
-    }
-    this.selectedArea = this.rsm
-  }
-
-  area_list:any=[]
-  getAreaList() {
-    this.city_list = [];
-    console.log(this.data1)
-    let value = { "state": this.data1.state, "district": this.data1.district,"city":this.data1.city }
-    this.serve.fetchData(value, "Travel/areaList").subscribe((response => {
+    this.serve.fetchData({'id':this.data1.sales_user_id,'state':this.data1.state,'district':this.data1.district}, "Travel/beat_code_list_according_to_city").subscribe((response => {
       console.log(response);
-      this.area_list = response;
-      // this.city_list2 = this.area_list;
+      this.city_list = response['beat_code_list'];
       console.log(this.city_list);
 
     }));
+    console.log("list in get city list");
+    console.log(this.lists);
+    this.search.district_search='';
+
+
+    // this.lists['_pendingValue']='';
+    // this.lists='';
+    this.search.district_search='';
+
   }
+
+
+  // ----------------------
+
 
 
 }

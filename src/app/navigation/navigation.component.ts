@@ -20,27 +20,29 @@ export class NavigationComponent implements OnInit {
   networkType :any = [];
   networkType1 :any = [];
 
-  constructor(public session: sessionStorage, public route: ActivatedRoute, public serve:DatabaseService,public dialog: MatDialog ,private renderer: Renderer2) { 
+  constructor(public session: sessionStorage, public route: ActivatedRoute, public serve:DatabaseService,public dialog: MatDialog ,private renderer: Renderer2) {
     this.login_data = this.session.getSession();
     this.login_data = this.login_data.value;
     this.login_data = this.login_data.data;
     console.log(this.login_data);
-    this.serve.count_list();
+    // this.serve.count_list();
     this.serve.dr_list();
     this.serve.lead_list();
 
-    console.log(this.serve.counterArray);
-    
-    
+
+
   }
   ngOnInit() {
-    this.count_data();
-    this.getNetworkType();
-    this.getNetworkType1();
+    // this.count_data();
+    // this.getNetworkType();
+    // this.getNetworkType1();
 
-    
+    console.log("Navigation Counter: ",this.serve.counterArray);
+
+
+
   }
-  
+
   getNetworkType(){
     this.serve.fetchData('', "Dashboard/distributionNetworkModule").subscribe((result => {
       console.log(result);
@@ -53,15 +55,15 @@ export class NavigationComponent implements OnInit {
       this.networkType1 = result['modules'];
     }))
   }
-  
+
   status:boolean = false;
-  
-  toggleDropdown(value) 
+
+  toggleDropdown(value)
   {
     console.log(value);
     if(value==1)
     {
-      
+
       if(this.distactive==false){
         this.distactive=true;
         this.ordersactive=false;
@@ -73,31 +75,31 @@ export class NavigationComponent implements OnInit {
         this.ordersactive=false;
         this.leadactive=false;
         this.reportactive=false;
-        
+
       }
-      
+
       // this.renderer.removeClass(event.target, 'active');
       // this.renderer.removeClass(document.body, 'active');
     }
     else if(value==4)
     {
-      
+
       if(this.leadactive==false){
         this.leadactive=true;
         this.ordersactive=false;
         this.distactive=false;
         this.masteractive=false;
         this.reportactive=false;
-        
+
       }else{
         this.leadactive=false;
         this.ordersactive=false;
         this.distactive=false;
         this.masteractive=false;
         this.reportactive=false;
-        
+
       }
-      
+
       // this.renderer.removeClass(event.target, 'active');
       // this.renderer.removeClass(document.body, 'active');
     }
@@ -109,14 +111,14 @@ export class NavigationComponent implements OnInit {
         this.leadactive=false;
         this.masteractive=false;
         this.reportactive=false;
-        
+
       }else{
         this.leadactive=false;
         this.ordersactive=false;
         this.distactive=false;
         this.masteractive=false;
         this.reportactive=false;
-        
+
       }
       // this.renderer.removeClass(event.target, 'active');
       // this.renderer.removeClass(document.body, 'active');
@@ -129,14 +131,14 @@ export class NavigationComponent implements OnInit {
         this.leadactive=false;
         this.masteractive=true;
         this.reportactive=false;
-        
+
       }else{
         this.leadactive=false;
         this.ordersactive=false;
         this.distactive=false;
         this.masteractive=false;
         this.reportactive=false;
-        
+
       }
       // this.renderer.removeClass(event.target, 'active');
       // this.renderer.removeClass(document.body, 'active');
@@ -150,7 +152,7 @@ export class NavigationComponent implements OnInit {
         this.masteractive=false;
         this.reportactive=false;
         this.targetactive=true;
-        
+
       }else{
         this.leadactive=false;
         this.ordersactive=false;
@@ -158,26 +160,26 @@ export class NavigationComponent implements OnInit {
         this.masteractive=false;
         this.reportactive=false;
         this.targetactive=false;
-        
+
       }
       // this.renderer.removeClass(event.target, 'active');
       // this.renderer.removeClass(document.body, 'active');
     }
     else if(value==0)
     {
-      
+
       this.distactive=false;
       this.ordersactive=false;
       this.leadactive=false;
       this.targetactive=false;
       this.reportactive=false;
       this.masteractive=false;
-      
-      
+
+
     }
     // this.renderer.removeClass(event.target, 'active');
     // this.renderer.removeClass(document.body, 'active');
-    
+
     else if(value==5)
     {
       if(this.reportactive==false){
@@ -186,14 +188,14 @@ export class NavigationComponent implements OnInit {
         this.ordersactive=false;
         this.leadactive=false;
         this.masteractive=false;
-        
+
       }else{
         this.reportactive=false;
         this.leadactive=false;
         this.ordersactive=false;
         this.distactive=false;
         this.masteractive=false;
-        
+
       }
       // this.renderer.removeClass(event.target, 'active');
       // this.renderer.removeClass(document.body, 'active');
@@ -205,11 +207,11 @@ export class NavigationComponent implements OnInit {
       this.leadactive=false;
       this.reportactive=false;
       this.targetactive=true;
-      
-      
+
+
     }
     // this.status = !this.status;
-    
+
     // if(this.status) {
     //   this.renderer.addClass(event.target, 'active');
     //   this.renderer.removeClass(document.body, 'active');
@@ -219,8 +221,8 @@ export class NavigationComponent implements OnInit {
     //   // this.renderer.removeClass(document.body, 'active');
     // }
   }
-  
-  
+
+
   toggleHeader() {
     console.log(this.status);
     this.status = !this.status;
@@ -231,7 +233,7 @@ export class NavigationComponent implements OnInit {
       this.renderer.removeClass(document.body, 'nav-active');
     }
   }
-  
+
   status1:boolean = false;
   toggleNav() {
     this.status1 = !this.status1;
@@ -242,13 +244,13 @@ export class NavigationComponent implements OnInit {
       this.renderer.removeClass(document.body, 'active');
     }
   }
-  count_data(){
-    console.log(this.login_data.id);
-    this.serve.fetchData({'user_id':this.login_data.id,'user_type':this.login_data.type},"Attendance/count_data").subscribe((result=>{
-      console.log(result);
-      this.count=result;
-    }))
-  }
-  
-  
+  // count_data(){
+  //   console.log(this.login_data.id);
+  //   this.serve.fetchData({'user_id':this.login_data.id,'user_type':this.login_data.type},"Attendance/count_data").subscribe((result=>{
+  //     console.log(result);
+  //     this.count=result;
+  //   }))
+  // }
+
+
 }

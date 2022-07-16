@@ -98,8 +98,8 @@ count_list:any=[];
       'user_id': this.assign_login_data2.id, 'start': this.start, 'pagelimit': this.pagelimit, 'search': this.search, 'active_tab': this.active_tab, 'user_type': this.assign_login_data2.type},"Distributors/followup_list").subscribe((result=>
       {
         console.log(result);
-        this.followup_list=result['followup_list'];
-        this.count_list=result['followup_list']['data'];
+        this.count_list=result['followup_list'];
+        this.followup_list=result['followup_list']['data'];
 
 
         if(this.count_list.length ==0)
@@ -147,10 +147,13 @@ count_list:any=[];
 
 
     exportAsXLSX():void {
+      for(let i=0;i<this.followup_list.length;i++)
+      {
+        console.log(this.followup_list)
 
-      for(let i=0;i<this.followup_list.length;i++){
-        this.excel_data.push({'Date Created':this.followup_list[i].date_created,'Created By':this.followup_list[i].name,'Company Name':this.followup_list[i].company_name,'Followup Type':this.followup_list[i].next_follow_type,'Followup Date':this.followup_list[i].next_follow_date,'Assigned To':this.followup_list[i].assigned_to_name && this.followup_list[i].assigned_to_name !=''? this.followup_list[i].assigned_to_name : '-','Description':this.followup_list[i].description,'Activity Remarks':this.followup_list[i].activity_remarks});
+        this.excel_data.push({'Date Created':this.followup_list[i].date_created,'Team State': this.followup_list[i].team_state,'Team Code': this.followup_list[i].team_code,'Team Name': this.followup_list[i].team_name,'Employee Id': this.followup_list[i].employee_id,'Created By':this.followup_list[i].name,'Company Name':this.followup_list[i].company_name,'Followup Type':this.followup_list[i].next_follow_type,'Followup Date':this.followup_list[i].next_follow_date,'Assigned To':this.followup_list[i].assigned_to_name && this.followup_list[i].assigned_to_name !=''? this.followup_list[i].assigned_to_name : '-','Description':this.followup_list[i].description,});
       }
+      
       this.serve.exportAsExcelFile(this.excel_data,'Follow Up SHEET');
       this.excel_data = [];
 

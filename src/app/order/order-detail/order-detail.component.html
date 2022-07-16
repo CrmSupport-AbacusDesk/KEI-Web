@@ -17,22 +17,7 @@
                 </div>
             </div>
             
-            <div class="left-auto" >
-                <div class="action-menu">
-                    <button mat-raised-button color="accent"   color="accent"*ngIf="((login_data.access_level == '1') || (login_data.access_level != '1' )) && order_detail.order_status!='Dispatch'  && order_detail.order_status!='Partial Dispatch' &&order_detail.delivery_from=='paraflex'" (click)="openDialog()">
-                        Change Status
-                    </button>
-                    <button mat-raised-button  color="accent" class="ml10" (click)="open_dipatch_model()"  *ngIf="order_detail.order_status!='Dispatch' &&( order_detail.order_status=='Approved'|| order_detail.order_status=='Partial Dispatch')"> 
-                        Dispatch Item
-                    </button>
-                    <!-- <button mat-raised-button color="primary"   class="ml10" color="primary" (click)="onPrintPage()">
-                        Print
-                     </button> -->
-                    <!-- <button mat-raised-button  color="accent" class="ml10" (click)="changeStatusToDispatch(order_detail.id)" *ngIf="order_detail.order_status!='Dispatch'  &&( order_detail.order_status=='Approved'|| order_detail.order_status=='Partial Dispatch')">
-                        Dispatch Order
-                    </button>  -->
-                </div>
-            </div>
+         
         </div>
         
         
@@ -78,57 +63,15 @@
                                                 <div class="inner">
                                                     <span>Distributor</span>
                                                     <p>{{order_detail.distributor_name}}</p>
-                                                    <a  class="one-edit" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(order_detail.created_by,'order_cp_edit')" *ngIf="(login_data.access_level == '1') && (order_detail.order_status=='Pending')"><i class="material-icons">create</i></a>
+                                                    <!-- <a  class="one-edit" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(order_detail.created_by,'order_cp_edit')" *ngIf="(login_data.access_level == '1') && (order_detail.order_status=='Pending')"><i class="material-icons">create</i></a> -->
                                                 </div>
                                             </div>
                                         </li>
                                         
-                                        <li class="w130 " style="min-width: 130px;" *ngIf="order_detail.type!='3'||order_detail.type!='5'||order_detail.type!='9'||order_detail.type!='11'||order_detail.type!='12'||order_detail.type!='13'||order_detail.type!='14'||order_detail.type!='15'||order_detail.type!='16'">
-                                            <div class="outer">
-                                                <div class="inner">
-                                                    <span>Status</span>
-                                                    <p>
-                                                        <!-- {{order_detail.order_status == "Pending" ? 'Order Placed' : order_detail.order_status == 'Approved' ? 'Order Accepted' : order_detail.order_status}} -->
-                                                        <ng-container *ngIf="order_detail.order_status == 'Pending'">
-                                                            Pending
-                                                        </ng-container>
-                                                        <ng-container *ngIf="order_detail.order_status == 'Approved'">
-                                                            Approved
-                                                        </ng-container>
-                                                        <ng-container *ngIf="order_detail.order_status == 'Dispatch'">
-                                                            Dispatched
-                                                        </ng-container>
-                                                        <ng-container *ngIf="order_detail.order_status == 'Partial Dispatch'">
-                                                            Partially Dispatched
-                                                        </ng-container>
-                                                        
-                                                        <ng-container *ngIf="order_detail.order_status == 'Reject' || order_detail.order_status == 'Rejected'">
-                                                            {{order_detail.order_status}}
-                                                        </ng-container>
-                                                        
-                                                    </div>
-                                                </div>
-                                            </li>
+                                  
                                         </ul>
                                         
-                                        <ul>
-                                            <li *ngIf="order_detail.order_status=='Reject'">
-                                                <div class="outer">
-                                                    <div class="inner">
-                                                        <span>Reason Of Reject</span>
-                                                        <p>{{order_detail.reason_reject}}</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li *ngIf="order_detail.order_status=='Approved'">
-                                                <div class="outer">
-                                                    <div class="inner">
-                                                        <span>Approved By</span>
-                                                        <p>{{order_detail.approved_by_name}}</p>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                  
                                         
                                         <ul class="mt10" >
                                             <li  *ngIf="order_detail.remark">
@@ -152,6 +95,25 @@
                                                     <div class="inner">
                                                         <span>Order Remark</span>
                                                         <p *ngIf="order_detail.remark">{{order_detail.order_remark}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <ul class="mt10" >
+                                            
+                                            <li  *ngIf="order_detail.total_qty">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Total Qty</span>
+                                                        <p *ngIf="order_detail.total_qty">{{order_detail.total_qty}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li  *ngIf="order_detail.total_amount">
+                                                <div class="outer">
+                                                    <div class="inner">
+                                                        <span>Total Amount</span>
+                                                        <p *ngIf="order_detail.total_amount">{{order_detail.total_amount}}</p>
                                                     </div>
                                                 </div>
                                             </li>
@@ -270,7 +232,7 @@
                                                             ( <strong style="color: #63270e;" *ngIf="order_detail.type==1"> Distributor</strong>
                                                             <strong style="color: #63270e;" *ngIf="order_detail.type==2">Dealer</strong>
                                                            
-                                                            <strong style="color: #63270e;" *ngIf="order_detail.type==3">Retailer</strong>
+                                                            <!-- <strong style="color: #63270e;" *ngIf="order_detail.type==3">Retailer</strong> -->
                                                             <strong style="color: #63270e;" *ngIf="order_detail.type==4">Project</strong>
                                                             <strong style="color: #63270e;" *ngIf="order_detail.type==12">Sub-dealer</strong>
                                                             <strong style="color: #63270e;" *ngIf="order_detail.type==13">Pvt. Contractor</strong>
@@ -322,14 +284,16 @@
                                         <tr>
                                             <th class="w40 text-center"></th>
                                             <th>Product Description</th>
-                                            <th class="w100">Type</th>
+                                            <!-- <th class="w100">Type</th> -->
                                            
                                             <th class="w80">QTY</th>
-                                            <th class="w80" *ngIf="order_detail.delivery_from=='paraflex'" > Pending QTY</th>
+                                            <th class="w80">AMOUNT</th>
+
+                                            <!-- <th class="w80" *ngIf="order_detail.delivery_from=='paraflex'" > Pending QTY</th>
                                             <th class="w80"  *ngIf="order_detail.delivery_from=='paraflex'" > Dispatch QTY</th>
                                             
                                             <th class="w90">Rate</th>
-                                            <th class="w80" >Sub-Total</th>
+                                            <th class="w80" >Sub-Total</th> -->
 
                                             <!-- <th class="w90"> Basic Discount Percent</th>
                                             <th class="w90"> Sd Discount Percent</th>
@@ -338,8 +302,8 @@
 
                                             <th class="w90">Discount Amount</th> -->
                                              <!-- <th class="w120" >Discount</th> -->
-                                                <th class="w100" >GST Amount</th> 
-                                                <th class="w140 text-right"> Amount</th>
+                                                <!-- <th class="w100" >GST Amount</th> 
+                                                <th class="w140 text-right"> Amount</th> -->
                                             </tr>
                                         </table>
                                     </div>
@@ -350,30 +314,10 @@
                                                 <tr *ngFor="let list of order_item; let i=index;">
                                                     <td class="w40 text-center">{{i+1}}</td>
                                                     <!-- <td>{{list.product_name}} {{list.cat_no}}</td> -->
-                                                    <td>{{list.product_name + ','}} ({{ list.cat_no}})</td>
-                                                    <td class="w100">{{list.product_type}}</td>
+                                                    <td>{{list.product_name}}</td>
+                                                   <td class="w80" >{{list.qty}}</td>
+                                                   <td class="w80" >{{list.amount}}</td>
 
-                                                    <!-- *ngIf="(order_detail.order_status=='Pending')" -->
-                                                  
-                                                    <td class="w80" *ngIf="(order_detail.order_status=='Pending'|| order_detail.order_status=='Approved' && login_data.access_level == '1' )">
-                                                        <div class="td-input" [ngClass]="{'active':list.editqty==true}">
-                                                            <input type="number" class="input-bdr" value="{{list.qty}}"  name="qty" #qty="ngModel" [(ngModel)]="list.qty" (ngModelChange)="calc(list.id,list.qty)" [readonly]="!list.editqty">
-                                                            <div class="edit">
-                                                                <a class="edit-icon edit" *ngIf="list.editqty == false">
-                                                                    <i class="material-icons" (click)="list.editqty = true">create</i>
-                                                                </a>
-                                                                <a class="edit-icon save" *ngIf="list.editqty == true">
-                                                                    <i class="material-icons" (click)="list.editqty = false;update_order(list.id)">save</i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="w80" *ngIf="(order_detail.order_status!='Pending')">{{list.qty}}</td>
-                                                    <td class="w80" *ngIf="order_detail.delivery_from=='paraflex'" >{{list.pending_qty}}</td>
-                                                    <td class="w80" *ngIf="order_detail.delivery_from=='paraflex'"><b>{{list.dispatch_qty && list.dispatch_qty!= null ? list.dispatch_qty : '--'}}</b></td>
-                                                    
-                                                    <td class="w90">&#8377; {{list.price}}</td>
-                                                    <td class="w80">&#8377; {{list.sub_total}}</td>
 <!-- 
                                                     <td class="w90"> {{list.basic_discount + '%'}}</td>
                                                     <td class="w90"> {{list.sr_discount + '%'}}</td>
@@ -382,8 +326,7 @@
 
                                                     <td class="w90">&#8377; {{list.discount_amount}}</td> -->
                                                     <!-- <td class="w120">&#8377;  {{list.discount_amount * list.qty}}({{list.discount_percent}}%)</td> -->
-                                                    <td class="w100">&#8377; {{list.gst_amount}} ({{list.gst_percent?list.gst_percent+' %':'0 %'}})</td>
-                                                    <td class="w140 text-right">&#8377;  {{list.amount}}</td>
+                                                   
                                                     
                                                 </tr>
                                             </table>
@@ -394,84 +337,7 @@
                             </div>
                         </div>
                         
-                        <div class="row">
-                            <div class="col s8">&nbsp;</div>
-                            <div class="col s4">
-                                <div class="invoice-table">
-                                    <table>
-                                        
-                                        
-                                        <!-- <tr >
-                                            <td>Sub Amount</td>
-                                            <td class="w30 text-center">:</td>
-                                            <td class="w200 text-right ">&#8377; {{order_detail.sub_total}}</td>
-                                        </tr>
-                                        <tr >
-                                            <td>Discount</td>
-                                            <td class="text-center">:</td>
-                                            <td class="text-right ">&#8377; {{order_detail.order_discount}}</td>
-                                        </tr> -->
-                                        <tr >
-                                            <td>Sub Total</td>
-                                            <td class="text-center"><strong>:</strong></td>
-                                            <td class="text-right ">&#8377; {{order_detail.sub_total}}</td>
-                                        </tr>
-                                        <!-- <tr >
-                                            <td>Order Discount</td>
-                                            <td class="text-center"><strong>:</strong></td>
-                                            <td class="text-right ">&#8377; {{order_detail.order_discount}}</td>
-                                        </tr>
-                                        <tr >
-                                            <td>Net Total</td>
-                                            <td class="text-center"><strong>:</strong></td>
-                                            <td class="text-right ">&#8377; {{order_detail.order_total}}</td>
-                                        </tr>
-                                         -->
-                                        <tr *ngIf="order_detail.order_gst!=0" >
-                                            <td>GST Amount</td>
-                                            <td class="text-center"><strong>:</strong></td>
-                                            <td class="text-right ">&#8377;{{order_detail.order_gst}}</td>
-                                        </tr>
-
-                                        <tr *ngIf="order_detail.order_gst!=0" >
-                                            <td>Grand Total</td>
-                                            <td class="text-center"><strong>:</strong></td>
-                                            <td class="text-right ">&#8377;{{order_detail.order_grand_total}}</td>
-                                        </tr>
-                                        
-                                        <!-- *ngIf="order_detail.sp_type" -->
-                                        <!-- <tr > -->
-                                            <!-- *ngIf="order_detail.sp_type=='Discount'" -->
-                                            <!-- <td >Special Discount</td> -->
-                                            <!-- <td *ngIf="order_detail.sp_type=='Premium'">Additional Charges</td> -->
-                                            <!-- <td class="text-center">:</td> -->
-                                            <!-- <td class="text-right "> -->
-                                                <!-- <div class="edit"> -->
-                                                    <!-- &#8377; {{order_detail.special_discount_amount}} -->
-                                                    <!-- <input  type="number" [min]="0" name=""> -->
-                                                    <!-- <div class="edit-icon edit" *ngIf="list.editqty == false">
-                                                        <a class="material-icons"(click)="list.editqty == true">create</a>
-                                                        <a class="edit-icon save" *ngIf="list.editqty==true" ></a>
-                                                        <a class="material-icons"(click)="list.editqty = false;update_order(list.id)">save</a>
-                                                    </div> -->
-                                                    <!-- </div> -->
-                                                    <!-- </td> -->
-                                                    <!-- </tr> -->
-                                                    
-                                                    <!-- <tr >
-                                                        <td>Grand Total</td>
-                                                        <td class="text-center">:</td>
-                                                        <td class="text-right ">&#8377; {{order_detail.order_grand_total}}</td>
-                                                    </tr>
-                                                    <tr >
-                                                        <td>Breakup of Grand Total</td>
-                                                        <td class="text-center">:</td>
-                                                        <td class="text-right ">(&#8377;{{order_detail.netBreakup}},GST(18%) : &#8377;{{order_detail.gstBreakup}}) </td>
-                                                    </tr> -->
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
+                   
                                 </div>
                             </div>
                             

@@ -38,7 +38,7 @@
                     <ul class="ais">
                       <li class="col s4">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/people.svg" class="fix-img">
+                          <img src="assets/img/people.svg" class="fix-img">
                           <span>Name</span>
                           <p class="link-clr">{{detail.name?detail.name:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.name,'name')"><i class="material-icons">create</i></a>
@@ -46,7 +46,7 @@
                       </li>
                       <li class="col s4">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/company.svg" class="fix-img">
+                          <img src="assets/img/company.svg" class="fix-img">
                           <span>Type</span>
                           <p >{{detail.user_type?detail.user_type:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.user_type,'user_type')"><i class="material-icons">create</i></a>
@@ -54,15 +54,26 @@
                       </li>
                       <li class="col s4">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/designation.svg" class="fix-img">
+                          <img src="assets/img/designation.svg" class="fix-img">
                           <span>Designation</span>
                           <p>{{detail.designation?detail.designation:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.access_level,'access_level')"><i class="material-icons">create</i></a>
                         </div>
                       </li>
+                      <li  class="col s3">
+                        <div class="cs-box">
+                          <img src="assets/img/phone.svg" class="fix-img">
+                          <span>Mobile no</span>
+                          <p>{{detail.contact_01?detail.contact_01:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.contact_01,'contact_01')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      </ul>
+                    <ul class="ais">
+
                       <li class="col s4">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/gmail.svg" class="fix-img">
+                          <img src="assets/img/gmail.svg" class="fix-img">
                           <span>Email</span>
                           <p>{{detail.email?detail.email:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.email,'email')"><i class="material-icons">create</i></a>
@@ -70,16 +81,37 @@
                       </li>
                       <li  class="col s2">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/building.svg" class="fix-img">
+                          <img src="assets/img/building.svg" class="fix-img">
                           <span>Sales Type</span>
                           <p>{{detail.department && detail.department!=null  ?detail.department:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.department,'department')"><i class="material-icons">create</i></a>
                         </div>
                       </li>
-
+                      <li  class="col s2">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Employee Code</span>
+                          <p>{{detail.employee_id && detail.employee_id!=null  ?detail.employee_id:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.employee_id,'employee_id')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
                       <li  class="col s2" >
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/building.svg" class="fix-img">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Team State</span>
+                          <p>{{detail.team_state?detail.team_state:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
+                          (click)="openEditDialog(detail.team_state,'team_state')"><i class="material-icons">edit</i></a>
+
+                        </div>
+                      </li>
+                      </ul>
+                   
+
+                    <ul class="ais">
+                      <li  class="col s2" >
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
                           <span>Team Name</span>
                           <p>{{detail.team_name?detail.team_name:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
@@ -87,29 +119,20 @@
 
                         </div>
                       </li>
-                    </ul>
-
-                    <ul class="ais">
                       <li  class="col s3">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/phone.svg" class="fix-img">
-                          <span>Mobile no</span>
-                          <p>{{detail.contact_01?detail.contact_01:'--'}}</p>
-                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.contact_01,'contact_01')"><i class="material-icons">create</i></a>
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Team Code</span>
+                          <p>{{detail.team_code?detail.team_code:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.team_code,'team_code')"><i class="material-icons">create</i></a>
                         </div>
                       </li>
-                      <li  class="col s2">
-                        <div class="cs-box">
-                          <img src="../paraflex/assets/img/building.svg" class="fix-img">
-                          <span>Employee Code</span>
-                          <p>{{detail.employee_id && detail.employee_id!=null  ?detail.employee_id:'--'}}</p>
-                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.employee_id,'employee_id')"><i class="material-icons">create</i></a>
-                        </div>
-                      </li>
+                    
+                    
 
-                      <li  class="col s2" >
+                      <li  class="col s3" >
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/building.svg" class="fix-img">
+                          <img src="assets/img/building.svg" class="fix-img">
                           <span>User Name</span>
                           <p>{{detail.username?detail.username:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
@@ -118,9 +141,9 @@
                         </div>
                       </li>
 
-                      <li  class="col s2">
+                      <li  class="col s3">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/building.svg" class="fix-img">
+                          <img src="assets/img/building.svg" class="fix-img">
                           <span>Password</span>
                           <p>{{detail.password?detail.password:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT"
@@ -128,16 +151,48 @@
 
                         </div>
                       </li>
-
-                      <li  class="col s4"   *ngIf="detail.user_type == 'Sales User' || detail.user_type == 'Sales User'">
+                      </ul>
+                      <ul class="ais">
+                        <li class="col s4">
+                          <div class="cs-box">
+                            <img src="../assets/img/birthday.svg" class="fix-img">
+                            <span>Date of joining</span>
+                            <p>{{detail.date_joining?detail.date_joining:'N/A'}}</p>
+                            <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.date_joining,'date_joining')"><i class="material-icons">create</i></a>
+                          </div>
+                        </li>
+                        <li  class="col s4">
+                          <div class="cs-box">
+                            <img src="../assets/img/birthday.svg" class="fix-img">
+                            <span>Date of leaving</span>
+                            <p>{{detail.date_leaving?detail.date_leaving:'N/A'}}</p>
+                            <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.date_leaving,'date_leaving')"><i class="material-icons">create</i></a>
+                          </div>
+                        </li>
+                      <li  class="col s3"   *ngIf="detail.user_type == 'Sales User' || detail.user_type == 'Sales User'">
                         <div class="cs-box">
-                          <img src="../paraflex/assets/img/calendars.svg" class="fix-img">
+                          <img src="assets/img/calendars.svg" class="fix-img">
                           <span>Weekly Off</span>
                           <p>{{detail.weekly_off?detail.weekly_off:'--'}}</p>
                           <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.weekly_off,'weekly_off')"><i class="material-icons">create</i></a>
                         </div>
                       </li>
-
+                      <li  class="col s3"   >
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Region</span>
+                          <p>{{detail.region?detail.region:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.region,'region')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
+                      <li  class="col s3"   *ngIf="detail.user_type == 'Sales User' || detail.user_type == 'Sales User'">
+                        <div class="cs-box">
+                          <img src="assets/img/building.svg" class="fix-img">
+                          <span>Distance Office to Home(IN KM)</span>
+                          <p>{{detail.distance?detail.distance:'--'}}</p>
+                          <a  class="edit-icon" color="accent" matRipple matTooltip="EDIT" (click)="openEditDialog(detail.distance,'distance')"><i class="material-icons">create</i></a>
+                        </div>
+                      </li>
                     </ul>
 
                 

@@ -4,6 +4,10 @@ import { Location } from '@angular/common';
 import { retry } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogComponent } from 'src/app/dialog.component';
+// import { sessionStorage } from '../localstorage.service';
+
+// import { sessionStorage } from '../localstorage.service';
+
 import { Observable } from 'rxjs';
 import * as FileSaver from 'file-saver';
 import * as XLSX from 'xlsx';
@@ -14,32 +18,27 @@ const EXCEL_EXTENSION = '.xlsx';
 @Injectable({ providedIn: 'root' })
 export class DatabaseService implements OnInit {
 
-    // myurl = 'http://phpstack-83335-1495813.cloudwaysapps.com/api/';
-    // myurl="http://phpstack-83335-1495813.cloudwaysapps.com/api/";
-    // myimgurl="http://phpstack-83335-1495813.cloudwaysapps.com/";
-    // myimgurl2="http://phpstack-83335-1495813.cloudwaysapps.com/";
-    // dbUrl="http://phpstack-83335-1495813.cloudwaysapps.com/api/index.php/";
-    // myurl = "http://phpstack-83335-1570226.cloudwaysapps.com/api/";
-    // dburl2 = "http://phpstack-83335-1570226.cloudwaysapps.com/api/"
-    // myimgurl = "http://phpstack-83335-1570226.cloudwaysapps.com/";
-    // myimgurl2 = "http://phpstack-83335-1570226.cloudwaysapps.com/";
-    // dbUrl = "http://phpstack-83335-1570226.cloudwaysapps.com/api/index.php/";
-    // myurl = 'http://phpstack-83335-1570226.cloudwaysapps.com/';
-    // myurl2 ='http://phpstack-83335-1570226.cloudwaysapps.com/api/';
-    // tempUrl = 'http://crm.tricolite.com/api/index.php/'
+   
 
-    //////////////////////////test links 
-    dburl2 = "https://apps.abacusdesk.com/kei/api/"
-    myimgurl = "https://apps.abacusdesk.com/kei/";
-    imgurl = "https://apps.abacusdesk.com/kei/api/uploads/";
-    myimgurl2 = "https://apps.abacusdesk.com/kei/";
-    dbUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
-    myurl = 'https://apps.abacusdesk.com/kei/';
-    myurl2 ='https://apps.abacusdesk.com/kei/api/';
-    tempUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
+    //////////////////////////test links
+    dburl2 = "https://fsa.kei-ind.in/api/"
+    myimgurl = "https://fsa.kei-ind.in/";
+    imgurl = "https://fsa.kei-ind.in/api/uploads/";
+    myimgurl2 = "https://fsa.kei-ind.in/";
+    dbUrl = "https://fsa.kei-ind.in/api/index.php/";
+    myurl = 'https://fsa.kei-ind.in/';
+    myurl2 ='https://fsa.kei-ind.in/api/';
+    tempUrl = "https://fsa.kei-ind.in/api/index.php/";
+
     
-
-
+    // dburl2 = "https://apps.abacusdesk.com/kei/api/"
+    // myimgurl = "https://apps.abacusdesk.com/kei/";
+    // imgurl = "https://apps.abacusdesk.com/kei/api/uploads/";
+    // myimgurl2 = "https://apps.abacusdesk.com/kei/";
+    // dbUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
+    // myurl = 'https://apps.abacusdesk.com/kei/';
+    // myurl2 ='https://apps.abacusdesk.com/kei/api/';
+    // tempUrl = "https://apps.abacusdesk.com/kei/api/index.php/";
     header: any = new HttpHeaders();
     data: any;
     myProduct: any = {};
@@ -53,18 +52,26 @@ export class DatabaseService implements OnInit {
 
     counterArray1:any={};
 
-
+st_user:any
     orderFilterPrimary: any = {}
     orderFilterSecondary: any = {}
     dealerListSearch: any = {}
     directDealerListSearch: any = {}
     distributorListSearch: any = {}
-    
+
+    login_data:any={};
+
 
     constructor(public http: HttpClient,public location: Location,
         public dialog: DialogComponent,
         private router: Router,
-        public route: ActivatedRoute,) { }
+        // public session: sessionStorage,
+        public route: ActivatedRoute,
+        ) {
+            this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+            console.log(this.st_user);
+
+    }
 
     can_active: any = "";
     LogInCheck(username, password) {
@@ -101,6 +108,9 @@ export class DatabaseService implements OnInit {
         console.log(data);
         this.header.append('Content-Type', 'application/json');
         console.log(this.dbUrl + fn);
+        this.count_list();
+        this.dr_list();
+        this.lead_list();
         return this.http.post(this.dbUrl + fn, JSON.stringify(data), { headers: this.header })
     }
 
@@ -108,6 +118,9 @@ export class DatabaseService implements OnInit {
         console.log(data);
         this.header.append('Content-Type', 'application/json');
         console.log(this.dburl2 + fn);
+        this.count_list();
+        this.dr_list();
+        this.lead_list();
         return this.http.post(this.dburl2 + fn, JSON.stringify(data), { headers: this.header })
     }
     upload_image(val, fn_name) {
@@ -118,6 +131,9 @@ export class DatabaseService implements OnInit {
     FileData(request_data: any, fn: any) {
         this.header.append('Content-Type', undefined);
         console.log(request_data);
+        this.count_list();
+        this.dr_list();
+        this.lead_list();
         // return this.http.post(this.dbUrl + fn, request_data, { headers: this.header });
         return this.http.post(this.tempUrl + fn, request_data, { headers: this.header });
 
@@ -133,7 +149,7 @@ export class DatabaseService implements OnInit {
     franchise_location;
     challans: any = [];
 
-    
+
 
     ngOnInit() {
         // this._pushNotificationService.requestPermission();
@@ -181,33 +197,33 @@ export class DatabaseService implements OnInit {
         headers = headers.set('Token', 'Bearer ' + this.datauser.token);
         return this.http.post(this.dbUrl + fn, JSON.stringify(request_data), { headers: this.header })
 
-            
+
     }
 
 
 
     get_rqst2(request_data: any, fn: any): any {
-        
+
 
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         headers = headers.set('Token', 'Bearer ' + this.datauser.token);
         return this.http.post(this.dbUrl + fn, JSON.stringify(request_data), { headers: this.header })
 
         // return this.http.get(this.myurl2 + fn, { headers: headers });
-            
+
     }
 
 
 
     get_rqst3(request_data: any, fn: any): any {
-        
+
 
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         headers = headers.set('Token', 'Bearer ' + this.datauser.token);
         // return this.http.post(this.dbUrl + fn, JSON.stringify(request_data), { headers: this.header })
 
         return this.http.get(this.myurl2 + fn, { headers: headers });
-            
+
     }
 
 
@@ -376,44 +392,101 @@ export class DatabaseService implements OnInit {
 
 
     count_list() {
-        this.http.get(this.dbUrl + "Attendance/count_data").subscribe(r => {
-            if (r) {
-                this.counterArray = r;
-                console.log(this.counterArray);
-            }
-            else{
-                console.log("counter Error in DatabaseService File");   
-            }
-        });
+        console.log(this.login_data.id)
+        console.log(this.login_data.type)
+        console.log(this.st_user);
+       
+        this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+        console.log();
+        
+        if(this.st_user.data)
+        {
+            this.login_data = this.st_user.data
+            this.http.post(this.dbUrl +  "Attendance/count_data",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
+                if (r) {
+                    this.counterArray = r;
+                    console.log("Service File Data : ",this.counterArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+        else
+        {
+            this.http.post(this.dbUrl +  "Attendance/count_data",{}).subscribe(r => {
+                if (r) {
+                    this.counterArray = r;
+                    console.log("Service File Data : ",this.counterArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+
+      
     }
 
     dr_list() {
-        this.http.get(this.dbUrl + "Dashboard/distributionNetworkModule").subscribe(r => {
-            if (r) {
-                this.drArray = r['modules'];
-                console.log(this.drArray);
-            }
-            else{
-                console.log("counter Error in DatabaseService File");   
-            }
-        });
+        this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+        if(this.st_user.data)
+        {
+            this.login_data = this.st_user.data
+
+            this.http.post(this.dbUrl +"Dashboard/distributionNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
+                if (r) {
+                    this.drArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+        else
+        {
+            this.http.post(this.dbUrl +"Dashboard/distributionNetworkModule",{}).subscribe(r => {
+                if (r) {
+                    this.drArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
     }
     lead_list() {
-        this.http.get(this.dbUrl + "Dashboard/leadNetworkModule").subscribe(r => {
-            if (r) {
-                this.leadArray = r['modules'];
-                console.log(this.drArray);
-            }
-            else{
-                console.log("counter Error in DatabaseService File");   
-            }
-        });
+        this.st_user = JSON.parse(localStorage.getItem('st_user')) || [];
+        if(this.st_user.data)
+        {
+            this.login_data = this.st_user.data
+
+            this.http.post(this.dbUrl + "Dashboard/leadNetworkModule",{'user_id':this.login_data.id,'user_type':this.login_data.type}).subscribe(r => {
+                if (r) {
+                    this.leadArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
+        else
+        {
+            this.http.post(this.dbUrl + "Dashboard/leadNetworkModule",{}).subscribe(r => {
+                if (r) {
+                    this.leadArray = r['modules'];
+                    console.log(this.drArray);
+                }
+                else{
+                    console.log("counter Error in DatabaseService File");
+                }
+            });
+        }
     }
 
 
 
 }
-
-
-
-

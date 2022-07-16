@@ -20,10 +20,10 @@
         </li>
         
         <li class="dropdown" *ngIf="login_data.view_distribution_n_w=='1'">
-            <a mat-button (click)="toggleDropdown(1)" [ngClass]="{'active':distactive }"><i class="material-icons nav-icon">people_alt</i> Distribution Network</a>
+            <a mat-button (click)="toggleDropdown(1)" [ngClass]="{'active':distactive }"><i class="material-icons nav-icon">people_alt</i> Customer Network</a>
             <ul>
                 <li *ngFor="let row of serve.drArray">
-                    <a mat-button  routerLink="/distribution-list/{{row.id}}/{{row.module_name}}" routerLinkActive="active">
+                    <a mat-button  routerLink="/distribution-list/{{row.type}}/{{row.module_name}}" routerLinkActive="active">
                         {{row.module_name}}
                         <i class="material-icons">chevron_right </i>
                         <span class="nav-counter orange-count">{{row.dr_count}}</span>
@@ -75,6 +75,8 @@
         <li *ngIf="login_data.view_leaves=='1'">
             <a mat-button (click)="toggleDropdown(0)" routerLink="/leave-list" routerLinkActive="active">
                 <i class="material-icons nav-icon">exit_to_app</i>
+                <span class="nav-counter orange-count">{{serve.counterArray.leaves}}</span>
+
                 Leaves
             </a>
         </li>
@@ -113,13 +115,13 @@
         <li class="dropdown" *ngIf="login_data.masters=='1' ">
             <a  mat-button (click)=toggleDropdown(3) [ngClass]="{'active':masteractive}"><i class="material-icons nav-icon">star_rate</i>Masters </a>
             <ul>
-                <li *ngIf="login_data.view_products=='1'">
+                <!-- <li *ngIf="login_data.view_products=='1'">
                     <a mat-button routerLink="/product-list" routerLinkActive="active">
                         Products
                         <i class="material-icons">chevron_right </i>
                         <span class="nav-counter orange-count">{{serve.counterArray.product}}</span>
                     </a>
-                </li>
+                </li> -->
                 <li *ngIf="login_data.view_users=='1'">
                     <a mat-button routerLink="/sale-user-list" routerLinkActive="active">
                         Users
@@ -133,10 +135,21 @@
                         <i class="material-icons">chevron_right </i>
                     </a>
                 </li>
-               
+                <li *ngIf="login_data.view_category_master=='1'">
+                    <a routerLink="/location-Master" routerLinkActive="active">
+                        Beat Code Master
+                        <i class="material-icons">chevron_right </i>
+
+                    </a>
+                </li>
             </ul>
         </li>
-      
+        <li *ngIf="login_data.view_activity_report=='1' ">
+            <a mat-button routerLink="/activityreport" routerLinkActive="active">
+                <i class="material-icons nav-icon">card_giftcard</i>
+                 Checkin Report
+            </a>
+        </li>
     </ul>
 </div>
 
